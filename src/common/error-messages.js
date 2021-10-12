@@ -13,6 +13,18 @@ function displayInputFileErrorText(vContext)
 }
 
 
+function displayGraphSyntaxErrorText()
+{
+	var dispTxt = "";
+	
+	dispTxt += "Could not parse input into a valid graph.\r\n";
+	dispTxt += "Input must follow the format:\r\n";
+	dispTxt += "'AB5, BC4, CD8, [etc]'";
+	
+	console.log(dispTxt);
+}
+
+
 function extractFileSystemError(fullMsg)
 {
 	var colonIndex = fullMsg.indexOf(": ");
@@ -35,5 +47,6 @@ function prepareFileSystemError(actionPart, reasonPart)
 module.exports =
 {
 	displayFileSystem: displayFileSystemErrorText,
-	displayInputFile: displayInputFileErrorText
+	displayInputFile: displayInputFileErrorText,
+	displayGraphSyntax: displayGraphSyntaxErrorText
 };

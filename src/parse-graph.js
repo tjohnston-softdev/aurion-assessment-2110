@@ -1,3 +1,4 @@
+const errorMessages = require("./common/error-messages");
 const graphRegex = /^([A-Z][A-Z]\d+,)+([A-Z][A-Z]\d+)$/gi;
 const spaceChars = /\s+/g;
 
@@ -24,7 +25,7 @@ function performInputParsing(rawContents)
 	}
 	else
 	{
-		// Error
+		errorMessages.displayGraphSyntax();
 	}
 	
 	return parseRes;
