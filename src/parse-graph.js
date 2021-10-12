@@ -10,6 +10,7 @@ function performInputParsing(rawContents)
 	var graphParts = [];
 	var parseRes = {};
 	
+	parseRes["nodes"] = [];
 	parseRes["edges"] = [];
 	parseRes["valid"] = false;
 	
@@ -20,7 +21,7 @@ function performInputParsing(rawContents)
 	if (syntaxFlag === 0)
 	{
 		graphParts = prepContents.split(",");
-		loopGraphParts(graphParts, parseRes.edges);
+		loopGraphParts(graphParts, parseRes);
 		parseRes.valid = true;
 	}
 	else
@@ -32,13 +33,14 @@ function performInputParsing(rawContents)
 }
 
 
-function loopGraphParts(partsArray, edgeArr)
+function loopGraphParts(partsArray, graphObject)
 {
 	var partIndex = 0;
 	var currentPart = "";
 	var currentOrigin = "";
 	var currentDest = "";
 	var currentDistance = NaN;
+	var currentLengthGiven = false;
 	var currentValid = false;
 	var currentEdge = {};
 	
@@ -50,16 +52,17 @@ function loopGraphParts(partsArray, edgeArr)
 		currentOrigin = currentPart.charAt(0);
 		currentDest = currentPart.charAt(1);
 		currentDistance = castDistance(currentPart);
-		currentValid = checkDistanceValid(currentDistance);
+		currentLengthGiven = checkDistanceValid(currentDistance);
+		currentValid = false;
 		currentEdge = {};
 		
-		if (currentValid === true)
+		if (currentLengthGiven === true)
 		{
-			currentEdge["origin"] = currentOrigin;
-			currentEdge["destination"] = currentDest;
+			currentEdge["origin"] = getNodeID(currentOrigin, graphObject.nodes);
+			currentEdge["destination"] = getNodeID(currentDest, graphObject.nodes);
 			currentEdge["distance"] = currentDistance;
 			
-			edgeArr.push(currentEdge);
+			graphObject.edges.push(currentEdge);
 		}
 		
 		partIndex = partIndex + 1;
@@ -80,6 +83,25 @@ function checkDistanceValid(distNum)
 	var correctType = Number.isInteger(distNum);
 	var checkRes = (correctType === true && distNum > 0);
 	return checkRes;
+}
+
+
+function getNodeID(tgtChar, nodeArray)
+{
+	var matchIndex = nodeArray.indexOf(tgtChar);
+	var resultID = -1;
+	
+	if (matchIndex >= 0 && matchIndex < nodeArray.length)
+	{
+		resultID = matchIndex;
+	}
+	else
+	{
+		nodeArray.push(tgtChar);
+		resultID = nodeArray.length - 1;
+	}
+	
+	return resultID;
 }
 
 

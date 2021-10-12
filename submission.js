@@ -26,5 +26,8 @@ function runSubmission()
 		parsedGraphObject = parseGraph.performParsing(inpContents);
 	}
 	
-	console.log(parsedGraphObject);
+	if (parsedGraphObject.valid === true)
+	{
+		console.log(parsedGraphObject);
+	}
 }
