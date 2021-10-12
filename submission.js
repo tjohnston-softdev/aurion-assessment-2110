@@ -5,16 +5,22 @@ runSubmission();
 function runSubmission()
 {
 	var enteredPath = inputFile.readPathArg(process.argv);
-	var inputFileEntry = inputFile.getEntry(enteredPath);
-	var inputFileValid = false;
+	var inpEntry = inputFile.getEntry(enteredPath);
+	var inpValid = false;
+	var inpContents = "";
 	
-	if (inputFileEntry.retrieved === true)
+	if (inpEntry.retrieved === true)
 	{
-		inputFileValid = inputFile.validateEntry(inputFileEntry);
+		inpValid = inputFile.validateEntry(inpEntry);
 	}
 	
-	if (inputFileValid === true)
+	if (inpValid === true)
 	{
-		console.log("Input File Valid");
+		inpContents = inputFile.readContents(enteredPath);
+	}
+	
+	if (inpContents !== null)
+	{
+		console.log(inpContents);
 	}
 }

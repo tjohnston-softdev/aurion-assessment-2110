@@ -41,9 +41,9 @@ function getInputFileEntry(targetPath)
 		entryRes.correctType = statObject.isFile();
 		entryRes.sizeBytes = statObject.size;
 	}
-	catch(e)
+	catch(fsErr)
 	{
-		flagMsg = extractFileSystemError(e.message);
+		flagMsg = extractFileSystemError(fsErr.message);
 		displayFileSystemError("check", flagMsg);
 	}
 	
@@ -76,6 +76,25 @@ function validateInputFileEntry(entryObj)
 }
 
 
+function readInputFileContents(targetPath)
+{
+	var readRes = null;
+	var flagMsg = "";
+	
+	try
+	{
+		readRes = fs.readFileSync(targetPath, "utf8");
+	}
+	catch(fsErr)
+	{
+		flagMsg = extractFileSystemError(fsErr.message);
+		displayFileSystemError("read", flagMsg);
+	}
+	
+	return readRes;
+}
+
+
 function extractFileSystemError(fullMsg)
 {
 	var colonIndex = fullMsg.indexOf(": ");
@@ -105,5 +124,6 @@ module.exports =
 {
 	readPathArg: readInputPathArgument,
 	getEntry: getInputFileEntry,
-	validateEntry: validateInputFileEntry
+	validateEntry: validateInputFileEntry,
+	readContents: readInputFileContents
 };
