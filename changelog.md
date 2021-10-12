@@ -1,12 +1,17 @@
 # Changelog
 
 **./src/input-file.js**
-* New file - This will contain functions related to validating and reading the target input file.
-* Only has function for reading the path argument.
+* Wrote new functions:
+	* 'getInputFileEntry' - Checks if the input file exists and reads entry on file system.
+	* 'validateInputFileEntry' - Validates file system entry after it has been retrieved.
+	* 'extractFileSystemError' - Extracts message from file system error.
+	* 'displayFileSystemError' - Writes and displays error text for file-system actions.
+	* 'displayInputFileError' - Writes and displays error text for input file validation.
 
 ---
 
 **./submission.js**
-* Added requirement for: "./src/input-file"
-* The main function is 'runSubmission'
-* Reads and displays input file path.
+* New variables: 'inputFileEntry' and 'inputFileValid'
+* 'inputFileEntry' is assigned with call to 'inputFile.getEntry'
+* 'inputFileValid' is assigned with call to 'inputFile.validateEntry'
+* Entry will only be validated if it is successfully retrieved.
