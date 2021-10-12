@@ -1,17 +1,23 @@
 # Changelog
 
-**./src/common/graph-tasks.js**
-* New file - Will contain common functions for using graphs.
-* Has only one function at the moment: 'getExistingEdge'
-	* Copied from 'checkEdgeExists' in '../parse-graph.js'
+**./src/common/graph-tasks.js - getExistingEdge**
+* Replaced `edgeRes !== null` with `edgeRes === null`
 
 ---
 
-**./src/parse-graph.js**
-* Required './common/graph-tasks'
-* Removed the 'checkEdgeExists' function.
-	* Re-implemented in './common/graph-tasks' as 'getExistingEdge'
-* Changes to 'loopGraphParts'
-	* 'currentExists' is now an object variable.
-	* Replaced `currentExists !== true` with `currentExists === null`
-	* Replaced 'checkEdgeExists' call with 'graphTasks.getEdge'
+**./src/exact-route.js**
+* New file - Follows the exact route on a graph.
+* If route exists, output distance.
+* Messages are output when:
+	* Route does not exist.
+	* Path array has only one node.
+	* Path argument type is invalid.
+
+---
+
+**./submission.js**
+* Required: './src/exact-route'
+* Wrote new function 'runExactRouteTestCases'
+* Changes to 'runSubmission'
+	* Declared 'caseResultArray' variable.
+	* On parse graph successful, call 'runExactRouteTestCases' and display results.

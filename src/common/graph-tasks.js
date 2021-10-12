@@ -4,7 +4,7 @@ function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 	var currentObject = {};
 	var edgeRes = null;
 	
-	while (existIndex >= 0 && existIndex < edgeArray.length && edgeRes !== null)
+	while (existIndex >= 0 && existIndex < edgeArray.length && edgeRes === null)
 	{
 		currentObject = edgeArray[existIndex];
 		

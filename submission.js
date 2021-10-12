@@ -1,5 +1,6 @@
 const inputFile = require("./src/input-file");
 const parseGraph = require("./src/parse-graph");
+const exactRoute = require("./src/exact-route");
 
 runSubmission();
 
@@ -10,6 +11,7 @@ function runSubmission()
 	var inpValid = false;
 	var inpContents = "";
 	var parsedGraphObject = null;
+	var caseResultArray = [];
 	
 	if (inpEntry.retrieved === true)
 	{
@@ -28,6 +30,20 @@ function runSubmission()
 	
 	if (parsedGraphObject.valid === true)
 	{
-		console.log(parsedGraphObject);
+		runExactRouteTestCases(parsedGraphObject, caseResultArray);
+		console.log(caseResultArray);
 	}
+}
+
+
+
+function runExactRouteTestCases(pGraphObj, resArr)
+{
+	var case1 = exactRoute.getDistance(pGraphObj, "ABC");
+	var case2 = exactRoute.getDistance(pGraphObj, "AD");
+	var case3 = exactRoute.getDistance(pGraphObj, "ADC");
+	var case4 = exactRoute.getDistance(pGraphObj, "AEBCD");
+	var case5 = exactRoute.getDistance(pGraphObj, "AED");
+	
+	resArr.push(case1, case2, case3, case4, case5);
 }
