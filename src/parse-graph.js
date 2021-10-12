@@ -37,11 +37,14 @@ function loopGraphParts(partsArray, graphObject)
 {
 	var partIndex = 0;
 	var currentPart = "";
-	var currentOrigin = "";
-	var currentDest = "";
+	var currentOriginChar = "";
+	var currentDestChar = "";
 	var currentDistance = NaN;
 	var currentLengthGiven = false;
+	var currentOriginID = -1;
+	var currentDestID = -1;
 	var currentValid = false;
+	var currentExists = false;
 	var currentEdge = {};
 	
 	var canContinue = true;
@@ -49,21 +52,31 @@ function loopGraphParts(partsArray, graphObject)
 	while (partIndex >= 0 && partIndex < partsArray.length && canContinue === true)
 	{
 		currentPart = partsArray[partIndex];
-		currentOrigin = currentPart.charAt(0);
-		currentDest = currentPart.charAt(1);
+		currentOriginChar = currentPart.charAt(0);
+		currentDestChar = currentPart.charAt(1);
 		currentDistance = castDistance(currentPart);
 		currentLengthGiven = checkDistanceValid(currentDistance);
 		currentValid = false;
+		currentExists = false;
 		currentEdge = {};
 		
 		if (currentLengthGiven === true)
 		{
-			currentEdge["origin"] = getNodeID(currentOrigin, graphObject.nodes);
-			currentEdge["destination"] = getNodeID(currentDest, graphObject.nodes);
+			currentOriginID = getNodeID(currentOriginChar, graphObject.nodes);
+			currentDestID = getNodeID(currentDestChar, graphObject.nodes);
+			currentValid = true;
+			currentExists = checkEdgeExists(currentOriginID, currentDestID, graphObject.edges);
+		}
+		
+		if (currentValid === true && currentExists !== true)
+		{
+			currentEdge["origin"] = currentOriginID;
+			currentEdge["destination"] = currentDestID;
 			currentEdge["distance"] = currentDistance;
 			
 			graphObject.edges.push(currentEdge);
 		}
+		
 		
 		partIndex = partIndex + 1;
 	}
@@ -102,6 +115,29 @@ function getNodeID(tgtChar, nodeArray)
 	}
 	
 	return resultID;
+}
+
+
+
+function checkEdgeExists(tgtOrigin, tgtDest, edgeArray)
+{
+	var existIndex = 0;
+	var currentObject = {};
+	var searchRes = false;
+	
+	while (existIndex >= 0 && existIndex < edgeArray.length && searchRes !== true)
+	{
+		currentObject = edgeArray[existIndex];
+		
+		if (currentObject.origin === tgtOrigin && currentObject.destination === tgtDest)
+		{
+			searchRes = true;
+		}
+		
+		existIndex = existIndex + 1;
+	}
+	
+	return searchRes;
 }
 
 
