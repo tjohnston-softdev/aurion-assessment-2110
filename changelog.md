@@ -1,17 +1,17 @@
 # Changelog
 
+**./src/common/graph-tasks.js**
+* New file - Will contain common functions for using graphs.
+* Has only one function at the moment: 'getExistingEdge'
+	* Copied from 'checkEdgeExists' in '../parse-graph.js'
+
+---
+
 **./src/parse-graph.js**
-* Wrote new function 'checkEdgeExists'
-	* Checks if a given edge already exists.
-	* Edges are only one-way.
-	* Origin and destination must be exact. Vice-versa does not count.
-* Renamed 'loopGraphParts' variables:
-	* 'currentOrigin' to 'currentOriginChar'
-	* 'currentDest' to 'currentDestChar'
-* Declared new variables in 'loopGraphParts'
-	* currentOriginID
-	* currentDestID
-	* currentExists
-* 'loopGraphParts' structure:
-	* On `currentLengthGiven === true`, assign ID variables and check if edge exists.
-	* On `currentValid === true && currentExists !== true`, add new edge to graph.
+* Required './common/graph-tasks'
+* Removed the 'checkEdgeExists' function.
+	* Re-implemented in './common/graph-tasks' as 'getExistingEdge'
+* Changes to 'loopGraphParts'
+	* 'currentExists' is now an object variable.
+	* Replaced `currentExists !== true` with `currentExists === null`
+	* Replaced 'checkEdgeExists' call with 'graphTasks.getEdge'

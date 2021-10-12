@@ -1,4 +1,5 @@
 const errorMessages = require("./common/error-messages");
+const graphTasks = require("./common/graph-tasks");
 const graphRegex = /^([A-Z][A-Z]\d+,)+([A-Z][A-Z]\d+)$/gi;
 const spaceChars = /\s+/g;
 
@@ -44,7 +45,7 @@ function loopGraphParts(partsArray, graphObject)
 	var currentOriginID = -1;
 	var currentDestID = -1;
 	var currentValid = false;
-	var currentExists = false;
+	var currentExists = null;
 	var currentEdge = {};
 	
 	var canContinue = true;
@@ -57,7 +58,7 @@ function loopGraphParts(partsArray, graphObject)
 		currentDistance = castDistance(currentPart);
 		currentLengthGiven = checkDistanceValid(currentDistance);
 		currentValid = false;
-		currentExists = false;
+		currentExists = null;
 		currentEdge = {};
 		
 		if (currentLengthGiven === true)
@@ -65,10 +66,10 @@ function loopGraphParts(partsArray, graphObject)
 			currentOriginID = getNodeID(currentOriginChar, graphObject.nodes);
 			currentDestID = getNodeID(currentDestChar, graphObject.nodes);
 			currentValid = true;
-			currentExists = checkEdgeExists(currentOriginID, currentDestID, graphObject.edges);
+			currentExists = graphTasks.getEdge(currentOriginID, currentDestID, graphObject.edges);
 		}
 		
-		if (currentValid === true && currentExists !== true)
+		if (currentValid === true && currentExists === null)
 		{
 			currentEdge["origin"] = currentOriginID;
 			currentEdge["destination"] = currentDestID;
@@ -115,29 +116,6 @@ function getNodeID(tgtChar, nodeArray)
 	}
 	
 	return resultID;
-}
-
-
-
-function checkEdgeExists(tgtOrigin, tgtDest, edgeArray)
-{
-	var existIndex = 0;
-	var currentObject = {};
-	var searchRes = false;
-	
-	while (existIndex >= 0 && existIndex < edgeArray.length && searchRes !== true)
-	{
-		currentObject = edgeArray[existIndex];
-		
-		if (currentObject.origin === tgtOrigin && currentObject.destination === tgtDest)
-		{
-			searchRes = true;
-		}
-		
-		existIndex = existIndex + 1;
-	}
-	
-	return searchRes;
 }
 
 
