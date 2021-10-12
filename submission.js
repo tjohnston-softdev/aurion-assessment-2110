@@ -1,4 +1,5 @@
 const inputFile = require("./src/input-file");
+const parseGraph = require("./src/parse-graph");
 
 runSubmission();
 
@@ -8,6 +9,7 @@ function runSubmission()
 	var inpEntry = inputFile.getEntry(enteredPath);
 	var inpValid = false;
 	var inpContents = "";
+	var parsedGraphObject = null;
 	
 	if (inpEntry.retrieved === true)
 	{
@@ -21,6 +23,8 @@ function runSubmission()
 	
 	if (inpContents !== null)
 	{
-		console.log(inpContents);
+		parsedGraphObject = parseGraph.performParsing(inpContents);
 	}
+	
+	console.log(parsedGraphObject);
 }
