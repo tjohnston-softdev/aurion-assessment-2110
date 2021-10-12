@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const errorMessages = require("./common/error-messages");
 const maxInpSize = 10000;
 
 function readInputPathArgument(argList)
@@ -28,7 +29,6 @@ function getInputFileEntry(targetPath)
 {
 	var statObject = null;
 	var entryRes = {};
-	var flagMsg = "";
 	
 	entryRes["retrieved"] = false;
 	entryRes["correctType"] = false;
@@ -43,8 +43,7 @@ function getInputFileEntry(targetPath)
 	}
 	catch(fsErr)
 	{
-		flagMsg = extractFileSystemError(fsErr.message);
-		displayFileSystemError("check", flagMsg);
+		errorMessages.displayFileSystem("check", fsErr);
 	}
 	
 	return entryRes;
@@ -61,15 +60,15 @@ function validateInputFileEntry(entryObj)
 	}
 	else if (entryObj.correctType === true && entryObj.sizeBytes > maxInpSize)
 	{
-		displayInputFileError("cannot be larger than 10kb.");
+		errorMessages.displayInputFile("cannot be larger than 10kb.");
 	}
 	else if (entryObj.correctType === true)
 	{
-		displayInputFileError("cannot be empty.");
+		errorMessages.displayInputFile("cannot be empty.");
 	}
 	else
 	{
-		displayInputFileError("path actually refers to a directory.");
+		errorMessages.displayInputFile("path actually refers to a directory.");
 	}
 	
 	return validRes;
@@ -79,7 +78,6 @@ function validateInputFileEntry(entryObj)
 function readInputFileContents(targetPath)
 {
 	var readRes = null;
-	var flagMsg = "";
 	
 	try
 	{
@@ -87,37 +85,13 @@ function readInputFileContents(targetPath)
 	}
 	catch(fsErr)
 	{
-		flagMsg = extractFileSystemError(fsErr.message);
-		displayFileSystemError("read", flagMsg);
+		errorMessages.displayFileSystem("read", fsErr);
 	}
 	
 	return readRes;
 }
 
 
-function extractFileSystemError(fullMsg)
-{
-	var colonIndex = fullMsg.indexOf(": ");
-	var subBegin = colonIndex + 2;
-	var subEnd = fullMsg.indexOf(",", subBegin);
-	
-	var extractRes = fullMsg.substring(subBegin, subEnd);
-	return extractRes;
-}
-
-
-function displayFileSystemError(vAction, vReason)
-{
-	var prepTxt = ["Could not successfully ", vAction, " input file - ", vReason, "."].join("");
-	console.log(prepTxt);
-}
-
-
-function displayInputFileError(vContext)
-{
-	var prepTxt = "Input file " + vContext;
-	console.log(prepTxt);
-}
 
 
 module.exports =

@@ -1,24 +1,23 @@
 # Changelog
 
-**./src/parse-graph.js**
-* New functions:
-	* 'loopGraphParts' - Reads edges from input string.
-	* 'castDistance' - Converts distance string into a number.
-	* 'checkDistanceValid' - Checks whether a distance number is valid. (Positive whole)
-* Declared new variable 'graphParts' in 'performInputParsing'	
-	* 'prepContents' split by comma.
-	* Array of different graph parts (eg. "AB3")
-	* Assigned on valid syntax.
-* Other changes to 'performInputParsing'
-	* Call 'loopGraphParts' on valid syntax.
-	* Return 'parseRes'
-	* Called publicly as 'performParsing'
+**./src/common/error-messages.js**
+* New file - Functions for writing and displaying error messages.
+* Split from: './src/input-file.js'
 
 ---
 
-**./submission.js**
-* Required './src/parse-graph'
-* Declared 'parsedGraphObject' variable.
-	* Starts as null.
-	* Assigned with 'parseGraph.performParsing' after input file is read.
-* Echo 'parsedGraphObject' to console regardless of result.
+**./src/input-file.js**
+* Added requirement for: './common/error-messages'
+* Moved functions to 'errorMessages'
+	* extractFileSystemError
+	* 'displayInputFileError' as 'displayInputFileErrorText'
+	* 'displayFileSystemError' split into:
+		* displayFileSystemErrorText
+		* prepareFileSystemError
+* Replaced calls:
+	* 'displayFileSystemError' with 'errorMessages.displayFileSystem'
+	* 'displayInputFileError' with 'errorMessages.displayInputFile'
+* Removed 'flagMsg' variable from functions:
+	* getInputFileEntry
+	* readInputFileContents
+* Replaced references to 'flagMsg' with 'fsErr'
