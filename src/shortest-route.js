@@ -8,13 +8,18 @@ function findShortestRoute(graphObject, startNode, endNode)
 }
 
 
-function defineDijkstraTable(nodeArray, sNode)
+function defineDijkstraTable(nodeArray, sNode, eNode)
 {
 	var nodeIndex = 0;
 	var currentChar = "";
 	var currentRow = {};
 	
-	var tableRes = [];
+	var defineRes = {};
+	
+	defineRes["start"] = null;
+	defineRes["end"] = null;
+	defineRes["closed"] = false;
+	defineRes["nodes"] = [];
 	
 	for (nodeIndex = 0; nodeIndex < nodeArray.length; nodeIndex = nodeIndex + 1)
 	{
@@ -22,21 +27,25 @@ function defineDijkstraTable(nodeArray, sNode)
 		currentRow = {};
 		
 		currentRow["nodeID"] = nodeIndex;
-		currentRow["start"] = false;
 		currentRow["distanceFromStart"] = Number.POSITIVE_INFINITY;
 		currentRow["previous"] = null;
 		currentRow["visited"] = false;
 		
 		if (currentChar === sNode)
 		{
-			currentRow.start = true;
 			currentRow.distanceFromStart = 0;
+			defineRes.start = nodeIndex;
 		}
 		
-		tableRes.push(currentRow);
+		if (currentChar === eNode)
+		{
+			defineRes.end = nodeIndex;
+		}
+		
+		defineRes.nodes.push(currentRow);
 	}
 	
-	return tableRes;
+	return defineRes;
 }
 
 
