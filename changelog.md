@@ -1,25 +1,23 @@
 # Changelog
 
-**./src/common/dsktra-tasks.js**
-* New functions:
-	* resetNodeTable
-	* getCurrentVisitingNode
+**./src/common/graph-tasks.js**
+* Wrote new function 'getAdjacentEdgesByNode'
+	* Gets index numbers of edges that have the given node as origin.
+	* Remember that edges are only one-way.
 
 ---
 
-**./src/shortest-route.js**
-* Started writing new function 'loopPathfinding'
-	* Used to perform the Dijkstra search algorithm itself.
-	* Called from 'findShortestRoute' after 'dsktraTasks.setClosed'
-	* Only reads current visiting node - in queue with shortest total distance.
-	* Only iterates once.
-	* Displays visiting node before and after reset.
-
----
-
-**./src/submission.js**
-* Uncommented 'runShortestRouteTestCases' call.
-* Commented out following in 'runShortestRouteTestCases'
-	* `var case9 ...`
-	* `resArr.push`
-* Commented out `console.log(caseResultArray);`
+**./src/shortest-route.js - loopPathfinding**
+* Removed:
+	* `console.log(currentVisitingNode);`
+	* `dsktraInfoObj.nodes.reverse();`
+	* `console.log("");`
+	* `console.log(currentVisitingNode);`
+* Properly declared 'currentDestinationEdges' variable.
+	* Assigned with 'graphTasks.getAdjacentEdges'
+	* After visiting node was retrieved successfully.
+* Display:
+	* Graph edge array.
+	* Visiting node ID.
+	* Destination edges array.
+* Still only iterates once.

@@ -23,6 +23,7 @@ function findShortestRoute(graphObject, startNode, endNode)
 function loopPathfinding(dsktraInfoObj, graphObj)
 {
 	var currentVisitingNode = null;
+	var currentDestinationEdges = [];
 	var canContinue = true;
 	
 	while (canContinue === true)
@@ -35,13 +36,15 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 		
 		if (currentVisitingNode !== null)
 		{
-			console.log(currentVisitingNode);
-			
 			dsktraTasks.resetNodes(dsktraInfoObj.nodes);
-			dsktraInfoObj.nodes.reverse();
+			currentDestinationEdges = graphTasks.getAdjacentEdges(currentVisitingNode.nodeID, graphObj.edges);
 			
 			console.log("");
-			console.log(currentVisitingNode);
+			console.log("All Edges:");
+			console.log(graphObj.edges);
+			console.log("");
+			console.log("Node: ", currentVisitingNode.nodeID);
+			console.log("Dests: ", currentDestinationEdges);
 		}
 		
 		canContinue = false;

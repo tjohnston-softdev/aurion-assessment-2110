@@ -66,11 +66,32 @@ function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 }
 
 
+function getAdjacentEdgesByNode(tgtOrigin, edgeArray)
+{
+	var edgeIndex = 0;
+	var currentObject = {};
+	var adjacentRes = [];
+	
+	for (edgeIndex = 0; edgeIndex < edgeArray.length; edgeIndex = edgeIndex + 1)
+	{
+		currentObject = edgeArray[edgeIndex];
+		
+		if (currentObject.origin === tgtOrigin)
+		{
+			adjacentRes.push(edgeIndex);
+		}
+	}
+	
+	return adjacentRes;
+}
+
+
 
 module.exports =
 {
 	defineGraph: defineGraphObject,
 	addNode: addNodeDefinition,
 	addEdge: addEdgeObject,
-	getEdge: getExistingEdge
+	getEdge: getExistingEdge,
+	getAdjacentEdges: getAdjacentEdgesByNode
 };
