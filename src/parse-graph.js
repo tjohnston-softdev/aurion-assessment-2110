@@ -9,11 +9,7 @@ function performInputParsing(rawContents)
 	var prepContents = rawContents;
 	var syntaxFlag = -1;
 	var graphParts = [];
-	var parseRes = {};
-	
-	parseRes["nodes"] = [];
-	parseRes["edges"] = [];
-	parseRes["valid"] = false;
+	var parseRes = graphTasks.defineGraph();
 	
 	prepContents = prepContents.replace(spaceChars, "");
 	prepContents = prepContents.toUpperCase();
@@ -46,11 +42,10 @@ function loopGraphParts(partsArray, graphObject)
 	var currentDestID = -1;
 	var currentValid = false;
 	var currentExists = null;
-	var currentEdge = {};
 	
 	var canContinue = true;
 	
-	while (partIndex >= 0 && partIndex < partsArray.length && canContinue === true)
+	while (partIndex >= 0 && partIndex < partsArray.length && canContinue === true && graphObject.edges.length < 300)
 	{
 		currentPart = partsArray[partIndex];
 		currentOriginChar = currentPart.charAt(0);
@@ -59,23 +54,18 @@ function loopGraphParts(partsArray, graphObject)
 		currentLengthGiven = checkDistanceValid(currentDistance);
 		currentValid = false;
 		currentExists = null;
-		currentEdge = {};
 		
 		if (currentLengthGiven === true)
 		{
-			currentOriginID = getNodeID(currentOriginChar, graphObject.nodes);
-			currentDestID = getNodeID(currentDestChar, graphObject.nodes);
+			currentOriginID = graphTasks.addNode(currentOriginChar, graphObject.nodes);
+			currentDestID = graphTasks.addNode(currentDestChar, graphObject.nodes);
 			currentValid = true;
 			currentExists = graphTasks.getEdge(currentOriginID, currentDestID, graphObject.edges);
 		}
 		
 		if (currentValid === true && currentExists === null)
-		{
-			currentEdge["origin"] = currentOriginID;
-			currentEdge["destination"] = currentDestID;
-			currentEdge["distance"] = currentDistance;
-			
-			graphObject.edges.push(currentEdge);
+		{	
+			graphTasks.addEdge(currentOriginID, currentDestID, currentDistance, graphObject.edges);
 		}
 		
 		
@@ -97,25 +87,6 @@ function checkDistanceValid(distNum)
 	var correctType = Number.isInteger(distNum);
 	var checkRes = (correctType === true && distNum > 0);
 	return checkRes;
-}
-
-
-function getNodeID(tgtChar, nodeArray)
-{
-	var matchIndex = nodeArray.indexOf(tgtChar);
-	var resultID = -1;
-	
-	if (matchIndex >= 0 && matchIndex < nodeArray.length)
-	{
-		resultID = matchIndex;
-	}
-	else
-	{
-		nodeArray.push(tgtChar);
-		resultID = nodeArray.length - 1;
-	}
-	
-	return resultID;
 }
 
 
