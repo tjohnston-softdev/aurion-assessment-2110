@@ -33,7 +33,7 @@ function runSubmission()
 	{
 		runExactRouteTestCases(parsedGraphObject, caseResultArray);
 		// 6-7
-		runShortestRouteTestCases(parsedGraphObject, caseResultArray);
+		//runShortestRouteTestCases(parsedGraphObject, caseResultArray);
 		// 10
 		console.log(caseResultArray);
 	}

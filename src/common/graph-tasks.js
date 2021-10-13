@@ -33,11 +33,14 @@ function addEdgeObject(originID, destID, distNum, edgeArray)
 {
 	var newEdge = {};
 	
-	newEdge["origin"] = originID;
-	newEdge["destination"] = destID;
-	newEdge["distance"] = distNum;
-	
-	edgeArray.push(newEdge);
+	if (originID !== destID)
+	{
+		newEdge["origin"] = originID;
+		newEdge["destination"] = destID;
+		newEdge["distance"] = distNum;
+		
+		edgeArray.push(newEdge);
+	}
 }
 
 
