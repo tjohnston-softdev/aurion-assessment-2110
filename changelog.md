@@ -1,4 +1,5 @@
 # Changelog
 
 **./src/shortest-route.js**
-* Renamed 'defineDijkstraTable' to 'defineDijkstraInfo'
+* Renamed 'closed' result property to 'closedRoute' (defineDijkstraInfo)
+* Renamed 'closeStatus' variable to 'nodesMatch' (setClosedRoute)

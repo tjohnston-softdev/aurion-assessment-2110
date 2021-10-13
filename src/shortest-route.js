@@ -25,7 +25,7 @@ function defineDijkstraInfo()
 	
 	defineRes["start"] = null;
 	defineRes["end"] = null;
-	defineRes["closed"] = false;
+	defineRes["closedRoute"] = false;
 	defineRes["nodes"] = [];
 	
 	return defineRes;
@@ -67,8 +67,8 @@ function setNodeTable(dsktraInfo, nodeArray, sNode, eNode)
 
 function setClosedRoute(dsktraInfo)
 {
-	var closeStatus = (dsktraInfo.start === dsktraInfo.end);
-	dsktraInfo.closed = closeStatus;
+	var nodesMatch = (dsktraInfo.start === dsktraInfo.end);
+	dsktraInfo.closedRoute = nodesMatch;
 }
 
 
