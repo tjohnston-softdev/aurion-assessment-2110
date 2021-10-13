@@ -33,9 +33,9 @@ function runSubmission()
 	{
 		runExactRouteTestCases(parsedGraphObject, caseResultArray);
 		// 6-7
-		//runShortestRouteTestCases(parsedGraphObject, caseResultArray);
+		runShortestRouteTestCases(parsedGraphObject, caseResultArray);
 		// 10
-		console.log(caseResultArray);
+		//console.log(caseResultArray);
 	}
 }
 
@@ -56,7 +56,7 @@ function runExactRouteTestCases(pGraphObj, resArr)
 function runShortestRouteTestCases(pGraphObj, resArr)
 {
 	var case8 = shortestRoute.findRoute(pGraphObj, "A", "C");
-	var case9 = shortestRoute.findRoute(pGraphObj, "B", "B");
+	//var case9 = shortestRoute.findRoute(pGraphObj, "B", "B");
 	
-	resArr.push(case8, case9);
+	//resArr.push(case8, case9);
 }

@@ -60,11 +60,44 @@ function sortNodeTable(tblObj)
 }
 
 
+function resetNodeTable(tblObj)
+{
+	tblObj.sort(function(a,b)
+	{
+		return a.nodeID - b.nodeID;
+	});
+}
+
+
+function getCurrentVisitingNode(tblObj)
+{
+	var rowIndex = 0;
+	var currentNodeRow = {};
+	var visitRes = null;
+	
+	while (rowIndex >= 0 && rowIndex < tblObj.length && visitRes === null)
+	{
+		currentNodeRow = tblObj[rowIndex];
+		
+		if (currentNodeRow.visited !== true)
+		{
+			visitRes = currentNodeRow;
+		}
+		
+		rowIndex = rowIndex + 1;
+	}
+	
+	return visitRes;
+}
+
+
 
 module.exports =
 {
 	defineInfo: defineDijkstraInfo,
 	setNodes: setNodeTable,
 	setClosed: setClosedRoute,
-	sortNodes: sortNodeTable
+	sortNodes: sortNodeTable,
+	resetNodes: resetNodeTable,
+	getVisitingNode: getCurrentVisitingNode
 };

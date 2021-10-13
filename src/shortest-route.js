@@ -9,6 +9,7 @@ function findShortestRoute(graphObject, startNode, endNode)
 	if (dijkstraInfoObject.start !== null && dijkstraInfoObject.end !== null)
 	{
 		dsktraTasks.setClosed(dijkstraInfoObject);
+		loopPathfinding(dijkstraInfoObject, graphObject);
 	}
 	else
 	{
@@ -16,6 +17,35 @@ function findShortestRoute(graphObject, startNode, endNode)
 	}
 	
 	return -1;
+}
+
+
+function loopPathfinding(dsktraInfoObj, graphObj)
+{
+	var currentVisitingNode = null;
+	var canContinue = true;
+	
+	while (canContinue === true)
+	{
+		currentVisitingNode = null;
+		currentDestinationEdges = [];
+		
+		dsktraTasks.sortNodes(dsktraInfoObj.nodes);
+		currentVisitingNode = dsktraTasks.getVisitingNode(dsktraInfoObj.nodes);
+		
+		if (currentVisitingNode !== null)
+		{
+			console.log(currentVisitingNode);
+			
+			dsktraTasks.resetNodes(dsktraInfoObj.nodes);
+			dsktraInfoObj.nodes.reverse();
+			
+			console.log("");
+			console.log(currentVisitingNode);
+		}
+		
+		canContinue = false;
+	}
 }
 
 
