@@ -3,23 +3,41 @@ const graphTasks = require("./common/graph-tasks");
 
 function findShortestRoute(graphObject, startNode, endNode)
 {
-	var nodeTable = [];
+	var dijkstraInfoObject = defineDijkstraTable();
+	setNodeTable(dijkstraInfoObject, graphObject.nodes, startNode, endNode);
+	
+	if (dijkstraInfoObject.start !== null && dijkstraInfoObject.end !== null)
+	{
+		setClosedRoute(dijkstraInfoObject);
+	}
+	else
+	{
+		// Unknown nodes.
+	}
+	
 	return -1;
 }
 
 
-function defineDijkstraTable(nodeArray, sNode, eNode)
-{
-	var nodeIndex = 0;
-	var currentChar = "";
-	var currentRow = {};
-	
+function defineDijkstraTable()
+{	
 	var defineRes = {};
 	
 	defineRes["start"] = null;
 	defineRes["end"] = null;
 	defineRes["closed"] = false;
 	defineRes["nodes"] = [];
+	
+	return defineRes;
+}
+
+
+
+function setNodeTable(dsktraInfo, nodeArray, sNode, eNode)
+{
+	var nodeIndex = 0;
+	var currentChar = "";
+	var currentRow = {};
 	
 	for (nodeIndex = 0; nodeIndex < nodeArray.length; nodeIndex = nodeIndex + 1)
 	{
@@ -34,18 +52,23 @@ function defineDijkstraTable(nodeArray, sNode, eNode)
 		if (currentChar === sNode)
 		{
 			currentRow.distanceFromStart = 0;
-			defineRes.start = nodeIndex;
+			dsktraInfo.start = nodeIndex;
 		}
 		
 		if (currentChar === eNode)
 		{
-			defineRes.end = nodeIndex;
+			dsktraInfo.end = nodeIndex;
 		}
 		
-		defineRes.nodes.push(currentRow);
+		dsktraInfo.nodes.push(currentRow);
 	}
-	
-	return defineRes;
+}
+
+
+function setClosedRoute(dsktraInfo)
+{
+	var closeStatus = (dsktraInfo.start === dsktraInfo.end);
+	dsktraInfo.closed = closeStatus;
 }
 
 
