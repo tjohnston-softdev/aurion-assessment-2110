@@ -3,7 +3,7 @@ const graphTasks = require("./common/graph-tasks");
 
 function findShortestRoute(graphObject, startNode, endNode)
 {
-	var dijkstraInfoObject = defineDijkstraTable();
+	var dijkstraInfoObject = defineDijkstraInfo();
 	setNodeTable(dijkstraInfoObject, graphObject.nodes, startNode, endNode);
 	
 	if (dijkstraInfoObject.start !== null && dijkstraInfoObject.end !== null)
@@ -19,7 +19,7 @@ function findShortestRoute(graphObject, startNode, endNode)
 }
 
 
-function defineDijkstraTable()
+function defineDijkstraInfo()
 {	
 	var defineRes = {};
 	
