@@ -43,7 +43,7 @@ function performSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObj
 		iterateRoutes(prepNodes, graphObj.edges, stopCountCritObject, distanceCritObject, routeBacklog, completedRoutes);
 	}
 	
-	var searchRes = completedRoutes;
+	var searchRes = routeTasks.countValidRoutes(completedRoutes);
 	return searchRes;
 }
 

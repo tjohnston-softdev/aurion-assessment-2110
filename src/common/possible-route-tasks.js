@@ -50,7 +50,6 @@ function saveCompletedRoute(routeInd, routeObj, routeArr, compArr, routeValid)
 		completeDefinition.valid = routeValid;
 		compArr.push(completeDefinition);
 		saveSuccessful = true;
-		console.log(completeDefinition);
 	}
 	
 	return saveSuccessful;
@@ -76,6 +75,27 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 		currentNewRoute.distance += currentEdgeObject.distance;
 		routeArr.splice(currentInsertIndex, 0, currentNewRoute);
 	}
+}
+
+
+function countValidCompletedRoutes(compArr)
+{
+	var entryIndex = 0;
+	var currentEntry = {};
+	var countRes = 0;
+	
+	for (entryIndex = 0; entryIndex < compArr.length; entryIndex = entryIndex + 1)
+	{
+		currentEntry = compArr[entryIndex];
+		
+		if (currentEntry.valid === true)
+		{
+			countRes += 1;
+			console.log(currentEntry.route);
+		}
+	}
+	
+	return countRes;
 }
 
 
@@ -120,5 +140,6 @@ module.exports =
 	validateNodes: validateStartEndNodes,
 	initializeBacklog: initializeRouteBacklog,
 	saveComplete: saveCompletedRoute,
-	deriveNew: deriveNewRoutes
+	deriveNew: deriveNewRoutes,
+	countValidRoutes: countValidCompletedRoutes
 };
