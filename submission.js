@@ -2,6 +2,12 @@ const inputFile = require("./src/input-file");
 const parseGraph = require("./src/parse-graph");
 const exactRoute = require("./src/exact-route");
 const shortestRoute = require("./src/shortest-route");
+const possibleRoutes = require("./src/possible-routes");
+const routeCriteria = require("./src/common/route-criteria");
+const numSigns = require("./src/common/num-signs");
+
+const routeStopCriteria = routeCriteria.defineCriteria();
+const routeDistCriteria = routeCriteria.defineCriteria();
 
 runSubmission();
 
@@ -31,17 +37,17 @@ function runSubmission()
 	
 	if (parsedGraphObject.valid === true)
 	{
-		runExactRouteTestCases(parsedGraphObject, caseResultArray);
-		// 6-7
-		runShortestRouteTestCases(parsedGraphObject, caseResultArray);
-		// 10
+		callExactRouteTestCases(parsedGraphObject, caseResultArray);
+		callPossibleRouteByStopCountTestCases(parsedGraphObject, caseResultArray);
+		callShortestRouteTestCases(parsedGraphObject, caseResultArray);
+		// Test Case 10
 		//console.log(caseResultArray);
 	}
 }
 
 
 
-function runExactRouteTestCases(pGraphObj, resArr)
+function callExactRouteTestCases(pGraphObj, resArr)
 {
 	var case1 = exactRoute.getDistance(pGraphObj, "ABC");
 	var case2 = exactRoute.getDistance(pGraphObj, "AD");
@@ -53,7 +59,18 @@ function runExactRouteTestCases(pGraphObj, resArr)
 }
 
 
-function runShortestRouteTestCases(pGraphObj, resArr)
+function callPossibleRouteByStopCountTestCases(pGraphObj, resArr)
+{
+	var case6 = null;
+	var case7 = null;
+	
+	routeStopCriteria.sign = numSigns.LESS_EQUAL;
+	routeStopCriteria.number = 3;
+	case6 = possibleRoutes.findRoutes(pGraphObj, "C", "C", routeStopCriteria, null);
+}
+
+
+function callShortestRouteTestCases(pGraphObj, resArr)
 {
 	var case8 = shortestRoute.findRoute(pGraphObj, "A", "C");
 	var case9 = shortestRoute.findRoute(pGraphObj, "B", "B");
