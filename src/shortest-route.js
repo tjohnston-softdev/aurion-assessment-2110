@@ -10,7 +10,7 @@ function findShortestRoute(graphObject, startNode, endNode)
 	{
 		dsktraTasks.setClosed(dijkstraInfoObject);
 		visitStartNode(dijkstraInfoObject, graphObject);
-		//loopPathfinding(dijkstraInfoObject, graphObject);
+		loopPathfinding(dijkstraInfoObject, graphObject);
 	}
 	else
 	{
@@ -25,23 +25,26 @@ function visitStartNode(dsktraInfoObj, graphObj)
 {
 	var startID = dsktraInfoObj.start;
 	var startObj = dsktraInfoObj.nodes[startID];
-	var adjacentEdges = graphTasks.getAdjacentEdges(startID, graphObj.edges);
-	dsktraTasks.evaluateNodes(startID, 0, adjacentEdges, dsktraInfoObj, graphObj.edges);
+	var adjEdges = graphTasks.getAdjacentEdges(startID, graphObj.edges);
+	dsktraTasks.evaluateNodes(startID, 0, adjEdges, dsktraInfoObj, graphObj.edges);
 	startObj.visited = true;
-	console.log(dsktraInfoObj.nodes);
 }
 
 
 function loopPathfinding(dsktraInfoObj, graphObj)
 {
 	var currentVisitingNode = null;
-	var currentDestinationEdges = [];
+	var currentID = -1;
+	var currentDistance = -1;
+	var currentAdjEdges = [];
 	var canContinue = true;
 	
 	while (canContinue === true)
 	{
 		currentVisitingNode = null;
-		currentDestinationEdges = [];
+		currentID = -1;
+		currentDistance = -1;
+		currentAdjEdges = [];
 		
 		dsktraTasks.sortNodes(dsktraInfoObj.nodes);
 		currentVisitingNode = dsktraTasks.getVisitingNode(dsktraInfoObj.nodes);
@@ -49,9 +52,14 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 		if (currentVisitingNode !== null)
 		{
 			dsktraTasks.resetNodes(dsktraInfoObj.nodes);
-			currentDestinationEdges = graphTasks.getAdjacentEdges(currentVisitingNode.nodeID, graphObj.edges);
+			currentID = currentVisitingNode.nodeID;
+			currentDistance = currentVisitingNode.distanceFromStart;
+			currentAdjEdges = graphTasks.getAdjacentEdges(currentVisitingNode.nodeID, graphObj.edges);
+			dsktraTasks.evaluateNodes(currentID, currentDistance, currentAdjEdges, dsktraInfoObj, graphObj.edges);
+			currentVisitingNode.visited = true;
 		}
 		
+		console.log(dsktraInfoObj.nodes);
 		canContinue = false;
 	}
 }
