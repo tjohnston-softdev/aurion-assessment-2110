@@ -67,7 +67,17 @@ function callPossibleRouteByStopCountTestCases(pGraphObj, resArr)
 	routeStopCriteria.sign = numSigns.LESS_EQUAL;
 	routeStopCriteria.number = 3;
 	case6 = possibleRoutes.findRoutes(pGraphObj, "C", "C", routeStopCriteria, null);
-	console.log(case6);
+	
+	console.log("");
+	console.log("---");
+	console.log("");
+	
+	routeStopCriteria.sign = numSigns.EQUAL;
+	routeStopCriteria.number = 4;
+	case7 = possibleRoutes.findRoutes(pGraphObj, "A", "C", routeStopCriteria, null);
+	
+	console.log("");
+	console.log(case6, case7);
 }
 
 
