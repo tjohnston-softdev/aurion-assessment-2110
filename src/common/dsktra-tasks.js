@@ -30,7 +30,7 @@ function setNodeTable(dsktraInfo, nodeArray, sNode, eNode)
 		
 		if (currentChar === sNode)
 		{
-			currentRow.distanceFromStart = 0;
+			//currentRow.distanceFromStart = 0;
 			dsktraInfo.start = nodeIndex;
 		}
 		
@@ -55,7 +55,7 @@ function sortNodeTable(tblObj)
 {
 	tblObj.sort(function (a,b)
 	{
-		return a.visited - b.visited || a.distanceFromStart - b.distanceFromStart;
+		return a.distanceFromStart - b.distanceFromStart;
 	});
 }
 
@@ -91,6 +91,35 @@ function getCurrentVisitingNode(tblObj)
 }
 
 
+function evaluateAdjacentNodes(baseID, baseDist, possibleEdges, dsktraInfo, edgeArray)
+{
+	var adjacentIndex = 0;
+	var currentEdgeID = -1;
+	var currentEdgeObject = {};
+	var currentNodeID = -1;
+	var currentNodeObject = {};
+	var currentOldDist = -1;
+	var currentNewDist = -1;
+	
+	for (adjacentIndex = 0; adjacentIndex < possibleEdges.length; adjacentIndex = adjacentIndex + 1)
+	{
+		currentEdgeID = possibleEdges[adjacentIndex];
+		currentEdgeObject = edgeArray[currentEdgeID];
+		currentNodeID = currentEdgeObject.destination;
+		currentNodeObject = dsktraInfo.nodes[currentNodeID];
+		currentOldDist = currentNodeObject.distanceFromStart;
+		currentNewDist = baseDist + currentEdgeObject.distance;
+		currentUpdate = false;
+		
+		if (currentNewDist < currentOldDist)
+		{
+			currentNodeObject.distanceFromStart = currentNewDist;
+			currentNodeObject.previous = baseID
+		}
+	}
+}
+
+
 
 module.exports =
 {
@@ -99,5 +128,6 @@ module.exports =
 	setClosed: setClosedRoute,
 	sortNodes: sortNodeTable,
 	resetNodes: resetNodeTable,
-	getVisitingNode: getCurrentVisitingNode
+	getVisitingNode: getCurrentVisitingNode,
+	evaluateNodes: evaluateAdjacentNodes
 };

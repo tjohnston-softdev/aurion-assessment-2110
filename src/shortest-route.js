@@ -9,7 +9,8 @@ function findShortestRoute(graphObject, startNode, endNode)
 	if (dijkstraInfoObject.start !== null && dijkstraInfoObject.end !== null)
 	{
 		dsktraTasks.setClosed(dijkstraInfoObject);
-		loopPathfinding(dijkstraInfoObject, graphObject);
+		visitStartNode(dijkstraInfoObject, graphObject);
+		//loopPathfinding(dijkstraInfoObject, graphObject);
 	}
 	else
 	{
@@ -17,6 +18,17 @@ function findShortestRoute(graphObject, startNode, endNode)
 	}
 	
 	return -1;
+}
+
+
+function visitStartNode(dsktraInfoObj, graphObj)
+{
+	var startID = dsktraInfoObj.start;
+	var startObj = dsktraInfoObj.nodes[startID];
+	var adjacentEdges = graphTasks.getAdjacentEdges(startID, graphObj.edges);
+	dsktraTasks.evaluateNodes(startID, 0, adjacentEdges, dsktraInfoObj, graphObj.edges);
+	startObj.visited = true;
+	console.log(dsktraInfoObj.nodes);
 }
 
 
@@ -38,13 +50,6 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 		{
 			dsktraTasks.resetNodes(dsktraInfoObj.nodes);
 			currentDestinationEdges = graphTasks.getAdjacentEdges(currentVisitingNode.nodeID, graphObj.edges);
-			
-			console.log("");
-			console.log("All Edges:");
-			console.log(graphObj.edges);
-			console.log("");
-			console.log("Node: ", currentVisitingNode.nodeID);
-			console.log("Dests: ", currentDestinationEdges);
 		}
 		
 		canContinue = false;
