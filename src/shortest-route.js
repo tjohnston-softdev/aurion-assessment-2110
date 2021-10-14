@@ -37,6 +37,8 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 	var currentID = -1;
 	var currentDistance = -1;
 	var currentAdjEdges = [];
+	
+	var iterationsMade = 1;
 	var canContinue = true;
 	
 	while (canContinue === true)
@@ -49,6 +51,8 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 		dsktraTasks.sortNodes(dsktraInfoObj.nodes);
 		currentVisitingNode = dsktraTasks.getVisitingNode(dsktraInfoObj.nodes);
 		
+		iterationsMade += 1;
+		
 		if (currentVisitingNode !== null)
 		{
 			dsktraTasks.resetNodes(dsktraInfoObj.nodes);
@@ -59,8 +63,11 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 			currentVisitingNode.visited = true;
 		}
 		
-		console.log(dsktraInfoObj.nodes);
-		canContinue = false;
+		if (iterationsMade === 5)
+		{
+			console.log(dsktraInfoObj.nodes);
+			canContinue = false;
+		}
 	}
 }
 
