@@ -95,6 +95,10 @@ function countValidCompletedRoutes(compArr)
 		}
 	}
 	
+	console.log("");
+	console.log("---");
+	console.log("");
+	
 	return countRes;
 }
 
