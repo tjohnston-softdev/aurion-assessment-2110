@@ -91,13 +91,8 @@ function countValidCompletedRoutes(compArr)
 		if (currentEntry.valid === true)
 		{
 			countRes += 1;
-			console.log(currentEntry.route);
 		}
 	}
-	
-	console.log("");
-	console.log("---");
-	console.log("");
 	
 	return countRes;
 }

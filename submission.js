@@ -92,6 +92,6 @@ function callPossibleRouteByDistanceTestCase(pGraphObj, resArr)
 	routeDistCriteria.number = 30;
 	case10 = possibleRoutes.findRoutes(pGraphObj, "C", "C", null, routeDistCriteria);
 	
-	console.log("");
 	console.log(case10);
+	resArr.push(case10);
 }
