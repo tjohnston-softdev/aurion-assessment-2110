@@ -41,7 +41,8 @@ function runSubmission()
 		callPossibleRouteByStopCountTestCases(parsedGraphObject, caseResultArray);
 		callShortestRouteTestCases(parsedGraphObject, caseResultArray);
 		callPossibleRouteByDistanceTestCase(parsedGraphObject, caseResultArray)
-		//console.log(caseResultArray);
+		
+		console.log(caseResultArray);
 	}
 }
 
@@ -92,6 +93,5 @@ function callPossibleRouteByDistanceTestCase(pGraphObj, resArr)
 	routeDistCriteria.number = 30;
 	case10 = possibleRoutes.findRoutes(pGraphObj, "C", "C", null, routeDistCriteria);
 	
-	console.log(case10);
 	resArr.push(case10);
 }
