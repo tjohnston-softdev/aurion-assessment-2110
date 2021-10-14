@@ -40,7 +40,7 @@ function runSubmission()
 		callExactRouteTestCases(parsedGraphObject, caseResultArray);
 		callPossibleRouteByStopCountTestCases(parsedGraphObject, caseResultArray);
 		callShortestRouteTestCases(parsedGraphObject, caseResultArray);
-		// Test Case 10
+		callPossibleRouteByDistanceTestCase(parsedGraphObject, caseResultArray)
 		//console.log(caseResultArray);
 	}
 }
@@ -68,16 +68,11 @@ function callPossibleRouteByStopCountTestCases(pGraphObj, resArr)
 	routeStopCriteria.number = 3;
 	case6 = possibleRoutes.findRoutes(pGraphObj, "C", "C", routeStopCriteria, null);
 	
-	console.log("");
-	console.log("---");
-	console.log("");
-	
 	routeStopCriteria.sign = numSigns.EQUAL;
 	routeStopCriteria.number = 4;
 	case7 = possibleRoutes.findRoutes(pGraphObj, "A", "C", routeStopCriteria, null);
 	
-	console.log("");
-	console.log(case6, case7);
+	resArr.push(case6, case7);
 }
 
 
@@ -85,6 +80,18 @@ function callShortestRouteTestCases(pGraphObj, resArr)
 {
 	var case8 = shortestRoute.findRoute(pGraphObj, "A", "C");
 	var case9 = shortestRoute.findRoute(pGraphObj, "B", "B");
+	resArr.push(case8, case9);
+}
+
+
+function callPossibleRouteByDistanceTestCase(pGraphObj, resArr)
+{
+	var case10 = null;
 	
-	//resArr.push(case8, case9);
+	routeDistCriteria.sign = numSigns.LESS;
+	routeDistCriteria.number = 30;
+	case10 = possibleRoutes.findRoutes(pGraphObj, "C", "C", null, routeDistCriteria);
+	
+	console.log("");
+	console.log(case10);
 }

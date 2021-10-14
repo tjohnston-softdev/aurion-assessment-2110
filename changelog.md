@@ -1,8 +1,16 @@
 # Changelog
 
-**./submission.js - callPossibleRouteByStopCountTestCases**
-* Wrote test case #7
-* Console output consists of:
-	* Valid routes for cass #6
-	* Valid routes for case #7
-	* Number of valid routes for both #6 and #7
+**./submission.js**
+* Uncommented `resArr.push` in 'callShortestRouteTestCases'
+* Changes to 'callPossibleRouteByStopCountTestCases'
+	* Removed console output.
+	* Push output variables to 'resArr'
+* Wrote new function 'callPossibleRouteByDistanceTestCase'
+	* Runs test case #10
+	* Called from 'runSubmission'
+* Console output from case #10
+	* Valid routes.
+	* Number of valid routes.
+* Result:
+	* Number output is correct.
+	* Chosen routes may be glitched.
