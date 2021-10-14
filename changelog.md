@@ -1,7 +1,9 @@
 # Changelog
 
 **./src/shortest-route.js - loopPathfinding**
-* Declared 'iterationsMade' variable.
-	* Counts total number of iterations.
-	* Loop aborts after fifth iteration.
-* On loop abort, display Nodes table.
+* Removed 'iterationsMade' variable.
+* Removed `if (iterationsMade === 5)` structure.
+* Loop will abort when all nodes have been visited.
+* After loop finishes:
+	* Reset node sort order.
+	* Display nodes table.
