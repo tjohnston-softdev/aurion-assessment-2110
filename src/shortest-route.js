@@ -4,20 +4,22 @@ const dsktraTasks = require("./common/dsktra-tasks");
 function findShortestRoute(graphObject, startNode, endNode)
 {
 	var dijkstraInfoObject = dsktraTasks.defineInfo();
+	var shortRouteRes = null;
+	
 	dsktraTasks.setNodes(dijkstraInfoObject, graphObject.nodes, startNode, endNode);
 	
 	if (dijkstraInfoObject.start !== null && dijkstraInfoObject.end !== null)
 	{
-		dsktraTasks.setClosed(dijkstraInfoObject);
 		visitStartNode(dijkstraInfoObject, graphObject);
-		loopPathfinding(dijkstraInfoObject, graphObject);
+		visitOtherNodes(dijkstraInfoObject, graphObject);
+		shortRouteRes = checkRouteSuccessful(dijkstraInfoObject);
 	}
 	else
 	{
-		// Unknown nodes.
+		shortRouteRes = "UNKNOWN NODES";
 	}
 	
-	return -1;
+	return shortRouteRes;
 }
 
 
@@ -31,7 +33,7 @@ function visitStartNode(dsktraInfoObj, graphObj)
 }
 
 
-function loopPathfinding(dsktraInfoObj, graphObj)
+function visitOtherNodes(dsktraInfoObj, graphObj)
 {
 	var currentVisitingNode = null;
 	var currentID = -1;
@@ -69,6 +71,25 @@ function loopPathfinding(dsktraInfoObj, graphObj)
 	console.log(dsktraInfoObj.nodes);
 }
 
+function checkRouteSuccessful(dsktraInfoObj)
+{
+	var endID = dsktraInfoObj.end;
+	var endObj = dsktraInfoObj.nodes[endID];
+	var distVal = endObj.distanceFromStart;
+	var distSet = Number.isInteger(distVal);
+	var checkRes = null;
+	
+	if (distSet === true && endObj.visited === true)
+	{
+		checkRes = distVal;
+	}
+	else
+	{
+		checkRes = "NO SUCH ROUTE";
+	}
+	
+	return checkRes;
+}
 
 
 

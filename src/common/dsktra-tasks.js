@@ -4,7 +4,6 @@ function defineDijkstraInfo()
 	
 	defineRes["start"] = null;
 	defineRes["end"] = null;
-	defineRes["closedRoute"] = false;
 	defineRes["nodes"] = [];
 	
 	return defineRes;
@@ -30,7 +29,6 @@ function setNodeTable(dsktraInfo, nodeArray, sNode, eNode)
 		
 		if (currentChar === sNode)
 		{
-			//currentRow.distanceFromStart = 0;
 			dsktraInfo.start = nodeIndex;
 		}
 		
@@ -41,13 +39,6 @@ function setNodeTable(dsktraInfo, nodeArray, sNode, eNode)
 		
 		dsktraInfo.nodes.push(currentRow);
 	}
-}
-
-
-function setClosedRoute(dsktraInfo)
-{
-	var nodesMatch = (dsktraInfo.start === dsktraInfo.end);
-	dsktraInfo.closedRoute = nodesMatch;
 }
 
 
@@ -125,7 +116,6 @@ module.exports =
 {
 	defineInfo: defineDijkstraInfo,
 	setNodes: setNodeTable,
-	setClosed: setClosedRoute,
 	sortNodes: sortNodeTable,
 	resetNodes: resetNodeTable,
 	getVisitingNode: getCurrentVisitingNode,
