@@ -68,7 +68,6 @@ function visitOtherNodes(dsktraInfoObj, graphObj)
 	}
 	
 	dsktraTasks.resetNodes(dsktraInfoObj.nodes);
-	console.log(dsktraInfoObj.nodes);
 }
 
 function checkRouteSuccessful(dsktraInfoObj)

@@ -56,9 +56,8 @@ function runExactRouteTestCases(pGraphObj, resArr)
 function runShortestRouteTestCases(pGraphObj, resArr)
 {
 	var case8 = shortestRoute.findRoute(pGraphObj, "A", "C");
-	console.log("");
-	console.log(case8);
+	var case9 = shortestRoute.findRoute(pGraphObj, "B", "B");
+	console.log(case8, case9);
 	
-	//var case9 = shortestRoute.findRoute(pGraphObj, "B", "B");
 	//resArr.push(case8, case9);
 }
