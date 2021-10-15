@@ -21,7 +21,7 @@ function getRouteDistance(graphObject, pathString)
 	else
 	{
 		// Invalid type.
-		resultValue = "PATH MUST BE A VALID ARRAY";
+		resultValue = "PATH MUST BE A VALID STRING";
 	}
 	
 	return resultValue;

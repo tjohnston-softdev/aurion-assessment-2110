@@ -1,3 +1,4 @@
 # Changelog
 
-Tests execute successfully (2021-10-15 11:55)
+**./src/exact-route.js**
+* Corrected invalid type message from "array" to "string"
