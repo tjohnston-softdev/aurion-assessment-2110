@@ -1,3 +1,4 @@
 # Changelog
 
-Wrote readme contents.
+**./instructions.md**
+* Replaced ASCII bullet points with unicode. (* ---> •)
