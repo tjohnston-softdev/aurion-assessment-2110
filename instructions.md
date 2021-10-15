@@ -25,25 +25,25 @@ For test cases 6, 7, and 10, output the number of possible routes meeting the gi
 5. The distance of the route A-E-D.
 
 6. The number of trips starting at C and ending at C with a maximum of 3 stops. In the sample data below, there are two such trips:  
-\• C-D-C (2 stops)  
-\• C-E-B-C (3 stops)
+• C-D-C (2 stops)  
+• C-E-B-C (3 stops)
 
 7. The number of trips starting at A and ending at C with exactly 4 stops. In the sample data below, there are three such trips:  
-\• A-B-C-D-C  
-\• A-D-C-D-C  
-\• A-D-E-B-C
+• A-B-C-D-C  
+• A-D-C-D-C  
+• A-D-E-B-C
 
 8. The length of the shortest route (in terms of distance to travel) from A to C.
 9. The length of the shortest route (in terms of distance to travel) from B to B.
 
 10. The number of different routes from C to C with a distance of less than 30. In the sample data, the trips are:  
-\• C-D-C  
-\• C-E-B-C  
-\• C-E-B-C-D-C  
-\• C-D-C-E-B-C  
-\• C-D-E-B-C  
-\• C-E-B-C-E-B-C  
-\• C-E-B-C-E-B-C-E-B-C
+• C-D-C  
+• C-E-B-C  
+• C-E-B-C-D-C  
+• C-D-C-E-B-C  
+• C-D-E-B-C  
+• C-E-B-C-E-B-C  
+• C-E-B-C-E-B-C-E-B-C
 
 #### Test Input
 
