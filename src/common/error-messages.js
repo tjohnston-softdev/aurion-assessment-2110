@@ -2,14 +2,14 @@ function displayFileSystemErrorText(vAction, vErrorObject)
 {
 	var flaggedMessage = extractFileSystemError(vErrorObject.message);
 	var dispTxt = prepareFileSystemError(vAction, flaggedMessage);
-	console.log(dispTxt);
+	outputToConsole(dispTxt);
 }
 
 
 function displayInputFileErrorText(vContext)
 {
 	var dispTxt = "Input file " + vContext;
-	console.log(dispTxt);
+	outputToConsole(dispTxt);
 }
 
 
@@ -21,7 +21,7 @@ function displayGraphSyntaxErrorText()
 	dispTxt += "Input must follow the format:\r\n";
 	dispTxt += "'AB5, BC4, CD8, [etc]'";
 	
-	console.log(dispTxt);
+	outputToConsole(dispTxt);
 }
 
 
@@ -40,6 +40,12 @@ function prepareFileSystemError(actionPart, reasonPart)
 {
 	var prepRes = ["Could not successfully ", actionPart, " input file - ", reasonPart, "."].join("");
 	return prepRes;
+}
+
+
+function outputToConsole(oText)
+{
+	console.log("ERROR:", oText);
 }
 
 
