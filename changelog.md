@@ -1,4 +1,6 @@
 # Changelog
 
-**./src/exact-route.js**
-* Corrected invalid type message from "array" to "string"
+**./instructions.md**
+* New file
+	* Assessment instructions interpreted as markdown.
+	* Personal implementation details.
