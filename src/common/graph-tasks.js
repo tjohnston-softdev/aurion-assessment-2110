@@ -44,6 +44,12 @@ function addEdgeObject(originID, destID, distNum, edgeArray)
 }
 
 
+function getUnknownNodesTextString()
+{
+	return "UNKNOWN NODES";
+}
+
+
 function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 {
 	var existIndex = 0;
@@ -92,6 +98,7 @@ module.exports =
 	defineGraph: defineGraphObject,
 	addNode: addNodeDefinition,
 	addEdge: addEdgeObject,
+	getUnknownNodesText: getUnknownNodesTextString,
 	getEdge: getExistingEdge,
 	getAdjacentEdges: getAdjacentEdgesByNode
 };

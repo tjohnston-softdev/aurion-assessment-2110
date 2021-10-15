@@ -26,7 +26,7 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 	}
 	else
 	{
-		possibleRes = "UNKNOWN NODES";
+		possibleRes = graphTasks.getUnknownNodesText();
 	}
 	
 	return possibleRes;

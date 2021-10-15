@@ -16,7 +16,7 @@ function findShortestRoute(graphObject, startNode, endNode)
 	}
 	else
 	{
-		shortRouteRes = "UNKNOWN NODES";
+		shortRouteRes = graphTasks.getUnknownNodesText();
 	}
 	
 	return shortRouteRes;
