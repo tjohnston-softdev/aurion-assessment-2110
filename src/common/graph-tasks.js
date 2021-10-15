@@ -1,15 +1,19 @@
+// Common graph functions.
+
+// Graph object.
 function defineGraphObject()
 {
 	var defineRes = {};
 	
-	defineRes["nodes"] = [];
-	defineRes["edges"] = [];
-	defineRes["valid"] = false;
+	defineRes["nodes"] = [];				// Node array.
+	defineRes["edges"] = [];				// Edge array.
+	defineRes["valid"] = false;				// Parse valid.
 	
 	return defineRes;
 }
 
 
+// Add or retrieve graph node.
 function addNodeDefinition(tgtChar, nodeArray)
 {
 	var matchIndex = nodeArray.indexOf(tgtChar);
@@ -17,10 +21,12 @@ function addNodeDefinition(tgtChar, nodeArray)
 	
 	if (matchIndex >= 0 && matchIndex < nodeArray.length)
 	{
+		// Already exists.
 		resultID = matchIndex;
 	}
 	else
 	{
+		// Add to graph.
 		nodeArray.push(tgtChar);
 		resultID = nodeArray.length - 1;
 	}
@@ -29,10 +35,12 @@ function addNodeDefinition(tgtChar, nodeArray)
 }
 
 
+// Add edge between nodes.
 function addEdgeObject(originID, destID, distNum, edgeArray)
 {
 	var newEdge = {};
 	
+	// Nodes cannot be the same.
 	if (originID !== destID)
 	{
 		newEdge["origin"] = originID;
@@ -44,12 +52,14 @@ function addEdgeObject(originID, destID, distNum, edgeArray)
 }
 
 
+// 'Unknown Nodes' output string.
 function getUnknownNodesTextString()
 {
 	return "UNKNOWN NODES";
 }
 
 
+// Search for existing graph edge.
 function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 {
 	var existIndex = 0;
@@ -60,8 +70,10 @@ function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 	{
 		currentObject = edgeArray[existIndex];
 		
+		// Origin and destination nodes must match exactly.
 		if (currentObject.origin === tgtOrigin && currentObject.destination === tgtDest)
 		{
+			// Match found, return edge object.
 			edgeRes = currentObject;
 		}
 		
@@ -72,6 +84,7 @@ function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 }
 
 
+// Get possible destination edges from origin node.
 function getAdjacentEdgesByNode(tgtOrigin, edgeArray)
 {
 	var edgeIndex = 0;
@@ -84,6 +97,7 @@ function getAdjacentEdgesByNode(tgtOrigin, edgeArray)
 		
 		if (currentObject.origin === tgtOrigin)
 		{
+			// Add edge index to result list.
 			adjacentRes.push(edgeIndex);
 		}
 	}

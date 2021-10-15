@@ -1,3 +1,10 @@
+/*
+	Aurion assessment submission.
+	Tyrone Johnston
+	15 October 2021
+*/
+
+
 const inputFile = require("./src/input-file");
 const parseGraph = require("./src/parse-graph");
 const exactRoute = require("./src/exact-route");
@@ -12,10 +19,11 @@ const routeDistCriteria = routeCriteria.defineCriteria();
 
 runSubmission();
 
+// Main function.
 function runSubmission()
 {
-	var enteredPath = inputFile.readPathArg(process.argv);
-	var inpEntry = inputFile.getEntry(enteredPath);
+	var enteredPath = inputFile.readPathArg(process.argv);			// Read file path argument.
+	var inpEntry = inputFile.getEntry(enteredPath);					// Check if file exists.
 	var inpValid = false;
 	var inpContents = "";
 	var parsedGraphObject = null;
@@ -23,32 +31,38 @@ function runSubmission()
 	
 	if (inpEntry.retrieved === true)
 	{
+		// Validate input file size.
 		inpValid = inputFile.validateEntry(inpEntry);
 	}
 	
 	if (inpValid === true)
 	{
+		// Read input file contents.
 		inpContents = inputFile.readContents(enteredPath);
 	}
 	
 	if (inpContents !== null)
 	{
+		// Parse input into graph.
 		parsedGraphObject = parseGraph.performParsing(inpContents);
 	}
 	
 	if (parsedGraphObject.valid === true)
 	{
+		// Perform tests.
 		callExactRouteTestCases(parsedGraphObject, caseResultArray);
 		callPossibleRouteByStopCountTestCases(parsedGraphObject, caseResultArray);
 		callShortestRouteTestCases(parsedGraphObject, caseResultArray);
 		callPossibleRouteByDistanceTestCase(parsedGraphObject, caseResultArray)
 		
+		// Output results to console.
 		resultDisplay.outputToConsole(caseResultArray);
 	}
 }
 
 
 
+// Runs test cases for exact routes: 1-5
 function callExactRouteTestCases(pGraphObj, resArr)
 {
 	var case1 = exactRoute.getDistance(pGraphObj, "ABC");
@@ -61,15 +75,18 @@ function callExactRouteTestCases(pGraphObj, resArr)
 }
 
 
+// Runs test cases for possible routes by stop count: 6-7
 function callPossibleRouteByStopCountTestCases(pGraphObj, resArr)
 {
 	var case6 = null;
 	var case7 = null;
 	
+	// Case #6
 	routeStopCriteria.sign = numSigns.LESS_EQUAL;
 	routeStopCriteria.number = 3;
 	case6 = possibleRoutes.findRoutes(pGraphObj, "C", "C", routeStopCriteria, null);
 	
+	// Case #7
 	routeStopCriteria.sign = numSigns.EQUAL;
 	routeStopCriteria.number = 4;
 	case7 = possibleRoutes.findRoutes(pGraphObj, "A", "C", routeStopCriteria, null);
@@ -78,6 +95,7 @@ function callPossibleRouteByStopCountTestCases(pGraphObj, resArr)
 }
 
 
+// Runs test cases for shortest routes: 8-9
 function callShortestRouteTestCases(pGraphObj, resArr)
 {
 	var case8 = shortestRoute.findRoute(pGraphObj, "A", "C");
@@ -86,6 +104,7 @@ function callShortestRouteTestCases(pGraphObj, resArr)
 }
 
 
+// Runs test case for possible routes by max distance: 10
 function callPossibleRouteByDistanceTestCase(pGraphObj, resArr)
 {
 	var case10 = null;

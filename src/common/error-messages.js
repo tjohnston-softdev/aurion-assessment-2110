@@ -1,3 +1,7 @@
+// Error message text functions.
+
+
+// File system action.
 function displayFileSystemErrorText(vAction, vErrorObject)
 {
 	var flaggedMessage = extractFileSystemError(vErrorObject.message);
@@ -6,6 +10,7 @@ function displayFileSystemErrorText(vAction, vErrorObject)
 }
 
 
+// Input file.
 function displayInputFileErrorText(vContext)
 {
 	var dispTxt = "Input file " + vContext;
@@ -13,6 +18,7 @@ function displayInputFileErrorText(vContext)
 }
 
 
+// Graph syntax.
 function displayGraphSyntaxErrorText()
 {
 	var dispTxt = "";
@@ -25,6 +31,7 @@ function displayGraphSyntaxErrorText()
 }
 
 
+// Reads message text from 'fs' error object.
 function extractFileSystemError(fullMsg)
 {
 	var colonIndex = fullMsg.indexOf(": ");
@@ -36,6 +43,7 @@ function extractFileSystemError(fullMsg)
 }
 
 
+// Writes full error text for file system action.
 function prepareFileSystemError(actionPart, reasonPart)
 {
 	var prepRes = ["Could not successfully ", actionPart, " input file - ", reasonPart, "."].join("");
@@ -43,6 +51,7 @@ function prepareFileSystemError(actionPart, reasonPart)
 }
 
 
+// Display message to console.
 function outputToConsole(oText)
 {
 	console.log("ERROR:", oText);

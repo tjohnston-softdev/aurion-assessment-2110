@@ -1,3 +1,4 @@
+// Output test results to console.
 function outputResultsToConsole(resultArray)
 {
 	var caseIndex = 0;

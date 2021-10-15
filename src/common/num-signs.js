@@ -1,3 +1,10 @@
+/*
+	Criteria number signs.
+	Used for criteria when searching for all possible routes.
+	eg. Distance is LESS than 30
+*/
+
+
 function defineOptions()
 {
 	var defineRes = {};

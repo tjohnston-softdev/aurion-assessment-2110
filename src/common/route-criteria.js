@@ -1,3 +1,7 @@
+// Route criteria object.
+
+
+// Constructor.
 function defineRouteCriteria(crNumber, crSign)
 {
 	var defineRes = {"number": crNumber, "sign": crSign};
@@ -6,6 +10,7 @@ function defineRouteCriteria(crNumber, crSign)
 
 
 
+// Validate object.
 function validateRouteCriteria(givenObject)
 {
 	var valueType = typeof givenObject;
@@ -13,14 +18,17 @@ function validateRouteCriteria(givenObject)
 	
 	if (givenObject !== null && valueType === "object")
 	{
+		// Check properties.
 		validationResult = handleCriteriaObject(givenObject);
 	}
 	else if (givenObject !== null)
 	{
+		// Invalid type.
 		validationResult = false;
 	}
 	else
 	{
+		// Empty.
 		validationResult = true;
 	}
 	
@@ -28,6 +36,7 @@ function validateRouteCriteria(givenObject)
 }
 
 
+// Check object properties.
 function handleCriteriaObject(criteriaObj)
 {
 	var numberVal = criteriaObj.number;
@@ -36,6 +45,7 @@ function handleCriteriaObject(criteriaObj)
 	
 	var handleRes = false;
 	
+	// Criteria number must be positive.
 	if (correctNumType === true && correctSignType === true && numberVal > 0)
 	{
 		handleRes = true;
