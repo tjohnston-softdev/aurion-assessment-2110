@@ -3,6 +3,7 @@ const parseGraph = require("./src/parse-graph");
 const exactRoute = require("./src/exact-route");
 const shortestRoute = require("./src/shortest-route");
 const possibleRoutes = require("./src/possible-routes");
+const resultDisplay = require("./src/result-display");
 const routeCriteria = require("./src/common/route-criteria");
 const numSigns = require("./src/common/num-signs");
 
@@ -42,7 +43,7 @@ function runSubmission()
 		callShortestRouteTestCases(parsedGraphObject, caseResultArray);
 		callPossibleRouteByDistanceTestCase(parsedGraphObject, caseResultArray)
 		
-		console.log(caseResultArray);
+		resultDisplay.outputToConsole(caseResultArray);
 	}
 }
 
