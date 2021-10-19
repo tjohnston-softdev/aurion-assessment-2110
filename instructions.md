@@ -108,8 +108,6 @@ We would like to see:
 * Recursive edges (eg. A to A) will be ignored without error.
 * There is no hard limit on edge distance but if it cannot be interpreted as a positive whole number, it will be ignored without error.
 
----
-
 #### Pathfinding
 
 * Exact routes:
