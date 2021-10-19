@@ -1,3 +1,3 @@
 # Changelog
 
-Public Commit
+Opened 'updates' branch
