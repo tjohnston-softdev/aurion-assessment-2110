@@ -54,7 +54,8 @@ function prepareFileSystemError(actionPart, reasonPart)
 // Display message to console.
 function outputToConsole(oText)
 {
-	console.log("ERROR:", oText);
+	//console.log("ERROR:", oText);
+	throw new Error(oText);
 }
 
 
