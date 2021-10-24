@@ -1,0 +1,19 @@
+{
+  "name": "aurion-assessment-2110",
+  "version": "0.0.0",
+  "description": "This is my submission for a technical assessment as part of a software developer position I applied for with [Aurion](https://aurion.com/). The challenge was to examine a rail network in an imaginary city represented as a weighted graph, and implement various pathfinding algorithms to fulfil different test cases. The cases consisted of following an exact route, finding all possible paths between stops under certain criteria, and finding the shortest path between stops.",
+  "main": "submission.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjohnston-softdev/aurion-assessment-2110.git"
+  },
+  "author": "Tyrone Johnston",
+  "license": "CC-BY-4.0",
+  "bugs": {
+    "url": "https://github.com/tjohnston-softdev/aurion-assessment-2110/issues"
+  },
+  "homepage": "https://github.com/tjohnston-softdev/aurion-assessment-2110#readme"
+}
