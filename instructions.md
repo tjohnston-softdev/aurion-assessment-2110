@@ -115,10 +115,12 @@ We would like to see:
 	* This string must have at least two characters.
 	* Messages are output for invalid input.
 	* If the route is not possible or a node does not exist, output "NO SUCH ROUTE"
+	* Successful output is the distance of the given route.
 * Shortest path:
 	* Implemented using Dijkstra's algorithm.
 	* If the start or end nodes are missing, output message.
 	* If the end node was not visited, the algorithm was unsuccessful.
+	* Successful output is the distance of the calculated route.
 * Possible routes:
 	* Supports criteria for 'number of stops' and 'total distance'
 	* If the start or end nodes are missing, output message.
@@ -127,10 +129,11 @@ We would like to see:
 	* If the end node is visited at *any* point, it is a completed route and will be saved.
 	* A complete route is valid if the criteria is met and has at least one stop.
 	* *All* completed routes are saved to prevent duplication but only valid routes will be counted for the end result.
+	* Successful output is the number of possible routes found, even if it is zero.
 
 #### Output
 
-* Values for each test case are displayed to console same as above.
+* Values for each test case are displayed to the console, same as above.
 * Only the actual values are displayed. I thought implementing a full unit test suite would be a little excessive.
 
 ----
