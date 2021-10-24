@@ -3,6 +3,10 @@ const chai = require("chai");
 const expect = chai.expect;
 const inputFile = require("../src/input-file");
 
+const validFilePath = "./submission.js";
+const invalidFilePath = "./unknown.txt";
+const unknownErrorText = "- no such file or directory.";
+
 
 function runTests()
 {
@@ -10,6 +14,8 @@ function runTests()
 	{
 		handleArgumentFunction();
 		handleGetFileEntry();
+		handleValidateFileEntry();
+		handleReadFile();
 	});
 }
 
@@ -23,21 +29,21 @@ function handleArgumentFunction()
 		it("Valid Entry", function()
 		{
 			var enteredPath = "./example-file.txt";
-			var argArray = getArgumentsObject(enteredPath);
+			var argArray = defineArgsObject(enteredPath);
 			var resultValue = inputFile.readPathArg(argArray);
 			expect(resultValue).to.equal(enteredPath);
 		});
 		
 		it("Empty String", function()
 		{
-			var argArray = getArgumentsObject("");
+			var argArray = defineArgsObject("");
 			var resultValue = inputFile.readPathArg(argArray);
 			expect(resultValue).to.equal(defaultValue);
 		});
 		
 		it("Invalid Argument Type", function()
 		{
-			var argArray = getArgumentsObject(-1);
+			var argArray = defineArgsObject(-1);
 			var resultValue = inputFile.readPathArg(argArray);
 			expect(resultValue).to.equal(defaultValue);
 		});
@@ -65,7 +71,7 @@ function handleGetFileEntry()
 	{
 		it("Valid File Path", function()
 		{
-			var resultValue = inputFile.getEntry("./submission.js");
+			var resultValue = inputFile.getEntry(validFilePath);
 			checkEntry(resultValue, true);
 			checkFileSize(resultValue.sizeBytes);
 		});
@@ -86,9 +92,73 @@ function handleGetFileEntry()
 }
 
 
-function getArgumentsObject(pthVal)
+function handleValidateFileEntry()
+{
+	describe("Validate Input File Entry", function()
+	{
+		it("Valid Entry", function()
+		{
+			var givenObject = defineRetrievedEntry(true, 50);
+			var resultValue = inputFile.validateEntry(givenObject);
+			expect(resultValue).to.be.true;
+		});
+		
+		it("Too Large", function()
+		{
+			var givenObject = defineRetrievedEntry(true, Number.POSITIVE_INFINITY);
+			callInvalidEntry(givenObject, "cannot be larger than 10kb.");
+		});
+		
+		it("Empty", function()
+		{
+			var givenObject = defineRetrievedEntry(true, 0);
+			callInvalidEntry(givenObject, "cannot be empty.");
+		});
+		
+		it("Directory", function()
+		{
+			var givenObject = defineRetrievedEntry(false, 0);
+			callInvalidEntry(givenObject, "path actually refers to a directory.");
+		});
+	});
+}
+
+
+function handleReadFile()
+{
+	describe("Read Contents", function()
+	{
+		it("File", function()
+		{
+			var resultValue = inputFile.readContents(validFilePath);
+			expect(resultValue).to.be.a("string");
+			expect(resultValue.length).to.be.above(0);
+		});
+		
+		it("Folder", function()
+		{
+			callInvalidRead(".", "- illegal operation on a directory.");
+		});
+		
+		it("Unknown", function()
+		{
+			callInvalidRead(invalidFilePath, unknownErrorText);
+		});
+		
+	});
+}
+
+
+function defineArgsObject(pthVal)
 {
 	var objectRes = [null, null, pthVal];
+	return objectRes;
+}
+
+
+function defineRetrievedEntry(corrType, sBytes)
+{
+	var objectRes = {"retrieved": true, "correctType": corrType, "sizeBytes": sBytes};
 	return objectRes;
 }
 
@@ -100,18 +170,59 @@ function callUnknownFile()
 	
 	try
 	{
-		inputFile.getEntry("./unknown.txt");
+		inputFile.getEntry(invalidFilePath);
 		fileRetrieved = true;
 	}
 	catch(fsErr)
 	{
 		fileRetrieved = false;
-		correctError = fsErr.message.endsWith("- no such file or directory.");
+		correctError = fsErr.message.endsWith(unknownErrorText);
 	}
 	
 	expect(fileRetrieved).to.be.false;
 	expect(correctError).to.be.true;
 	
+}
+
+
+function callInvalidEntry(entryObj, desiredMessage)
+{
+	var entryValid = false;
+	var correctError = false;
+	
+	try
+	{
+		entryValid = inputFile.validateEntry(entryObj);
+	}
+	catch(entryErr)
+	{
+		entryValid = false;
+		correctError = entryErr.message.endsWith(desiredMessage);
+	}
+	
+	expect(entryValid).to.be.false;
+	expect(correctError).to.be.true;
+}
+
+
+function callInvalidRead(rPath, desiredMessage)
+{
+	var readValid = false;
+	var correctError = false;
+	
+	try
+	{
+		inputFile.readContents(rPath);
+		readValid = true;
+	}
+	catch(readErr)
+	{
+		readValid = false;
+		correctError = readErr.message.endsWith(desiredMessage);
+	}
+	
+	expect(readValid).to.be.false;
+	expect(correctError).to.be.true;
 }
 
 
