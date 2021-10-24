@@ -1,4 +1,4 @@
 # Changelog
 
-**./package.json**
-* New file - Created with `npm init`
+* Installed packages: 'mocha' and 'chai' (package.json)
+* Ignore `node_modules` folder (.gitignore)
