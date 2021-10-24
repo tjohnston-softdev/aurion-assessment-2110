@@ -1,14 +1,11 @@
 # Changelog
 
-**./test-parts/test-input-functions.js**
-* New unit testing functions:
-	* handleValidateFileEntry
-	* handleReadFile
-* New secondary functions:
-	* defineRetrievedEntry
-	* callInvalidEntry
-	* callInvalidRead
-* Renamed 'getArgumentsObject' function to 'defineArgsObject'
-* Moved valid file path input to its own global 'validFilePath'
-* Moved path input from 'callUnknownFile' to its own global 'invalidFilePath'
-* Moved "no such file or directory" error text to its own global '
+**./test-parts/test-graph-parse.js**
+* New file - Unit tests for graph parsing.
+* So far only covers a fully valid graph.
+
+---
+
+**./test/index.js**
+* Required '../test-parts/test-graph-parse'
+* Call 'testGraphParse'
