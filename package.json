@@ -4,7 +4,7 @@
   "description": "This is my submission for a technical assessment as part of a software developer position I applied for with [Aurion](https://aurion.com/). The challenge was to examine a rail network in an imaginary city represented as a weighted graph, and implement various pathfinding algorithms to fulfil different test cases. The cases consisted of following an exact route, finding all possible paths between stops under certain criteria, and finding the shortest path between stops.",
   "main": "submission.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
