@@ -84,7 +84,7 @@ function loopSteps(graphObj, stepStr)
 	else
 	{
 		// Return message.
-		loopResult = "NO SUCH ROUTE";
+		loopResult = graphTasks.getNoRouteText();
 	}
 	
 	

@@ -129,7 +129,7 @@ function checkRouteSuccessful(dsktraInfoObj)
 	else
 	{
 		// Return message.
-		checkRes = "NO SUCH ROUTE";
+		checkRes = graphTasks.getNoRouteText();
 	}
 	
 	return checkRes;

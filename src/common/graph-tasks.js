@@ -59,6 +59,13 @@ function getUnknownNodesTextString()
 }
 
 
+// 'No Such Route' output string.
+function getNoRouteTextString()
+{
+	return "NO SUCH ROUTE";
+}
+
+
 // Search for existing graph edge.
 function getExistingEdge(tgtOrigin, tgtDest, edgeArray)
 {
@@ -113,6 +120,7 @@ module.exports =
 	addNode: addNodeDefinition,
 	addEdge: addEdgeObject,
 	getUnknownNodesText: getUnknownNodesTextString,
+	getNoRouteText: getNoRouteTextString,
 	getEdge: getExistingEdge,
 	getAdjacentEdges: getAdjacentEdgesByNode
 };
