@@ -91,27 +91,31 @@ We would like to see:
 
 * Script input is via plain text file consisting of the graph definition as above.
 * The text file content *must* be the graph and *only* the graph. Otherwise, there will be an error.
-* Input file path is an optional argument (eg. `node submission ./file.txt`). If this is not entered, `input.txt` will be used as default.
+* Input file path is an optional argument (eg. `node submission ./file.txt`).
+	* If this is not entered, `input.txt` will be used as default.
 * The file cannot be larger than 10kb. Otherwise, there will be an error.
 * Error handling has been implemented for accessing the input file.
 
 #### Parsing
 
-* All whitespace is ignored, but still counts against the file size limit.
-* Input is not case-sensitive. ('A' is the same as 'a'), but is interpreted as uppercase.
+* All whitespace is ignored, but it still counts against the file size limit.
+* Input is not case-sensitive, so 'A' is the same as 'a'.
+	* Letters will be interpreted as upper-case.
 * Graph uses the format: `AB5, BC4, [etc]`
 * If the format is invalid, there will be an error.
 * A node is represented using an alphabet character `[A-Z]`
-* There is no hard limit on the number of nodes, but only alphabet characters are supported. (26 values)
+* There is no hard limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
 * There is a hard limit of 300 edges. Afterwards, further input will be ignored.
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
-* There is no hard limit on edge distance but if it cannot be interpreted as a positive whole number, it will be ignored without error.
+* There is no hard limit on edge distance.
+	* Numbers that cannot be interpreted as positive and whole will be ignored without error.
+	* Negative and decimal values still cause errors during initial format check because the characters are not allowed.
 
 #### Pathfinding
 
 * Exact routes:
-	* Input is a string with each character representing a node to visit.
+	* Input is a string with each character representing a node along the route.
 	* This string must have at least two characters.
 	* Messages are output for invalid input.
 	* If the route is not possible or a node does not exist, output "NO SUCH ROUTE"
@@ -128,7 +132,7 @@ We would like to see:
 	* Expands from the start node, creating new possible paths as nodes are visited.
 	* If the end node is visited at *any* point, it is a completed route and will be saved.
 	* A complete route is valid if the criteria is met and has at least one stop.
-	* *All* completed routes are saved to prevent duplication but only valid routes will be counted for the end result.
+	* *All* completed routes are saved to avoid going around in circles but only valid routes will be counted for the end result.
 	* Successful output is the number of possible routes found, even if it is zero.
 
 #### Output
