@@ -31,6 +31,13 @@ function displayGraphSyntaxErrorText()
 }
 
 
+// Invalid Graph.
+function displayInvalidGraphErrorText()
+{
+	outputToConsole("Parsed graph must have multiple nodes and edges.");
+}
+
+
 // Reads message text from 'fs' error object.
 function extractFileSystemError(fullMsg)
 {
@@ -64,5 +71,6 @@ module.exports =
 {
 	displayFileSystem: displayFileSystemErrorText,
 	displayInputFile: displayInputFileErrorText,
-	displayGraphSyntax: displayGraphSyntaxErrorText
+	displayGraphSyntax: displayGraphSyntaxErrorText,
+	displayInvalidGraph: displayInvalidGraphErrorText
 };

@@ -25,7 +25,7 @@ function performInputParsing(rawContents)
 		// Syntax valid, continue parsing.
 		graphParts = prepContents.split(",");		// Split input text by comma, representing different edges.
 		loopGraphParts(graphParts, parseRes);
-		parseRes.valid = true;
+		validateGraphParse(parseRes);
 	}
 	else
 	{
@@ -87,6 +87,20 @@ function loopGraphParts(partsArray, graphObject)
 		
 		
 		partIndex = partIndex + 1;
+	}
+}
+
+
+// Validate parsed graph.
+function validateGraphParse(graphObject)
+{
+	if (graphObject.nodes.length >= 2 && graphObject.edges.length >= 2)
+	{
+		graphObject.valid = true;
+	}
+	else
+	{
+		errorMessages.displayInvalidGraph();
 	}
 }
 
