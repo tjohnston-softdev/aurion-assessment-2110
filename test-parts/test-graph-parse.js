@@ -209,8 +209,12 @@ function checkParseResult(parseObj)
 	expect(parseObj).to.have.property("edges");
 	expect(parseObj).to.have.property("valid");
 	
-	expect(parseObj.nodes).to.be.an("array").that.is.not.empty;
-	expect(parseObj.edges).to.be.an("array").that.is.not.empty;
+	expect(parseObj.nodes).to.be.an("array");
+	expect(parseObj.edges).to.be.an("array");
+	
+	expect(parseObj.nodes.length).to.be.at.least(2);
+	expect(parseObj.edges.length).to.be.at.least(2);
+	
 	expect(parseObj.valid).to.be.true;
 }
 
