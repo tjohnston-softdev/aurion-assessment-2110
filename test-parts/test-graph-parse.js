@@ -20,6 +20,7 @@ function runTests()
 		handleValidCase();
 		handleIgnoreData();
 		handleInvalidCases();
+		disposeOutputData();
 	});
 }
 
@@ -211,6 +212,19 @@ function handleInvalidCases()
 		});
 		
 		
+	});
+}
+
+
+function disposeOutputData()
+{
+	describe("Dispose Output Data", function()
+	{
+		it("Successful", function(done)
+		{
+			parseOutputData = null;
+			done();
+		});
 	});
 }
 
