@@ -1,26 +1,30 @@
 # Changelog
 
+**./test-parts/parse-output.json**
+* New file - Contains output edge array objects for when parsing graphs in unit tests.
+
+---
+
 **./test-parts/test-graph-parse.js**
-* Declared global variable 'alphabet' - String from A to Z.
-* Declared global variable 'maxEdges'
-	* When testing the hard edge limit, a graph will be generated containing `maxEdges \* 1.15` edges, rounding up.
-	* Used as-is when checking final edge count.
-* Wrote unit tests for ignored data with the function 'handleIgnoreData'
-	* Whitespace
-	* Case Sensitivity
-	* All Possible Nodes
-	* Hard Edge Limit
-	* Duplicate Edges
-	* Recursive Edge
-	* Zero Distance
-* New secondary functions:
+* Required 'fs'
+* Declared new global 'parseOutputData'
+* The following functions have been removed with their contents now in 'parse-output.json'
+	* defineValidCaseEdges
 	* defineWhitespaceEdges
 	* defineCaseSensitivityEdges
 	* defineDupeEdges
 	* defineRecurseEdges
 	* defineZeroDistEdges
+* Wrote new function 'loadOutputData'
+	* Used to read 'parse-output.json'
+	* Individual test cases for reading and parsing.
+* Removed 'inclEdges' variable from the following test cases and replaced with the corresponding 'parseOutputData' property.
+	* "Valid Case" - "Complete Graph"
+	* "Ignore Data" - "Whitespace"
+	* "Ignore Data" - "Case Sensitivity"
+	* "Ignore Data" - "Duplicate Edges"
+	* "Ignore Data" - "Recursive Edge"
+	* "Ignore Data" - "Zero Distance"
+* Renamed 'stringRes' to 'defineRes' in functions:
 	* defineAlphabetGraph
 	* defineMaxEdgesGraph
-* Changes to 'checkParseResult'
-	* Split the `deep.equal` checks into their own function 'checkGraphContents'
-	* Removed parameters 'nodeArr' and 'edgeArr'
