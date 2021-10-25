@@ -8,14 +8,14 @@ function runTests()
 {
 	describe("Parse Graph", function()
 	{
-		handleValidCases();
+		handleValidCase();
 	});
 }
 
 
-function handleValidCases()
+function handleValidCase()
 {
-	describe("Valid Cases", function()
+	describe("Valid Case", function()
 	{
 		it("Complete Graph", function()
 		{
