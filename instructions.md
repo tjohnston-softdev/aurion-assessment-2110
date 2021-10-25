@@ -102,10 +102,11 @@ We would like to see:
 * Input is not case-sensitive, so 'A' is the same as 'a'.
 	* Letters will be interpreted as upper-case.
 * Graph uses the format: `AB5, BC4, [etc]`
-* If the format is invalid, there will be an error.
-* A node is represented using an alphabet character `[A-Z]`
-* There is no hard limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
-* There is a hard limit of 300 edges. Afterwards, further input will be ignored.
+* If the graph does not use this format, there will be an error.
+* A node is represented using an alphabet character: `[A-Z]`
+* A graph must have multiple nodes and edges. Otherwise, there will be formatting errors.
+* There is no hard upper limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
+* There is a hard upper limit of 300 edges. Afterwards, further input will be ignored.
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
 * There is no hard limit on edge distance.
