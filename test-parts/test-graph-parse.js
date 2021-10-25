@@ -51,7 +51,7 @@ function handleValidCase()
 	{
 		it("Complete Graph", function()
 		{
-			var inclNodes = ["M", "E", "O", "W", "H", "I", "S"];
+			var inclNodes = getNodeList("MEOWHIS");
 			var resultValue = parseGraph.performParsing("ME7, OW8, HI9, SH10");
 			
 			checkParseResult(resultValue);
@@ -69,7 +69,7 @@ function handleIgnoreData()
 		it("Whitespace", function()
 		{
 			var inpGraph = "AB3, CD6,EF5,         GH8, IJ10";
-			var inclNodes = "ABCDEFGHIJ".split("");
+			var inclNodes = getNodeList("ABCDEFGHIJ");
 			var resultValue = parseGraph.performParsing(inpGraph);
 			
 			checkParseResult(resultValue);
@@ -79,7 +79,7 @@ function handleIgnoreData()
 		
 		it("Case Sensitivity", function()
 		{
-			var inclNodes = "ABCD".split("");
+			var inclNodes = getNodeList("ABCD");
 			var resultValue = parseGraph.performParsing("Ab8, cD16");
 			
 			checkParseResult(resultValue);
@@ -89,7 +89,7 @@ function handleIgnoreData()
 		it("All Possible Nodes", function()
 		{
 			var inpGraph = defineAlphabetGraph();
-			var inclNodes = alphabet.split("");
+			var inclNodes = getNodeList(alphabet);
 			var resultValue = parseGraph.performParsing(inpGraph);
 			
 			checkParseResult(resultValue);
@@ -109,7 +109,7 @@ function handleIgnoreData()
 		
 		it("Duplicate Edges", function()
 		{
-			var inclNodes = "ABCD".split("");
+			var inclNodes = getNodeList("ABCD");
 			var resultValue = parseGraph.performParsing("AB5, CD7, AB9");
 			
 			checkParseResult(resultValue);
@@ -118,7 +118,7 @@ function handleIgnoreData()
 		
 		it("Recursive Edge", function()
 		{
-			var inclNodes = "ABCDE".split("");
+			var inclNodes = getNodeList("ABCDE");
 			var resultValue = parseGraph.performParsing("AB6, CC10, DE12");
 			
 			checkParseResult(resultValue);
@@ -127,7 +127,7 @@ function handleIgnoreData()
 		
 		it("Zero Distance", function()
 		{
-			var inclNodes = "ABEF".split("");
+			var inclNodes = getNodeList("ABEF");
 			var resultValue = parseGraph.performParsing("AB8, CD0, EF16");
 			
 			checkParseResult(resultValue);
@@ -135,6 +135,13 @@ function handleIgnoreData()
 		});
 		
 	});
+}
+
+
+function getNodeList(entryStr)
+{
+	var listRes = entryStr.split("");
+	return listRes;
 }
 
 
