@@ -179,9 +179,7 @@ function callUnknownFile()
 		correctError = fsErr.message.endsWith(unknownErrorText);
 	}
 	
-	expect(fileRetrieved).to.be.false;
-	expect(correctError).to.be.true;
-	
+	checkTryCatch(fileRetrieved, correctError, unknownErrorText);
 }
 
 
@@ -200,8 +198,7 @@ function callInvalidEntry(entryObj, desiredMessage)
 		correctError = entryErr.message.endsWith(desiredMessage);
 	}
 	
-	expect(entryValid).to.be.false;
-	expect(correctError).to.be.true;
+	checkTryCatch(entryValid, correctError, desiredMessage);
 }
 
 
@@ -221,8 +218,7 @@ function callInvalidRead(rPath, desiredMessage)
 		correctError = readErr.message.endsWith(desiredMessage);
 	}
 	
-	expect(readValid).to.be.false;
-	expect(correctError).to.be.true;
+	checkTryCatch(readValid, correctError, desiredMessage);
 }
 
 
@@ -256,6 +252,30 @@ function checkFileSize(sBytes)
 	}
 	
 	return checkRes;
+}
+
+
+function checkTryCatch(trySuccessful, messageCorrect, expMsgTxt)
+{
+	if (trySuccessful === true)
+	{
+		throw new Error("No error was thrown");
+	}
+	else if (messageCorrect === true)
+	{
+		expect(true).to.be.true;
+	}
+	else
+	{
+		flagIncorrectError(expMsgTxt);
+	}
+}
+
+
+function flagIncorrectError(vExp)
+{
+	var preparedText = ["Incorrect error thrown\r\n", "Should had ended with: '", vExp, "'"].join("");
+	throw new Error(preparedText);
 }
 
 

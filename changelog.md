@@ -1,11 +1,13 @@
 # Changelog
 
-**./test-parts/test-graph-parse.js**
-* New file - Unit tests for graph parsing.
-* So far only covers a fully valid graph.
-
----
-
-**./test/index.js**
-* Required '../test-parts/test-graph-parse'
-* Call 'testGraphParse'
+**./test-parts/test-input-functions.js**
+* Merged all `try-catch` validation code into new functions:
+	* 'checkTryCatch' - Coordinates result checking.
+	* 'flagIncorrectError' - Writes and throws error for when message is incorrect.
+* 'checkTryCatch' is called from functions:
+	* callUnknownFile
+	* callInvalidEntry
+	* callInvalidRead
+* Custom error text has been implemented for invalid unit tests.
+	* No error thrown.
+	* Wrong error thrown.
