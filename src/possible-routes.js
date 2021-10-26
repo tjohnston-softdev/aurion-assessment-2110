@@ -72,7 +72,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 	var currentRoute = {};
 	var currentStops = -1;
 	var currentNode = -1;
-	var currentSave = false;
+	var currentEndValid = false;
 	var currentBranchAllowed = false;
 	var currentAdjEdges = [];
 	var currentOffset = 0;
@@ -85,7 +85,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		currentNode = currentRoute.steps[currentStops];
 		
 		// Reset result variables.
-		currentSave = false;					// Completed route can be saved.
+		currentEndValid = false;				// Completed route can be saved.
 		currentBranchAllowed = true;			// Backlog route can be explored.
 		currentAdjEdges = [];					// Edges adjacent to current node.
 		currentOffset = 0;						// Loop index offset.
@@ -94,8 +94,8 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		// If end node has been reached, save it, and check whether it should be explored further.
 		if (currentNode === pNodes.end)
 		{
-			currentSave = validateCompletedRoute(currentRoute.distance, currentStops, stopCriteriaObj, distCriteriaObj);
-			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentSave);
+			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, stopCriteriaObj, distCriteriaObj);
+			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentEndValid);
 		}
 		
 		
@@ -112,6 +112,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		routeArray.splice(routeIndex, 1);
 		routeIndex = routeIndex + currentOffset;
 	}
+	
 }
 
 
