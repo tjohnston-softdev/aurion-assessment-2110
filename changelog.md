@@ -1,4 +1,4 @@
 # Changelog
 
 **./readme.md**
-* Extra whitespace under 'Running' head.
+* Added confirmed release date to unit tests.
