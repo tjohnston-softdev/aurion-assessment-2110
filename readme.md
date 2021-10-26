@@ -4,7 +4,7 @@ This is my submission for a technical assessment as part of a software developer
 
 Assessment instructions were sent as a MS Word document which I interpreted into a [markdown file](./instructions.md) along with personal implementation details.
 
-This attempt was developed across 12-15 October 2021 and immediately shared to the general public.
+This attempt was developed across 12-15 October 2021 and immediately shared to the general public. An updated version with unit tests was released on xx October 2021.
 
 ## Running
 

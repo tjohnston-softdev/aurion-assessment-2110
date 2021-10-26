@@ -1,4 +1,4 @@
 # Changelog
 
 **./readme.md**
-* Updated execution instructions.
+* Added update release template.
