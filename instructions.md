@@ -147,7 +147,7 @@ We would like to see:
 #### Dependencies
 
 * The submission itself uses no third-party packages. Everything is written in native Node JS.
-* The [mocha](https://mochajs.org/) and [chai](https://www.chaijs.com/) packages are required for unit testing.
+* Unit tests were implemented using [mocha](https://mochajs.org/) and [chai](https://www.chaijs.com/)
 
 ----
 
