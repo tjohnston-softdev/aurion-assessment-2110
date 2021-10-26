@@ -130,6 +130,7 @@ We would like to see:
 	* Supports criteria for 'number of stops' and 'total distance'
 	* If the start or end nodes are missing, output message.
 	* If the criteria objects are invalid, output message.
+	* If the end node cannot be reached from the start node in a one-way sequence, there are no possible routes to search.
 	* Expands from the start node, creating new possible paths as nodes are visited.
 	* If the end node is visited at *any* point, it is a completed route and will be saved.
 	* A complete route is valid if the criteria is met and has at least one stop.
@@ -139,7 +140,7 @@ We would like to see:
 #### Output
 
 * Values for each test case are displayed to the console, same as above.
-* Only the actual values are displayed. I thought implementing a full unit test suite would be a little excessive.
+* Only the actual values are displayed. At first, I thought implementing a full unit test suite would be a little excessive.
 
 ----
 
