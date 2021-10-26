@@ -1,4 +1,4 @@
 # Changelog
 
 **./readme.md**
-* Added 'mocha' and 'chai' to references.
+* Updated execution instructions.

@@ -8,8 +8,16 @@ This attempt was developed across 12-15 October 2021 and immediately shared to t
 
 ## Running
 
-1. Clone this repository.
-2. Execute `node submission` to run the test cases.
+After cloning the repository:
+
+**Submission**
+
+Execute `node submission [input-path]`
+
+\
+**Unit Tests**
+1. Execute `npm install` to download the unit testing suite.
+2. Execute `npm test` to perform the unit tests.
 
 ## References
 
