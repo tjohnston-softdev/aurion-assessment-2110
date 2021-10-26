@@ -1,4 +1,4 @@
 # Changelog
 
 **./readme.md**
-* Added update release template.
+* Extra whitespace under 'Running' head.
