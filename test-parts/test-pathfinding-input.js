@@ -22,8 +22,8 @@ function runTests()
 	describe("Invalid Pathfinding Input", function()
 	{
 		prepareExampleGraph();
-		//handleExactRoute();
-		//handleShortestRoute();
+		handleExactRoute();
+		handleShortestRoute();
 		handlePossibleRoutes();
 		disposeExampleGraph();
 	});
