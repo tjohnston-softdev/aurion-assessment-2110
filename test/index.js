@@ -4,10 +4,12 @@ const expect = chai.expect;
 const testInputFunctions = require("../test-parts/test-input-functions");
 const testGraphParse = require("../test-parts/test-graph-parse");
 const testPathfindingInput = require("../test-parts/test-pathfinding-input");
+const testSubmission = require("../test-parts/test-submission");
 
 describe("Unit Tests", function()
 {
 	//testInputFunctions();
 	//testGraphParse();
-	testPathfindingInput();
+	//testPathfindingInput();
+	testSubmission();
 });
