@@ -221,8 +221,7 @@ function handlePossibleRoutes()
 		it("Impossible Route", function()
 		{
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "G", emptyCriteria, emptyCriteria);
-			console.log(resultValue);
-			expect(true).to.be.true;
+			expect(resultValue).to.equal(0);
 		});
 		
 	});
