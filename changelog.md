@@ -1,4 +1,3 @@
 # Changelog
 
-**./cases.js**
-* Added comments.
+Update complete.
