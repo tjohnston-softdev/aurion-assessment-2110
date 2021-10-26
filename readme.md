@@ -10,7 +10,7 @@ This attempt was developed across 12-15 October 2021 and immediately shared to t
 
 After cloning the repository:
 
-\
+
 **Submission**
 
 Execute `node submission [input-path]`

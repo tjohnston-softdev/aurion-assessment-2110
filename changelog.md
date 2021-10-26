@@ -1,3 +1,4 @@
 # Changelog
 
-Update complete.
+**./readme.md**
+* Reduced whitespace under 'Running' head.
