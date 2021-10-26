@@ -3,6 +3,7 @@ function outputResultsToConsole(resultArray)
 {
 	var caseIndex = 0;
 	var currentNumber = -1;
+	var currentCase = {};
 	var currentValue = null;
 	var currentLine = "";
 	
@@ -11,7 +12,8 @@ function outputResultsToConsole(resultArray)
 	for (caseIndex = 0; caseIndex < resultArray.length; caseIndex = caseIndex + 1)
 	{
 		currentNumber = caseIndex + 1;
-		currentValue = resultArray[caseIndex];
+		currentCase = resultArray[caseIndex];
+		currentValue = currentCase.actual;
 		currentLine = ["Output #", currentNumber, ":", "\t", currentValue].join("");
 		
 		console.log(currentLine);
