@@ -29,7 +29,7 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 	{
 		// Input valid, perform algorithm.
 		endReachPossible = performInitialSequence(preparedNodes, graphObject, stopCountCriteria, distanceCriteria);
-		possibleRes = performSearch(preparedNodes, graphObject, stopCountCriteria, distanceCriteria, endReachPossible);
+		possibleRes = performMainSearch(preparedNodes, graphObject, stopCountCriteria, distanceCriteria, endReachPossible);
 	}
 	else if (nodesValid === true && countValid === true)
 	{
@@ -72,7 +72,7 @@ function performInitialSequence(prepNodes, graphObj, stopCountCritObject, distan
 
 
 // Search for all possible routes.
-function performSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObject, loopEnabled)
+function performMainSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObject, loopEnabled)
 {
 	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
 	var completedRoutes = [];
