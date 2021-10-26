@@ -1,10 +1,24 @@
 # Changelog
 
 **./test-parts/test-pathfinding-input.js**
-* Added new edge to example graph: `G --> H (9)`
-	* It is impossible to reach these nodes.
-	* Used for 'shortest route' unit test.
-	* Impossible for Dijkstra.
-	* Does not conflict with existing unit tests.
-* Wrote unit tests for 'shortest route' pathfinding. (handleShortestRoute)
-* Wrote secondary function to `try-catch` missing graph for shortest route. (callShortestRouteMissingGraph)
+* Corrected error throwing syntax in 'checkOutputDistanceNumber'
+* New global variable 'badCriteriaMsg'
+* Changes to 'callShortestRouteMissingGraph'
+	* If the `try` is successful, 'givenMessage' is assigned blank.
+* Added new requirements:
+	* ../src/common/num-signs
+	* ../src/common/route-criteria
+* Commented out calls:
+	* handleExactRoute
+	* handleShortestRoute
+* New secondary functions:
+	* checkMultiplePossibleRoutes
+	* callPossibleRoutesMissingGraph
+* Wrote unit testing for 'possible routes' input. (handlePossibleRoutes)
+	* Most cases implemented.
+	* 'Impossible Route' results in infinite loop.
+
+---
+
+**./test/index.js**
+* Commented out all calls except for 'testPathfindingInput'

@@ -7,7 +7,7 @@ const testPathfindingInput = require("../test-parts/test-pathfinding-input");
 
 describe("Unit Tests", function()
 {
-	testInputFunctions();
-	testGraphParse();
+	//testInputFunctions();
+	//testGraphParse();
 	testPathfindingInput();
 });
