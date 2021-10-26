@@ -8,8 +8,8 @@ const testSubmission = require("../test-parts/test-submission");
 
 describe("Unit Tests", function()
 {
-	//testInputFunctions();
-	//testGraphParse();
-	//testPathfindingInput();
+	testInputFunctions();
+	testGraphParse();
+	testPathfindingInput();
 	testSubmission();
 });
