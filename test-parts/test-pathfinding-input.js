@@ -25,6 +25,7 @@ function runTests()
 		//handleExactRoute();
 		//handleShortestRoute();
 		handlePossibleRoutes();
+		disposeExampleGraph();
 	});
 }
 
@@ -224,6 +225,19 @@ function handlePossibleRoutes()
 			expect(resultValue).to.equal(0);
 		});
 		
+	});
+}
+
+
+function disposeExampleGraph()
+{
+	describe("Dispose Example Graph", function()
+	{
+		it("Successful", function(done)
+		{
+			exampleGraph = null;
+			done();
+		});
 	});
 }
 
