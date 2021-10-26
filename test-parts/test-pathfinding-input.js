@@ -20,6 +20,7 @@ function runTests()
 	{
 		prepareExampleGraph();
 		handleExactRoute();
+		handleShortestRoute();
 	});
 }
 
@@ -32,7 +33,7 @@ function prepareExampleGraph()
 		
 		it("String Written", function(done)
 		{
-			inpString = "AE14, CB13, EB7, EA11, BF10, BE20, BD3, BA1, AC2, FD7";
+			inpString = "AE14, CB13, EB7, EA11, BF10, BE20, BD3, BA1, AC2, FD7, GH9";
 			done();
 		});
 		
@@ -98,7 +99,54 @@ function handleExactRoute()
 }
 
 
-
+function handleShortestRoute()
+{
+	describe("Shortest Route", function()
+	{
+		it("Correct Output - Open", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "F");
+			checkOutputDistanceNumber(resultValue);
+		});
+		
+		it("Correct Output - Closed", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraph, "C", "C");
+			checkOutputDistanceNumber(resultValue);
+		});
+		
+		
+		it("Missing Graph", function()
+		{
+			callShortestRouteMissingGraph();
+		});
+		
+		it("Missing Node Argument", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraph, "A", null);
+			expect(resultValue).to.equal(unknownNodesMsg);
+		});
+		
+		it("Empty Node Argument", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "");
+			expect(resultValue).to.equal(unknownNodesMsg);
+		});
+		
+		it("Unknown Node", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "Z");
+			expect(resultValue).to.equal(unknownNodesMsg);
+		});
+		
+		it("Impossible Route", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "G");
+			expect(resultValue).to.equal(noRouteMsg);
+		});
+		
+	});
+}
 
 
 
@@ -110,6 +158,23 @@ function callExactRouteMissingGraph()
 	{
 		exactRoute.getDistance(null, "CBFD");
 		givenMessage = "";
+	}
+	catch(routeErr)
+	{
+		givenMessage = routeErr.message;
+	}
+	
+	checkMissingGraphError(givenMessage);
+}
+
+
+function callShortestRouteMissingGraph()
+{
+	var givenMessage = "";
+	
+	try
+	{
+		shortestRoute.findRoute(null, "A", "B");
 	}
 	catch(routeErr)
 	{

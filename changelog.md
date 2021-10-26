@@ -1,11 +1,10 @@
 # Changelog
 
 **./test-parts/test-pathfinding-input.js**
-* New file - Unit tests for pathfinding input.
-* So far, only the 'exact route' cases have been implemented.
-
----
-
-**./test/index.js**
-* Added requirement: '../test-parts/test-pathfinding-input'
-* Call 'testPathfindingInput'
+* Added new edge to example graph: `G --> H (9)`
+	* It is impossible to reach these nodes.
+	* Used for 'shortest route' unit test.
+	* Impossible for Dijkstra.
+	* Does not conflict with existing unit tests.
+* Wrote unit tests for 'shortest route' pathfinding. (handleShortestRoute)
+* Wrote secondary function to `try-catch` missing graph for shortest route. (callShortestRouteMissingGraph)
