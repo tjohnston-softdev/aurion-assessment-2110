@@ -71,13 +71,17 @@ function saveCompletedRoute(routeInd, routeObj, routeArr, compArr, routeValid)
 
 
 // Derive new routes using possible destinations.
-function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, routeArr)
+function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, routeArr, allowBack)
 {
 	var adjacentIndex = 0;
 	var currentEdgeID = -1;
 	var currentEdgeObject = {};
 	var currentNewRoute = {};
 	var currentInsertIndex = -1;
+	var currentVisited = false;
+	var currentUpdate = false;
+	
+	var offsetIndex = 1;
 	
 	// Loop marked edges that link to possible destinations.
 	for (adjacentIndex = 0; adjacentIndex < possibleEdges.length; adjacentIndex = adjacentIndex + 1)
@@ -88,14 +92,21 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 		
 		// Prepare new route.
 		currentNewRoute = cloneRouteObject(baseRouteObj);
-		currentInsertIndex = (baseRouteInd + adjacentIndex) + 1;
+		currentInsertIndex = baseRouteInd + offsetIndex;
+		currentVisited = currentNewRoute.steps.includes(currentEdgeObject.destination);
+		currentUpdate = checkDeriveAllowed(currentVisited, allowBack);
 		
-		// Update new route.
-		currentNewRoute.steps.push(currentEdgeObject.destination);
-		currentNewRoute.distance += currentEdgeObject.distance;
-		
-		// Add to backlog.
-		routeArr.splice(currentInsertIndex, 0, currentNewRoute);
+		if (currentUpdate === true)
+		{
+			// Update new route.
+			currentNewRoute.steps.push(currentEdgeObject.destination);
+			currentNewRoute.distance += currentEdgeObject.distance;
+			
+			// Add to backlog.
+			routeArr.splice(currentInsertIndex, 0, currentNewRoute);
+			
+			offsetIndex = offsetIndex + 1;
+		}
 	}
 }
 
@@ -161,6 +172,27 @@ function cloneRouteObject(origObj)
 	var definitionText = JSON.stringify(origObj);
 	var cloneRes = JSON.parse(definitionText);
 	return cloneRes;
+}
+
+
+function checkDeriveAllowed(visitStatus, backtrackStatus)
+{
+	var checkRes = false;
+	
+	if (visitStatus === true && backtrackStatus === true)
+	{
+		checkRes = true;
+	}
+	else if (visitStatus === true)
+	{
+		checkRes = false;
+	}
+	else
+	{
+		checkRes = true;
+	}
+	
+	return checkRes;
 }
 
 

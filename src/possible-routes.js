@@ -13,6 +13,7 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 	var nodesValid = false;
 	var countValid = false;
 	var distValid = false;
+	var endReachPossible = false;
 	var possibleRes = null;
 	
 	// Parse and validate node input.
@@ -27,7 +28,8 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 	if (nodesValid === true && countValid === true && distValid === true)
 	{
 		// Input valid, perform algorithm.
-		possibleRes = performSearch(preparedNodes, graphObject, stopCountCriteria, distanceCriteria);
+		endReachPossible = performInitialSequence(preparedNodes, graphObject, stopCountCriteria, distanceCriteria);
+		possibleRes = performSearch(preparedNodes, graphObject, stopCountCriteria, distanceCriteria, endReachPossible);
 	}
 	else if (nodesValid === true && countValid === true)
 	{
@@ -47,17 +49,42 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 }
 
 
+// Searches for a possible route in sequence.
+function performInitialSequence(prepNodes, graphObj, stopCountCritObject, distanceCritObject)
+{
+	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
+	var exploredRoutes = [];
+	
+	var loopNumber = 1;
+	var loopCutoff = Math.ceil(graphObj.nodes.length * 1.15);
+	var sequenceFound = false;
+	
+	// Loop until possible route is found without backtracking, or too many iterations.
+	while (loopNumber >= 1 && loopNumber <= loopCutoff && sequenceFound !== true)
+	{
+		// Iterate through current set of routes.
+		sequenceFound = iterateRoutes(prepNodes, graphObj.edges, stopCountCritObject, distanceCritObject, routeBacklog, exploredRoutes, false);
+		loopNumber = loopNumber + 1;
+	}
+	
+	return sequenceFound;
+}
+
+
 // Search for all possible routes.
-function performSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObject)
+function performSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObject, loopEnabled)
 {
 	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
 	var completedRoutes = [];
 	
-	// Loop until all possible routes have been explored.
-	while (routeBacklog.length > 0)
+	if (loopEnabled === true)
 	{
-		// Iterate through current set of routes.
-		iterateRoutes(prepNodes, graphObj.edges, stopCountCritObject, distanceCritObject, routeBacklog, completedRoutes);
+		// Loop until all possible routes have been explored.
+		while (routeBacklog.length > 0)
+		{
+			// Iterate through current set of routes.
+			iterateRoutes(prepNodes, graphObj.edges, stopCountCritObject, distanceCritObject, routeBacklog, completedRoutes, true);
+		}
 	}
 	
 	var searchRes = routeTasks.countValidRoutes(completedRoutes);
@@ -66,7 +93,7 @@ function performSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObj
 
 
 // Loop through current set of possible routes.
-function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, routeArray, compArray)
+function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, routeArray, compArray, allowBacktracking)
 {
 	var routeIndex = 0;
 	var currentRoute = {};
@@ -76,6 +103,8 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 	var currentBranchAllowed = false;
 	var currentAdjEdges = [];
 	var currentOffset = 0;
+	
+	var endReached = false;
 	
 	while (routeIndex >= 0 && routeIndex < routeArray.length)
 	{
@@ -96,6 +125,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		{
 			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, stopCriteriaObj, distCriteriaObj);
 			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentEndValid);
+			endReached = true;
 		}
 		
 		
@@ -103,7 +133,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		{
 			// Derive new routes from possible destinations.
 			currentAdjEdges = readIncompleteRoute(currentNode, currentRoute.distance, currentStops, stopCriteriaObj, distCriteriaObj, graphEdgeArr);
-			routeTasks.deriveNew(routeIndex, currentRoute, currentAdjEdges, graphEdgeArr, routeArray);
+			routeTasks.deriveNew(routeIndex, currentRoute, currentAdjEdges, graphEdgeArr, routeArray, allowBacktracking);
 			currentOffset = currentAdjEdges.length;
 		}
 		
@@ -113,6 +143,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		routeIndex = routeIndex + currentOffset;
 	}
 	
+	return endReached;
 }
 
 
