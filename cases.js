@@ -1,3 +1,8 @@
+/*
+	* This file contains example test cases for pathfinding algorithms.
+	* Used by both the submission itself and the unit tests.
+*/
+
 const exactRoute = require("./src/exact-route");
 const shortestRoute = require("./src/shortest-route");
 const possibleRoutes = require("./src/possible-routes");
@@ -6,6 +11,7 @@ const routeCriteria = require("./src/common/route-criteria");
 const numSigns = require("./src/common/num-signs");
 
 
+// Test case 1
 function runTestCase1(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "ABC");
@@ -14,6 +20,7 @@ function runTestCase1(givenInputGraph)
 }
 
 
+// Test case 2
 function runTestCase2(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "AD");
@@ -21,6 +28,8 @@ function runTestCase2(givenInputGraph)
 	return caseResultObject;
 }
 
+
+// Test case 3
 function runTestCase3(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "ADC");
@@ -28,6 +37,8 @@ function runTestCase3(givenInputGraph)
 	return caseResultObject;
 }
 
+
+// Test case 4
 function runTestCase4(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "AEBCD");
@@ -35,6 +46,8 @@ function runTestCase4(givenInputGraph)
 	return caseResultObject;
 }
 
+
+// Test case 5
 function runTestCase5(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "AED");
@@ -43,6 +56,7 @@ function runTestCase5(givenInputGraph)
 }
 
 
+// Test case 6
 function runTestCase6(givenInputGraph)
 {
 	var routeStopCriteria = routeCriteria.defineCriteria();
@@ -57,6 +71,8 @@ function runTestCase6(givenInputGraph)
 	return caseResultObject;
 }
 
+
+// Test case 7
 function runTestCase7(givenInputGraph)
 {
 	var routeStopCriteria = routeCriteria.defineCriteria();
@@ -72,6 +88,7 @@ function runTestCase7(givenInputGraph)
 }
 
 
+// Test case 8
 function runTestCase8(givenInputGraph)
 {
 	var actualValue = shortestRoute.findRoute(givenInputGraph, "A", "C");
@@ -79,6 +96,8 @@ function runTestCase8(givenInputGraph)
 	return caseResultObject;
 }
 
+
+// Test case 9
 function runTestCase9(givenInputGraph)
 {
 	var actualValue = shortestRoute.findRoute(givenInputGraph, "B", "B");
@@ -87,6 +106,7 @@ function runTestCase9(givenInputGraph)
 }
 
 
+// Test case 10
 function runTestCase10(givenInputGraph)
 {
 	var routeDistanceCriteria = routeCriteria.defineCriteria();
@@ -103,6 +123,7 @@ function runTestCase10(givenInputGraph)
 
 
 
+// Output object for test case.
 function setOutputObject(vExp, vAct)
 {
 	var outputRes = {"expected": vExp, "actual": vAct};
