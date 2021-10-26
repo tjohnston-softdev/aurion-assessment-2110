@@ -1,3 +1,5 @@
+// Unit tests for pathfinding input values.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -13,9 +15,12 @@ const unknownNodesMsg = "UNKNOWN NODES";
 const noRouteMsg = "NO SUCH ROUTE";
 const badCriteriaMsg = "INVALID COUNT CRITERIA";
 
+// Example graph that will be used for these tests.
 var exampleGraph = null;
 
 
+
+// Main function.
 function runTests()
 {
 	describe("Invalid Pathfinding Input", function()
@@ -29,6 +34,7 @@ function runTests()
 }
 
 
+// Creates example graph.
 function prepareExampleGraph()
 {
 	describe("Prepare Example Graph", function()
@@ -51,6 +57,7 @@ function prepareExampleGraph()
 
 
 
+// Exact route.
 function handleExactRoute()
 {
 	describe("Exact Route", function()
@@ -103,6 +110,7 @@ function handleExactRoute()
 }
 
 
+// Shortest route.
 function handleShortestRoute()
 {
 	describe("Shortest Route", function()
@@ -153,6 +161,7 @@ function handleShortestRoute()
 }
 
 
+// Possible routes.
 function handlePossibleRoutes()
 {
 	describe("Possible Routes", function()
@@ -228,6 +237,7 @@ function handlePossibleRoutes()
 }
 
 
+// Disposes example graph object after tests complete.
 function disposeExampleGraph()
 {
 	describe("Dispose Example Graph", function()
@@ -241,108 +251,134 @@ function disposeExampleGraph()
 }
 
 
+// Attempts 'exact route' pathfinding on a missing graph in a 'try-catch' structure.
 function callExactRouteMissingGraph()
 {
 	var givenMessage = "";
 	
 	try
 	{
+		// Perform pathfinding.
 		exactRoute.getDistance(null, "CBFD");
 		givenMessage = "";
 	}
 	catch(routeErr)
 	{
+		// Error caught.
 		givenMessage = routeErr.message;
 	}
 	
+	
+	// Validate error message.
 	checkMissingGraphError(givenMessage);
 }
 
 
+
+// Attempts 'shortest route' pathfinding on a missing graph in a 'try-catch' structure.
 function callShortestRouteMissingGraph()
 {
 	var givenMessage = "";
 	
 	try
 	{
+		// Perform pathfinding.
 		shortestRoute.findRoute(null, "A", "B");
 		givenMessage = "";
 	}
 	catch(routeErr)
 	{
+		// Error caught.
 		givenMessage = routeErr.message;
 	}
 	
+	// Validate error message.
 	checkMissingGraphError(givenMessage);
 }
 
 
+
+// Attempts 'possible routes' pathfinding on a missing graph in a 'try-catch' structure.
 function callPossibleRoutesMissingGraph()
 {
 	var givenMessage = "";
 	
 	try
 	{
+		// Perform pathfinding.
 		possibleRoutes.findRoutes(null, "A", "B", null, null);
 		givenMessage = "";
 	}
 	catch(routeErr)
 	{
+		// Error caught.
 		givenMessage = routeErr.message;
 	}
 	
+	// Validate error message.
 	checkMissingGraphError(givenMessage);
 }
 
 
 
+// Validate output distance number for valid pathfinding cases.
 function checkOutputDistanceNumber(distNum)
 {
 	var correctType = Number.isInteger(distNum);
 	
 	if (correctType === true && distNum > 0)
 	{
+		// Valid.
 		expect(true).to.be.true;
 	}
 	else
 	{
+		// Invalid.
 		throw new Error("Output must be a positive, whole number.");
 	}
 }
 
 
+// Validates result value for multiple possible routes.
 function checkMultiplePossibleRoutes(countNum)
 {
 	var correctType = Number.isInteger(countNum);
 	
 	if (correctType === true && countNum >= 2)
 	{
+		// Valid.
 		expect(true).to.be.true;
 	}
 	else
 	{
+		// Invalid.
 		throw new Error("Output must be a whole number that is at least 2.");
 	}
 }
 
 
+// Validates caught error for missing graph 'try-catch'
 function checkMissingGraphError(vMsg)
 {	
 	if (vMsg === graphErrMsg)
 	{
+		// Valid.
 		expect(true).to.be.true;
 	}
 	else if (vMsg.length > 0)
 	{
+		// Wrong error.
 		flagIncorrectError();
 	}
 	else
 	{
+		// No error.
 		throw new Error("No error was thrown.");
 	}
 }
 
 
+// Incorrect error thrown in 'try-catch'
 function flagIncorrectError()
 {
 	var preparedText = ["Incorrect pathfinding error thrown.\r\n", "Should had been: '", graphErrMsg, "'"].join("");

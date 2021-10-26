@@ -1,3 +1,5 @@
+// Unit testing for the assessment submission.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -8,6 +10,7 @@ const cases = require("../cases");
 var inputGraphObject = null;
 
 
+// Main function.
 function runTests()
 {
 	describe("Submission", function()
@@ -19,6 +22,7 @@ function runTests()
 }
 
 
+// Parse graph from input file.
 function handlePreparation()
 {
 	describe("Preparation", function()
@@ -46,6 +50,7 @@ function handlePreparation()
 }
 
 
+// Run example cases.
 function handleExampleCases()
 {
 	describe("Example Cases", function()
@@ -113,6 +118,7 @@ function handleExampleCases()
 }
 
 
+// Dispose input graph after example cases tested.
 function handleDispose()
 {
 	describe("Dispose Input Graph", function()
@@ -126,6 +132,7 @@ function handleDispose()
 }
 
 
+// Validates example case result.
 function checkResultValue(rVal)
 {
 	expect(rVal).to.not.be.undefined;

@@ -1,3 +1,5 @@
+// Unit testing for graph parse.
+
 const fs = require("fs");
 const mocha = require("mocha");
 const chai = require("chai");
@@ -9,9 +11,11 @@ const maxEdges = 300;
 const formatErrorText = "Could not parse input into a valid graph.";
 const arrayErrorText = "Parsed graph must have multiple nodes and edges.";
 
+// External output edge data.
 var parseOutputData = null;
 
 
+// Main function.
 function runTests()
 {
 	describe("Parse Graph", function()
@@ -25,6 +29,7 @@ function runTests()
 }
 
 
+// Reads external file containing output objects to validate against.
 function loadOutputData()
 {
 	var rawContents = null;
@@ -33,12 +38,14 @@ function loadOutputData()
 	{
 		it("File Read", function(done)
 		{
+			// Read file contents.
 			rawContents = fs.readFileSync("./test-parts/parse-output.json", "utf8");
 			done();
 		});
 		
 		it("JSON Parsed", function(done)
 		{
+			// Parse as JSON.
 			parseOutputData = JSON.parse(rawContents);
 			rawContents = null;
 			done();
@@ -49,6 +56,7 @@ function loadOutputData()
 
 
 
+// Test case for valid graph parsing.
 function handleValidCase()
 {
 	describe("Valid Case", function()
@@ -66,6 +74,7 @@ function handleValidCase()
 }
 
 
+// Test cases for data that is ignored without error.
 function handleIgnoreData()
 {
 	describe("Ignore Data", function()
@@ -142,6 +151,7 @@ function handleIgnoreData()
 }
 
 
+// Test cases that are invalid and will throw an error.
 function handleInvalidCases()
 {
 	describe("Invalid Cases", function()
@@ -216,6 +226,7 @@ function handleInvalidCases()
 }
 
 
+// Dispose external output data after unit tests complete.
 function disposeOutputData()
 {
 	describe("Dispose Output Data", function()
@@ -229,6 +240,7 @@ function disposeOutputData()
 }
 
 
+// Convert alphabet string into node array.
 function getNodeList(entryStr)
 {
 	var listRes = entryStr.split("");
@@ -237,6 +249,7 @@ function getNodeList(entryStr)
 
 
 
+// Defines graph containing every possible node.
 function defineAlphabetGraph()
 {
 	var defineRes = "";
@@ -248,6 +261,7 @@ function defineAlphabetGraph()
 }
 
 
+// Generates a graph with the maximum number of edges.
 function defineMaxEdgesGraph()
 {
 	var originIndex = -1;
@@ -262,33 +276,45 @@ function defineMaxEdgesGraph()
 	var loopCutoff = Math.ceil(maxEdges * 1.15);
 	var defineRes = "";
 	
+	// Loop until target number of edges generated, or every possible combination explored.
 	while (partArray.length < loopCutoff && originIndex < alphabet.length)
 	{
+		
+		// Checks if end of alphabet reached for destination node.
 		if (destinationIndex <= 0)
 		{
+			// Start again from A-Z on next origin.
 			originIndex += 1;
 			destinationIndex = 0;
 		}
 		
+		// Origin and destination nodes cannot be the same.
 		if (originIndex !== destinationIndex)
 		{
+			// Create edge part.
 			currentOriginNode = alphabet.charAt(originIndex);
 			currentDestinationNode = alphabet.charAt(destinationIndex);
 			currentPart = [currentOriginNode, currentDestinationNode, distanceNumber].join("");
 			partArray.push(currentPart);
 			
+			// Increment distance.
 			distanceNumber += 1;
 		}
 		
+		
+		// Update destination node index.
 		destinationIndex += 1;
 		destinationIndex = (destinationIndex % alphabet.length);
 	}
 	
+	
+	// Write graph string from parts.
 	defineRes = partArray.join();
 	return defineRes;
 }
 
 
+// Attempts to parse graph using 'try-catch' structure.
 function callInvalidEntry(entryStr, desiredMessage)
 {
 	var parseSuccessful = false;
@@ -296,33 +322,39 @@ function callInvalidEntry(entryStr, desiredMessage)
 	
 	try
 	{
+		// Parse input.
 		parseGraph.performParsing(entryStr);
 		parseSuccessful = true;
 	}
 	catch(parseErr)
 	{
+		// Error caught.
 		parseSuccessful = false;
 		correctError = parseErr.message.startsWith(desiredMessage);
 	}
 	
 	
+	// Check result.
 	if (parseSuccessful === true)
 	{
+		// No error.
 		throw new Error("No error was thrown.");
 	}
 	else if (correctError === true)
 	{
+		// Valid.
 		expect(true).to.be.true;
 	}
 	else
 	{
+		// Wrong error.
 		flagIncorrectError(desiredMessage);
 	}
 	
 }
 
 
-
+// Validates parse result object.
 function checkParseResult(parseObj)
 {
 	expect(parseObj).to.not.be.undefined;
@@ -343,6 +375,7 @@ function checkParseResult(parseObj)
 }
 
 
+// Checks whether parsed graph matches the given contents.
 function checkGraphContents(parseObj, nodeArr, edgeArr)
 {
 	expect(parseObj.nodes).to.deep.equal(nodeArr);
@@ -350,6 +383,7 @@ function checkGraphContents(parseObj, nodeArr, edgeArr)
 }
 
 
+// Incorrect error thrown in 'try-catch'
 function flagIncorrectError(vExp)
 {
 	var preparedText = ["Incorrect graph parsing error thrown.\r\n", "Should had been: '", vExp, "'"].join("");
