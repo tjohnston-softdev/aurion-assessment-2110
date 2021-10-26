@@ -139,8 +139,10 @@ We would like to see:
 
 #### Output
 
-* Values for each test case are displayed to the console, same as above.
-* Only the actual values are displayed. At first, I thought implementing a full unit test suite would be a little excessive.
+* Result values for each test case are displayed to the console, same as above.
+* For the submission itself, only the actual values are displayed.
+	* At first, I thought implementing a full unit test suite would be a little excessive.
+	* Unit testing was finally implemented in a later update.
 
 ----
 

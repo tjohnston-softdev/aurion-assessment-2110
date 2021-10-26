@@ -1,8 +1,11 @@
 # Changelog
 
 **./instructions.md**
-* Added new point under "Implementation Details" - "Pathfinding" - "Possible routes"
-	* "If the end node cannot be reached from the start node in a one-way sequence, there are no possible routes to search."
-* Re-worded 'unit test excessive' point:
-	* Before: "I thought implementing [...] excessive."
-	* After: "At first, I thought implementing [...] excessive"
+* Changed 'actual values output' point.
+	* Before: "Only [...] displayed"
+	* After: "For the submission itself, only [...] displayed."
+* 'unit test' is now a sub-point.
+* New point: "Unit testing [...] later update."
+* Changed 'test case values' point.
+	* Before "Values for each test case [...]"
+	* After: "Result values for each test case [...]"
