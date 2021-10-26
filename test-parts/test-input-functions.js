@@ -274,7 +274,7 @@ function checkTryCatch(trySuccessful, messageCorrect, expMsgTxt)
 
 function flagIncorrectError(vExp)
 {
-	var preparedText = ["Incorrect error thrown\r\n", "Should had ended with: '", vExp, "'"].join("");
+	var preparedText = ["Incorrect file system error thrown\r\n", "Should had ended with: '", vExp, "'"].join("");
 	throw new Error(preparedText);
 }
 

@@ -1,9 +1,7 @@
 # Changelog
 
-**./test-parts/test-pathfinding-input.js**
-* Removed 'fs' requirement.
-
----
-
-**./test-parts/test-input-functions.js - checkTryCatch**
-* Added missing full stop to error message.
+**./test-parts/
+* Revised 'flagIncorrectError' functions in their respective files to clarify between them.
+	* File system
+	* Graph parsing
+	* Pathfinding

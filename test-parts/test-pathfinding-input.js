@@ -345,7 +345,7 @@ function checkMissingGraphError(vMsg)
 
 function flagIncorrectError()
 {
-	var preparedText = ["Incorrect error thrown.\r\n", "Should had been: '", graphErrMsg, "'"].join("");
+	var preparedText = ["Incorrect pathfinding error thrown.\r\n", "Should had been: '", graphErrMsg, "'"].join("");
 	throw new Error(preparedText);
 }
 

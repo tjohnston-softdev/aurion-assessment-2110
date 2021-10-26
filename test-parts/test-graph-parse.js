@@ -352,7 +352,7 @@ function checkGraphContents(parseObj, nodeArr, edgeArr)
 
 function flagIncorrectError(vExp)
 {
-	var preparedText = ["Incorrect error thrown.\r\n", "Should had been: '", vExp, "'"].join("");
+	var preparedText = ["Incorrect graph parsing error thrown.\r\n", "Should had been: '", vExp, "'"].join("");
 	throw new Error(preparedText);
 }
 
