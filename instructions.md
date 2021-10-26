@@ -144,6 +144,11 @@ We would like to see:
 	* At first, I thought implementing a full unit test suite would be a little excessive.
 	* Unit testing was finally implemented in a later update.
 
+#### Dependencies
+
+* The submission itself uses no third-party packages. Everything is written in native Node JS.
+* The [mocha](https://mochajs.org/) and [chai](https://www.chaijs.com/) packages are required for unit testing.
+
 ----
 
 [City name](https://www.fantasynamegenerators.com/city-names.php) and [Suburb Names](https://www.fantasynamegenerators.com/city-district-names.php) from *[Fantasy Name Generators](https://www.fantasynamegenerators.com/)*  
