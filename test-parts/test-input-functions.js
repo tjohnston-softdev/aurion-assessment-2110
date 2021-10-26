@@ -259,7 +259,7 @@ function checkTryCatch(trySuccessful, messageCorrect, expMsgTxt)
 {
 	if (trySuccessful === true)
 	{
-		throw new Error("No error was thrown");
+		throw new Error("No error was thrown.");
 	}
 	else if (messageCorrect === true)
 	{
