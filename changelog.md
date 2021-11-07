@@ -1,6 +1,6 @@
 # Changelog
 
 **./instructions.md**
-* Reformatted 'plan and design'
-	* Before: "How did you plan and design your approach"
-	* After: "How you planned and designed your approach."
+* Added new points:
+	* "Edges are only one-way [...]"
+	* "These edges can have different distances [...]"

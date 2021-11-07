@@ -108,6 +108,8 @@ We would like to see:
 	* This is covered both during the initial format check and after the graph has been parsed.
 * There is no hard upper limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
 * There is a hard upper limit of 300 edges. Afterwards, further input will be ignored without error.
+* Edges are only one-way, so 'BC' and 'CB' are different edges.
+	* These edges can have different distances, even if they are in the opposite direction.
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
 * There is no hard limit on edge distance.
