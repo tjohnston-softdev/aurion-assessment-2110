@@ -80,7 +80,7 @@ We would like to see:
 * There must be a way to supply the application with the input data via text file.
 * The application must execute.
 * You should provide sufficient evidence that your solution is complete by, as a minimum, indicating that it works correctly against the supplied test data.
-* The application built to solve the problem should be constructed using Typescript, and execute as a NodeJS application.
+* The application built to solve the problem should be constructed using Typescript, and execute as a Node JS application.
 * Provide a brief overview of the submission with guidance on how to execute the application, or execute the test suites that verify the logic.
 
 ---
