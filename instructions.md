@@ -89,36 +89,38 @@ We would like to see:
 
 #### Input
 
-* Script input is via plain text file consisting of the graph definition as above.
-* The text file content *must* be the graph and *only* the graph. Otherwise, there will be an error.
+* Script input is a plain text file consisting of the graph definition as explained above.
+* The text file content *must* be the graph and *only* the graph. Otherwise, errors will be raised during parsing.
 * Input file path is an optional argument (eg. `node submission ./file.txt`).
 	* If this is not entered, `input.txt` will be used as default.
-* The file cannot be larger than 10kb. Otherwise, there will be an error.
-* Error handling has been implemented for accessing the input file.
+* The file cannot be larger than 10KB. Otherwise, there will be an error.
+* Error handling has been implemented for input file access functions.
 
 #### Parsing
 
 * All whitespace is ignored, but it still counts against the file size limit.
 * Input is not case-sensitive, so 'A' is the same as 'a'.
-	* Letters will be interpreted as upper-case.
+	* Letters are interpreted as upper-case.
 * Graph uses the format: `AB5, BC4, [etc]`
-* If the graph does not use this format, there will be an error.
+	* If the graph does not use this format, there will be an error.
 * A node is represented using an alphabet character: `[A-Z]`
-* A graph must have multiple nodes and edges. Otherwise, there will be formatting errors.
+* A graph must have multiple nodes and edges. Otherwise, there will be errors.
+	* This is covered both during the initial format check and after the graph has been parsed.
 * There is no hard upper limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
-* There is a hard upper limit of 300 edges. Afterwards, further input will be ignored.
+* There is a hard upper limit of 300 edges. Afterwards, further input will be ignored without error.
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
 * There is no hard limit on edge distance.
-	* Numbers that cannot be interpreted as positive and whole will be ignored without error.
-	* Negative and decimal values still cause errors during initial format check because the characters are not allowed.
+	* Numbers must be interpreted as positive and whole.
+	* Invalid number interpretations will be ignored without error.
+	* Negative and decimal values still cause errors during the initial format check because the respective characters are not allowed.
 
 #### Pathfinding
 
 * Exact routes:
 	* Input is a string with each character representing a node along the route.
 	* This string must have at least two characters.
-	* Messages are output for invalid input.
+	* Messages are output for invalid route input.
 	* If the route is not possible or a node does not exist, output "NO SUCH ROUTE"
 	* Successful output is the distance of the given route.
 * Shortest path:
@@ -130,24 +132,26 @@ We would like to see:
 	* Supports criteria for 'number of stops' and 'total distance'
 	* If the start or end nodes are missing, output message.
 	* If the criteria objects are invalid, output message.
-	* If the end node cannot be reached from the start node in a one-way sequence, there are no possible routes to search.
-	* Expands from the start node, creating new possible paths as nodes are visited.
-	* If the end node is visited at *any* point, it is a completed route and will be saved.
+	* If the end node cannot be reached from the start node in a direct sequence, there are no possible routes to search.
+	* Pathfinding expands from the start node, creating new possible paths as nodes are visited.
+	* Backtracking is allowed, so nodes can be visited multiple times on a given route.
+	* If the end node is visited at *any* point, it is a completed route and will be remembered.
 	* A complete route is valid if the criteria is met and has at least one stop.
-	* *All* completed routes are saved to avoid going around in circles but only valid routes will be counted for the end result.
+	* *All* completed routes are saved to avoid searching forever but only valid routes will be counted for the end result.
+	* Valid routes are counted after all of the completed routes have been found.
 	* Successful output is the number of possible routes found, even if it is zero.
 
 #### Output
 
 * Result values for each test case are displayed to the console, same as above.
 * For the submission itself, only the actual values are displayed.
-	* At first, I thought implementing a full unit test suite would be a little excessive.
-	* Unit testing was finally implemented in a later update.
+	* At first, I thought implementing a full unit test suite would have been excessive given that we only had three days to complete the assessment.
+	* Proper unit tests were finally implemented in a later update in my own time.
 
 #### Dependencies
 
 * The submission itself uses no third-party packages. Everything is written in native Node JS.
-* Unit tests were implemented using [mocha](https://mochajs.org/) and [chai](https://www.chaijs.com/)
+* Unit tests were implemented using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/)
 
 ----
 
