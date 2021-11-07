@@ -71,7 +71,7 @@ For the test input, the suburbs are named using the first few letters of the alp
 
 We would like to see:
 
-* How did you plan and design your approach
+* How you planned and designed your approach.
 * Written code.
 * Test results.
 
