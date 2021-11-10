@@ -78,10 +78,12 @@ We would like to see:
 #### Technical Requirements
 
 * There must be a way to supply the application with the input data via text file.
-* The application must execute.
+* The application must execute successfully.
 * You should provide sufficient evidence that your solution is complete by, as a minimum, indicating that it works correctly against the supplied test data.
-* The application built to solve the problem should be constructed using Typescript, and execute as a Node JS application.
-* Provide a brief overview of the submission with guidance on how to execute the application, or execute the test suites that verify the logic.
+* The application built to solve the problem should be constructed using TypeScript, and execute as a Node JS application.
+* Provide a brief overview of the submission with guidance on:
+	* How to execute the application.
+	* Execute the test suites that verify the logic.
 
 ---
 
@@ -89,27 +91,27 @@ We would like to see:
 
 #### Input
 
-* Script input is a plain text file consisting of the graph definition as explained above.
+* The script input is a plain text file consisting of the graph definition as explained above.
 * The text file content *must* be the graph and *only* the graph. Otherwise, errors will be raised during parsing.
-* Input file path is an optional argument (eg. `node submission ./file.txt`).
+* The input file path is an optional argument (eg. `node submission ./file.txt`).
 	* If this is not entered, `input.txt` will be used as default.
 * The file cannot be larger than 10KB. Otherwise, there will be an error.
-* Error handling has been implemented for input file access functions.
+* Error handling has been implemented for when the input file is being accessed.
 
 #### Parsing
 
-* All whitespace is ignored, but it still counts against the file size limit.
+* All white-space is ignored, but it still counts against the file size limit.
 * Input is not case-sensitive, so 'A' is the same as 'a'.
 	* Letters are interpreted as upper-case.
 * Graph uses the format: `AB5, BC4, [etc]`
-	* If the graph does not use this format, there will be an error.
+	* If the graph does not use this format, there will be errors.
 * A node is represented using an alphabet character: `[A-Z]`
 * A graph must have multiple nodes and edges. Otherwise, there will be errors.
 	* This is covered both during the initial format check and after the graph has been parsed.
 * There is no hard upper limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
 * There is a hard upper limit of 300 edges. Afterwards, further input will be ignored without error.
 * Edges are only one-way, so 'BC' and 'CB' are different edges.
-	* These edges can have different distances, even if they are in the opposite direction.
+	* These edges can have different distances, even if they are the same nodes in the opposite direction.
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
 * There is no hard limit on edge distance.
@@ -119,7 +121,7 @@ We would like to see:
 
 #### Pathfinding
 
-* Exact routes:
+* Exact route:
 	* Input is a string with each character representing a node along the route.
 	* This string must have at least two characters.
 	* Messages are output for invalid route input.
@@ -134,7 +136,7 @@ We would like to see:
 	* Supports criteria for 'number of stops' and 'total distance'
 	* If the start or end nodes are missing, output message.
 	* If the criteria objects are invalid, output message.
-	* If the end node cannot be reached from the start node in a direct sequence, there are no possible routes to search.
+	* If the end node cannot be reached from the start node in a direct sequence, there are no possible routes to search. The output will be zero.
 	* Pathfinding expands from the start node, creating new possible paths as nodes are visited.
 	* Backtracking is allowed, so nodes can be visited multiple times on a given route.
 	* If the end node is visited at *any* point, it is a completed route and will be remembered.
@@ -148,12 +150,14 @@ We would like to see:
 * Result values for each test case are displayed to the console, same as above.
 * For the submission itself, only the actual values are displayed.
 	* At first, I thought implementing a full unit test suite would have been excessive given that we only had three days to complete the assessment.
-	* Proper unit tests were finally implemented in a later update in my own time.
+	* Proper unit tests were finally implemented in a later update during my own time.
+	* The unit tests directly compare the expected and actual values for the given test cases.
 
 #### Dependencies
 
 * The submission itself uses no third-party packages. Everything is written in native Node JS.
 * Unit tests were implemented using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/)
+	* Keep in mind that formal unit tests were not included in the original submission.
 
 ----
 
