@@ -1,4 +1,4 @@
 # Changelog
 
 **./package.json**
-* Installed 'prompt-sync'
+* Uninstalled 'prompt-sync'
