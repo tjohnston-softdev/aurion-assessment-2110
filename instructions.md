@@ -114,9 +114,8 @@ We would like to see:
 	* These edges can have different distances, even if they are the same nodes in the opposite direction.
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
-* There is no hard limit on edge distance.
-	* Numbers must be interpreted as positive and whole.
-	* Invalid number interpretations will be ignored without error.
+* Edge distance must be a whole number between 1 and 1000000000 (a billion)
+	* Invalid distances will be ignored without error.
 	* Negative and decimal values still cause errors during the initial format check because the respective characters are not allowed.
 
 #### Pathfinding
