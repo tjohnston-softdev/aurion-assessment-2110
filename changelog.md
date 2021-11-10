@@ -1,4 +1,6 @@
 # Changelog
 
 **./instructions.md**
-* Updated implementation details on edge distance limit.
+* Re-worded 'invalid distance numbers'
+	* Before: "Invalid distances will be ignored without error."
+	* After: "Higher numbers will be ignored without error."

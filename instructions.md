@@ -115,7 +115,7 @@ We would like to see:
 * Duplicate edges will be ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
 * Edge distance must be a whole number between 1 and 1000000000 (a billion)
-	* Invalid distances will be ignored without error.
+	* Higher numbers will be ignored without error.
 	* Negative and decimal values still cause errors during the initial format check because the respective characters are not allowed.
 
 #### Pathfinding
