@@ -45,10 +45,10 @@ function loopGraphParts(partsArray, graphObject)
 	var currentOriginChar = "";
 	var currentDestChar = "";
 	var currentDistance = NaN;
-	var currentLengthGiven = false;
+	var currentLengthValid = false;
 	var currentOriginID = -1;
 	var currentDestID = -1;
-	var currentValid = false;
+	var currentPrepared = false;
 	var currentExists = null;
 	
 	var canContinue = true;
@@ -65,21 +65,21 @@ function loopGraphParts(partsArray, graphObject)
 		
 		// Read edge distance.
 		currentDistance = castDistance(currentPart);
-		currentLengthGiven = checkDistanceValid(currentDistance);
-		currentValid = false;
+		currentLengthValid = checkDistanceValid(currentDistance);
+		currentPrepared = false;
 		currentExists = null;
 		
 		
-		if (currentLengthGiven === true)
+		if (currentLengthValid === true)
 		{
 			// Add nodes to graph and check if edge exists.
 			currentOriginID = graphTasks.addNode(currentOriginChar, graphObject.nodes);
 			currentDestID = graphTasks.addNode(currentDestChar, graphObject.nodes);
-			currentValid = true;
+			currentPrepared = true;
 			currentExists = graphTasks.getEdge(currentOriginID, currentDestID, graphObject.edges);
 		}
 		
-		if (currentValid === true && currentExists === null)
+		if (currentPrepared === true && currentExists === null)
 		{	
 			// Add edge to graph.
 			graphTasks.addEdge(currentOriginID, currentDestID, currentDistance, graphObject.edges);
@@ -117,7 +117,7 @@ function castDistance(partStr)
 function checkDistanceValid(distNum)
 {
 	var correctType = Number.isInteger(distNum);
-	var checkRes = (correctType === true && distNum > 0);
+	var checkRes = (correctType === true && distNum > 0 && distNum <= 1000000000);
 	return checkRes;
 }
 

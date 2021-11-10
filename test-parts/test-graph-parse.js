@@ -147,6 +147,16 @@ function handleIgnoreData()
 			checkGraphContents(resultValue, inclNodes, parseOutputData.zeroDistance);
 		});
 		
+		it("Distance Too Long", function()
+		{
+			var inclNodes = getNodeList("ABEF");
+			var resultValue = parseGraph.performParsing("AB1, CD9999999999999999999999999999999999, EF1000");
+			
+			checkParseResult(resultValue);
+			checkGraphContents(resultValue, inclNodes, parseOutputData.distanceTooLong);
+		});
+		
+		
 	});
 }
 
