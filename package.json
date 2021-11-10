@@ -1,7 +1,7 @@
 {
   "name": "aurion-assessment-2110",
   "version": "0.0.0",
-  "description": "This is my submission for a technical assessment as part of a software developer position I applied for with [Aurion](https://aurion.com/). The challenge was to examine a rail network in an imaginary city represented as a weighted graph, and implement various pathfinding algorithms to fulfil different test cases. The cases consisted of following an exact route, finding all possible paths between stops under certain criteria, and finding the shortest path between stops.",
+  "description": "Submission for Aurion technical assessment - October 2021",
   "main": "submission.js",
   "scripts": {
     "test": "node ./node_modules/mocha/bin/mocha"

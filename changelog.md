@@ -1,4 +1,4 @@
 # Changelog
 
 **./package.json**
-* Uninstalled 'prompt-sync'
+* Simplified 'description' value.
