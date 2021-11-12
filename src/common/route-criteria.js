@@ -27,22 +27,32 @@ function defineTotalDistanceCriteria(inpDist, inpSign)
 // Validate object.
 function validateRouteCriteria(givenObject)
 {
-	var valueType = typeof givenObject;
+	var typeFlag = checkValueType(givenObject);
 	var validationResult = false;
 	
-	if (givenObject !== null && valueType === "object")
+	if (typeFlag > 0 && givenObject.type === criteriaTypesEnum.STOP_COUNT)
 	{
-		// Check properties.
+		// Stop Count
 		validationResult = handleNumberSign(givenObject);
 	}
-	else if (givenObject !== null)
+	else if (typeFlag > 0 && givenObject.type === criteriaTypesEnum.TOTAL_DISTANCE)
 	{
-		// Invalid type.
+		// Total Distance
+		validationResult = handleNumberSign(givenObject);
+	}
+	else if (typeFlag > 0)
+	{
+		// Unknown criteria type.
+		validationResult = false;
+	}
+	else if (typeFlag === 0)
+	{
+		// Invalid object type.
 		validationResult = false;
 	}
 	else
 	{
-		// Empty.
+		// Empty
 		validationResult = true;
 	}
 	
@@ -50,7 +60,7 @@ function validateRouteCriteria(givenObject)
 }
 
 
-// Check object properties.
+// Check 'stop count' and 'total distance' properties.
 function handleNumberSign(criteriaObj)
 {
 	var numberVal = criteriaObj.number;
@@ -66,6 +76,33 @@ function handleNumberSign(criteriaObj)
 	}
 	
 	return handleRes;
+}
+
+
+
+// Reads criteria object value type before validation.
+function checkValueType(givenObj)
+{
+	var valueType = typeof givenObj;
+	var checkRes = -1;
+	
+	if (givenObj !== null && valueType === "object")
+	{
+		// Valid object.
+		checkRes = 1;
+	}
+	else if (givenObj !== null)
+	{
+		// Invalid value type.
+		checkRes = 0;
+	}
+	else
+	{
+		// Null.
+		checkRes = -1;
+	}
+	
+	return checkRes;
 }
 
 
