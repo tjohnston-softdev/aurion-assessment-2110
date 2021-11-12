@@ -73,12 +73,7 @@ function checkCompleteNumberSign(actualValue, criteriaObj)
 {
 	var matchRes = false;
 	
-	if (criteriaObj === null)
-	{
-		// Criteria not set.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.LESS && actualValue < criteriaObj.number)
+	if (criteriaObj.sign === numSigns.LESS && actualValue < criteriaObj.number)
 	{
 		// Less than.
 		matchRes = true;
@@ -119,12 +114,8 @@ function checkIncompleteNumberSign(actualValue, criteriaObj)
 {
 	var matchRes = false;
 	
-	if (criteriaObj === null)
-	{
-		// Criteria not set.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.LESS && actualValue >= criteriaObj.number)
+	
+	if (criteriaObj.sign === numSigns.LESS && actualValue >= criteriaObj.number)
 	{
 		// Above inclusive cutoff.
 		matchRes = false;

@@ -1,19 +1,19 @@
 # Changelog
 
-**./src/common/enum/criteria-types.js**
-* New file - Definition for route criteria types.
-
----
-
 **./src/common/route-criteria.js**
-* Removed 'criteriaTypesEnum' global object.
-* Required './enum/criteria-types'
-* Replaced references to 'criteriaTypesEnum' with 'criteriaTypes'
-* Removed `criteriaTypes: criteriaTypesEnum,` module export.
+* Changes to 'iterateCriteriaValidation'
+	* Renamed 'resultObject' parameter to 'validResultObj'
+* Changes to 'checkValueType'
+	* 'checkRes' is now a boolean.
+	* Result is valid if 'givenObj' is an existing, non-null object.
+* Changes to 'readCriteria'
+	* Declared 'resultObject' parameter.
+	* Renamed 'typeFlag' variable to 'correctType'
+	* Replaced `typeFlag > 0` with `correctType === true`
 
 ---
 
 **./src/common/possible-criteria-validation.js**
-* Removed 'routeCriteria' requirement.
-* Required './enum/criteria-types'
-* Replaced references to 'routeCriteria.criteriaTypes' with 'criteriaTypes'
+* Removed valid `criteriaObj === null` clauses from functions:
+	* checkCompleteNumberSign
+	* checkIncompleteNumberSign

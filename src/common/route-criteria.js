@@ -46,13 +46,13 @@ function validateRouteCriteria(givenCriteriaArray)
 }
 
 
-function iterateCriteriaValidation(givenArray, resultObject)
+function iterateCriteriaValidation(givenArray, validResultObj)
 {
 	var criteriaIndex = 0;
 	var currentElement = null;
 	var currentValid = false;
 	
-	while (criteriaIndex >= 0 && criteriaIndex < givenArray.length && resultObject.successful === true)
+	while (criteriaIndex >= 0 && criteriaIndex < givenArray.length && validResultObj.successful === true)
 	{
 		currentElement = givenArray[criteriaIndex];
 		currentValid = true;
@@ -63,22 +63,22 @@ function iterateCriteriaValidation(givenArray, resultObject)
 
 
 // Validate object.
-function readCriteria(givenObject)
+function readCriteria(givenObject, resultObject)
 {
-	var typeFlag = checkValueType(givenObject);
+	var correctType = checkValueType(givenObject);
 	var validationResult = false;
 	
-	if (typeFlag > 0 && givenObject.type === criteriaTypes.STOP_COUNT)
+	if (correctType === true && givenObject.type === criteriaTypes.STOP_COUNT)
 	{
 		// Stop Count
 		validationResult = handleNumberSign(givenObject);
 	}
-	else if (typeFlag > 0 && givenObject.type === criteriaTypes.TOTAL_DISTANCE)
+	else if (correctType === true && givenObject.type === criteriaTypes.TOTAL_DISTANCE)
 	{
 		// Total Distance
 		validationResult = handleNumberSign(givenObject);
 	}
-	else if (typeFlag > 0)
+	else if (correctType === true)
 	{
 		// Unknown criteria type.
 		validationResult = false;
@@ -122,22 +122,11 @@ function handleNumberSign(criteriaObj)
 function checkValueType(givenObj)
 {
 	var valueType = typeof givenObj;
-	var checkRes = -1;
+	var checkRes = false;
 	
-	if (givenObj !== null && valueType === "object")
+	if (givenObj !== undefined && givenObj !== null && valueType === "object")
 	{
-		// Valid object.
-		checkRes = 1;
-	}
-	else if (givenObj !== null)
-	{
-		// Invalid value type.
-		checkRes = 0;
-	}
-	else
-	{
-		// Null.
-		checkRes = -1;
+		checkRes = true;
 	}
 	
 	return checkRes;
