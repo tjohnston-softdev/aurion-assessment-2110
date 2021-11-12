@@ -4,15 +4,16 @@ const graphTasks = require("./common/graph-tasks");
 const routeTasks = require("./common/possible-route-tasks");
 const numSigns = require("./common/num-signs");
 const routeCriteria = require("./common/route-criteria");
+const possibleCriteriaValidation = require("./common/possible-criteria-validation");
 
 
 // Main function.
-function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, distanceCriteria)
+function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 {
 	var preparedNodes = {};
 	var nodesValid = false;
-	var countValid = false;
-	var distValid = false;
+	var criteriaValidation = {};
+	
 	var endReachPossible = false;
 	var possibleRes = null;
 	
@@ -21,23 +22,19 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 	nodesValid = routeTasks.validateNodes(preparedNodes);
 	
 	// Validate route criteria.
-	countValid = routeCriteria.validateCriteria(stopCountCriteria);
-	distValid = routeCriteria.validateCriteria(distanceCriteria);
+	criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
 	
 	
-	if (nodesValid === true && countValid === true && distValid === true)
+	if (nodesValid === true && criteriaValidation.successful === true)
 	{
 		// Input valid, perform algorithm.
-		endReachPossible = performInitialSequence(preparedNodes, graphObject, stopCountCriteria, distanceCriteria);
-		possibleRes = performMainSearch(preparedNodes, graphObject, stopCountCriteria, distanceCriteria, endReachPossible);
-	}
-	else if (nodesValid === true && countValid === true)
-	{
-		possibleRes = "INVALID DISTANCE CRITERIA";
+		endReachPossible = performInitialSequence(preparedNodes, graphObject, criteriaListObject, criteriaValidation.ignore);
+		possibleRes = performMainSearch(preparedNodes, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
 	}
 	else if (nodesValid === true)
 	{
-		possibleRes = "INVALID COUNT CRITERIA";
+		// Invalid route criteria
+		possibleRes = "INVALID CRITERIA";
 	}
 	else
 	{
@@ -50,7 +47,7 @@ function findPossibleRoutes(graphObject, startNode, endNode, stopCountCriteria, 
 
 
 // Searches for a possible route in sequence.
-function performInitialSequence(prepNodes, graphObj, stopCountCritObject, distanceCritObject)
+function performInitialSequence(prepNodes, graphObj, criteriaListObj, ignoreCriteria)
 {
 	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
 	var exploredRoutes = [];
@@ -63,7 +60,7 @@ function performInitialSequence(prepNodes, graphObj, stopCountCritObject, distan
 	while (loopNumber >= 1 && loopNumber <= loopCutoff && sequenceFound !== true)
 	{
 		// Iterate through current set of routes.
-		sequenceFound = iterateRoutes(prepNodes, graphObj.edges, stopCountCritObject, distanceCritObject, routeBacklog, exploredRoutes, false);
+		sequenceFound = iterateRoutes(prepNodes, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, exploredRoutes, false);
 		loopNumber = loopNumber + 1;
 	}
 	
@@ -72,7 +69,7 @@ function performInitialSequence(prepNodes, graphObj, stopCountCritObject, distan
 
 
 // Search for all possible routes.
-function performMainSearch(prepNodes, graphObj, stopCountCritObject, distanceCritObject, loopEnabled)
+function performMainSearch(prepNodes, graphObj, criteriaListObj, ignoreCriteria, loopEnabled)
 {
 	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
 	var completedRoutes = [];
@@ -83,7 +80,7 @@ function performMainSearch(prepNodes, graphObj, stopCountCritObject, distanceCri
 		while (routeBacklog.length > 0)
 		{
 			// Iterate through current set of routes.
-			iterateRoutes(prepNodes, graphObj.edges, stopCountCritObject, distanceCritObject, routeBacklog, completedRoutes, true);
+			iterateRoutes(prepNodes, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, true);
 		}
 	}
 	
@@ -93,7 +90,7 @@ function performMainSearch(prepNodes, graphObj, stopCountCritObject, distanceCri
 
 
 // Loop through current set of possible routes.
-function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, routeArray, compArray, allowBacktracking)
+function iterateRoutes(pNodes, graphEdgeArr, critListArr, ignoreCrit, routeArray, compArray, allowBacktracking)
 {
 	var routeIndex = 0;
 	var currentRoute = {};
@@ -123,7 +120,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		// If end node has been reached, save it, and check whether it should be explored further.
 		if (currentNode === pNodes.end)
 		{
-			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, stopCriteriaObj, distCriteriaObj);
+			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, critListArr, ignoreCrit);
 			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentEndValid);
 			endReached = true;
 		}
@@ -132,7 +129,7 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 		if (currentBranchAllowed === true)
 		{
 			// Derive new routes from possible destinations.
-			currentAdjEdges = readIncompleteRoute(currentNode, currentRoute.distance, currentStops, stopCriteriaObj, distCriteriaObj, graphEdgeArr);
+			currentAdjEdges = readIncompleteRoute(currentNode, currentRoute.distance, currentStops, critListArr, ignoreCrit, graphEdgeArr);
 			routeTasks.deriveNew(routeIndex, currentRoute, currentAdjEdges, graphEdgeArr, routeArray, allowBacktracking);
 			currentOffset = currentAdjEdges.length;
 		}
@@ -148,13 +145,17 @@ function iterateRoutes(pNodes, graphEdgeArr, stopCriteriaObj, distCriteriaObj, r
 
 
 // Check whether a completed route meets the criteria.
-function validateCompletedRoute(distVal, stopCount, stopCriteria, distCriteria)
+function validateCompletedRoute(distVal, stopCount, criteriaList, skipCriteria)
 {
-	var stopCountMatch = checkCompletedRouteCriteriaMatch(stopCount, stopCriteria);
-	var distanceMatch = checkCompletedRouteCriteriaMatch(distVal, distCriteria);
+	var criteriaMatch = true;
 	var validRes = false;
 	
-	if (stopCountMatch === true && distanceMatch === true && stopCount > 0)
+	if (skipCriteria !== true)
+	{
+		criteriaMatch = possibleCriteriaValidation.loopComplete(distVal, stopCount, criteriaList);
+	}
+	
+	if (criteriaMatch === true && stopCount > 0)
 	{
 		validRes = true;
 	}
@@ -164,17 +165,18 @@ function validateCompletedRoute(distVal, stopCount, stopCriteria, distCriteria)
 
 
 // Reads incomplete route.
-function readIncompleteRoute(baseNodeID, distVal, stopCount, stopCriteria, distCriteria, graphEdges)
+function readIncompleteRoute(baseNodeID, distVal, stopCount, criteriaList, skipCriteria, graphEdges)
 {
-	var stopCountValid = false;
-	var distanceValid = false;
+	var criteriaMatch = true;
 	var readRes = [];
 	
-	// Check if criteria still met.
-	stopCountValid = checkIncompleteRouteCriteriaMatch(stopCount, stopCriteria);
-	distanceValid = checkIncompleteRouteCriteriaMatch(distVal, distCriteria);
+	if (skipCriteria !== true)
+	{
+		// Check if criteria still met.
+		criteriaMatch = possibleCriteriaValidation.loopIncomplete(distVal, stopCount, criteriaList);
+	}
 	
-	if (stopCountValid === true && distanceValid === true)
+	if (criteriaMatch === true)
 	{
 		// Criteria met, retrieve adjacent edges from current node.
 		readRes = graphTasks.getAdjacentEdges(baseNodeID, graphEdges);
@@ -182,87 +184,6 @@ function readIncompleteRoute(baseNodeID, distVal, stopCount, stopCriteria, distC
 	
 	return readRes;
 }
-
-
-
-// Check if a completed route meets the given criteria.
-function checkCompletedRouteCriteriaMatch(actualValue, criteriaObj)
-{
-	var matchRes = false;
-	
-	if (criteriaObj === null)
-	{
-		// Criteria not set.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.LESS && actualValue < criteriaObj.number)
-	{
-		// Less than.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.LESS_EQUAL && actualValue <= criteriaObj.number)
-	{
-		// Less than or equal to.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.EQUAL && actualValue === criteriaObj.number)
-	{
-		// Equal.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.GREAT && actualValue > criteriaObj.number)
-	{
-		// Greater than.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.GREAT_EQUAL && actualValue >= criteriaObj.number)
-	{
-		// Greater than or equal to.
-		matchRes = true;
-	}
-	else
-	{
-		// Invalid.
-		matchRes = false;
-	}
-	
-	return matchRes;
-}
-
-// Check if an incomplete route meets the given criteria.
-function checkIncompleteRouteCriteriaMatch(actualValue, criteriaObj)
-{
-	var matchRes = false;
-	
-	if (criteriaObj === null)
-	{
-		// Criteria not set.
-		matchRes = true;
-	}
-	else if (criteriaObj.sign === numSigns.LESS && actualValue >= criteriaObj.number)
-	{
-		// Above inclusive cutoff.
-		matchRes = false;
-	}
-	else if (criteriaObj.sign === numSigns.LESS_EQUAL && actualValue > criteriaObj.number)
-	{
-		// Above exclusive cutoff.
-		matchRes = false;
-	}
-	else if (criteriaObj.sign === numSigns.EQUAL && actualValue > criteriaObj.number)
-	{
-		// Above target.
-		matchRes = false;
-	}
-	else
-	{
-		// Criteria met.
-		matchRes = true;
-	}
-	
-	return matchRes;
-}
-
 
 
 module.exports =

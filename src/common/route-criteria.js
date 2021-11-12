@@ -23,9 +23,51 @@ function defineTotalDistanceCriteria(inpDist, inpSign)
 }
 
 
+function validateRouteCriteria(givenCriteriaArray)
+{
+	var arrayValid = Array.isArray(givenCriteriaArray);
+	var validationResult = {};
+	
+	validationResult["successful"] = true;
+	validationResult["reason"] = "";
+	validationResult["itemNo"] = -1;
+	validationResult["ignore"] = false;
+	
+	if (arrayValid === true)
+	{
+		iterateCriteriaValidation(givenCriteriaArray, validationResult);
+	}
+	else if (givenCriteriaArray === undefined || givenCriteriaArray === null)
+	{
+		validationResult.ignore = true;
+	}
+	else
+	{
+		validationResult.successful = false;
+	}
+	
+	return validationResult;
+}
+
+
+function iterateCriteriaValidation(givenArray, resultObject)
+{
+	var criteriaIndex = 0;
+	var currentElement = null;
+	var currentValid = false;
+	
+	while (criteriaIndex >= 0 && criteriaIndex < givenArray.length && resultObject.successful === true)
+	{
+		currentElement = givenArray[criteriaIndex];
+		currentValid = true;
+		criteriaIndex = criteriaIndex + 1;
+	}
+}
+
+
 
 // Validate object.
-function validateRouteCriteriaOriginal(givenObject)
+function readCriteria(givenObject)
 {
 	var typeFlag = checkValueType(givenObject);
 	var validationResult = false;
@@ -123,5 +165,5 @@ module.exports =
 	criteriaTypes: criteriaTypesEnum,
 	defineStopCount: defineStopCountCriteria,
 	defineTotalDistance: defineTotalDistanceCriteria,
-	validateCriteria: validateRouteCriteriaOriginal
+	validateCriteria: validateRouteCriteria
 };
