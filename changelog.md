@@ -1,17 +1,19 @@
 # Changelog
 
-**./src/common/enum/**
-* New folder - Will contain definitions for enum types.
+**./src/common/enum/criteria-types.js**
+* New file - Definition for route criteria types.
 
 ---
 
-**./src/common/num-signs.js**
-* Moved into 'enum' subfolder.
+**./src/common/route-criteria.js**
+* Removed 'criteriaTypesEnum' global object.
+* Required './enum/criteria-types'
+* Replaced references to 'criteriaTypesEnum' with 'criteriaTypes'
+* Removed `criteriaTypes: criteriaTypesEnum,` module export.
 
 ---
 
-**Updated Requirements**
-* ./cases.js
-* ./src/possible-routes.js
-* ./src/common/possible-criteria-validation.js
-* ./test-parts/test-pathfinding-input.js
+**./src/common/possible-criteria-validation.js**
+* Removed 'routeCriteria' requirement.
+* Required './enum/criteria-types'
+* Replaced references to 'routeCriteria.criteriaTypes' with 'criteriaTypes'

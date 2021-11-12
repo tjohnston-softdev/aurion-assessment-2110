@@ -1,16 +1,12 @@
 // Route criteria objects.
 
-const criteriaTypesEnum =
-{
-	"STOP_COUNT": 1,
-	"TOTAL_DISTANCE": 2
-};
+const criteriaTypes = require("./enum/criteria-types");
 
 
 // 'Stop Count' constructor.
 function defineStopCountCriteria(inpCount, inpSign)
 {
-	var defineRes = setNumberSign(criteriaTypesEnum.STOP_COUNT, inpCount, inpSign);
+	var defineRes = setNumberSign(criteriaTypes.STOP_COUNT, inpCount, inpSign);
 	return defineRes;
 }
 
@@ -18,7 +14,7 @@ function defineStopCountCriteria(inpCount, inpSign)
 // 'Total Distance' constructor.
 function defineTotalDistanceCriteria(inpDist, inpSign)
 {
-	var defineRes = setNumberSign(criteriaTypesEnum.TOTAL_DISTANCE, inpDist, inpSign);
+	var defineRes = setNumberSign(criteriaTypes.TOTAL_DISTANCE, inpDist, inpSign);
 	return defineRes;
 }
 
@@ -72,12 +68,12 @@ function readCriteria(givenObject)
 	var typeFlag = checkValueType(givenObject);
 	var validationResult = false;
 	
-	if (typeFlag > 0 && givenObject.type === criteriaTypesEnum.STOP_COUNT)
+	if (typeFlag > 0 && givenObject.type === criteriaTypes.STOP_COUNT)
 	{
 		// Stop Count
 		validationResult = handleNumberSign(givenObject);
 	}
-	else if (typeFlag > 0 && givenObject.type === criteriaTypesEnum.TOTAL_DISTANCE)
+	else if (typeFlag > 0 && givenObject.type === criteriaTypes.TOTAL_DISTANCE)
 	{
 		// Total Distance
 		validationResult = handleNumberSign(givenObject);
@@ -162,7 +158,6 @@ function setNumberSign(typeVal, numVal, signVal)
 
 module.exports =
 {
-	criteriaTypes: criteriaTypesEnum,
 	defineStopCount: defineStopCountCriteria,
 	defineTotalDistance: defineTotalDistanceCriteria,
 	validateCriteria: validateRouteCriteria
