@@ -1,4 +1,4 @@
-const numSigns = require("./num-signs");
+const numSigns = require("./enum/num-signs");
 const routeCriteria = require("./route-criteria");
 
 function loopCriteriaComplete(givenDistance, givenStops, criteriaObjectArray)

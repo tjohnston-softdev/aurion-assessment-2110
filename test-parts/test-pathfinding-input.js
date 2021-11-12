@@ -7,7 +7,7 @@ const parseGraph = require("../src/parse-graph");
 const exactRoute = require("../src/exact-route");
 const shortestRoute = require("../src/shortest-route");
 const possibleRoutes = require("../src/possible-routes");
-const numSigns = require("../src/common/num-signs");
+const numSigns = require("../src/common/enum/num-signs");
 const routeCriteria = require("../src/common/route-criteria");
 
 const graphErrMsg = "Cannot read property 'nodes' of null";

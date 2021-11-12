@@ -2,7 +2,7 @@
 
 const graphTasks = require("./common/graph-tasks");
 const routeTasks = require("./common/possible-route-tasks");
-const numSigns = require("./common/num-signs");
+const numSigns = require("./common/enum/num-signs");
 const routeCriteria = require("./common/route-criteria");
 const possibleCriteriaValidation = require("./common/possible-criteria-validation");
 
