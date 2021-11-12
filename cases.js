@@ -59,12 +59,9 @@ function runTestCase5(givenInputGraph)
 // Test case 6
 function runTestCase6(givenInputGraph)
 {
-	var routeStopCriteria = routeCriteria.defineCriteria();
+	var routeStopCriteria = routeCriteria.defineStopCount(3, numSigns.LESS_EQUAL);
 	var actualValue = null;
 	var caseResultObject = null;
-	
-	routeStopCriteria.sign = numSigns.LESS_EQUAL;
-	routeStopCriteria.number = 3;
 	
 	actualValue = possibleRoutes.findRoutes(givenInputGraph, "C", "C", routeStopCriteria, null);
 	caseResultObject = setOutputObject(2, actualValue);
@@ -75,12 +72,9 @@ function runTestCase6(givenInputGraph)
 // Test case 7
 function runTestCase7(givenInputGraph)
 {
-	var routeStopCriteria = routeCriteria.defineCriteria();
+	var routeStopCriteria = routeCriteria.defineStopCount(4, numSigns.EQUAL);
 	var actualValue = null;
 	var caseResultObject = null;
-	
-	routeStopCriteria.sign = numSigns.EQUAL;
-	routeStopCriteria.number = 4;
 	
 	actualValue = possibleRoutes.findRoutes(givenInputGraph, "A", "C", routeStopCriteria, null);
 	caseResultObject = setOutputObject(3, actualValue);
@@ -109,12 +103,9 @@ function runTestCase9(givenInputGraph)
 // Test case 10
 function runTestCase10(givenInputGraph)
 {
-	var routeDistanceCriteria = routeCriteria.defineCriteria();
+	var routeDistanceCriteria = routeCriteria.defineTotalDistance(30, numSigns.LESS);
 	var actualValue = null;
 	var caseResultObject = null;
-	
-	routeDistanceCriteria.sign = numSigns.LESS;
-	routeDistanceCriteria.number = 30;
 	
 	actualValue = possibleRoutes.findRoutes(givenInputGraph, "C", "C", null, routeDistanceCriteria);
 	caseResultObject = setOutputObject(7, actualValue);
