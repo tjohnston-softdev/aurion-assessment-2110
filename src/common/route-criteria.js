@@ -25,7 +25,7 @@ function defineTotalDistanceCriteria(inpDist, inpSign)
 
 
 // Validate object.
-function validateRouteCriteria(givenObject)
+function validateRouteCriteriaOriginal(givenObject)
 {
 	var typeFlag = checkValueType(givenObject);
 	var validationResult = false;
@@ -123,5 +123,5 @@ module.exports =
 	criteriaTypes: criteriaTypesEnum,
 	defineStopCount: defineStopCountCriteria,
 	defineTotalDistance: defineTotalDistanceCriteria,
-	validateCriteria: validateRouteCriteria
+	validateCriteria: validateRouteCriteriaOriginal
 };
