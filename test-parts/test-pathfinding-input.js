@@ -11,6 +11,7 @@ const numSigns = require("../src/common/enum/num-signs");
 const routeCriteria = require("../src/common/route-criteria");
 const errorThrowing = require("../src/test-common/error-throwing");
 const pathfindingHelp = require("../src/test-common/pathfinding-help");
+const graphInput = require("../src/test-common/graph-input");
 
 const graphErrMsg = "Cannot read property 'nodes' of null";
 const unknownNodesMsg = "UNKNOWN NODES";
@@ -26,7 +27,7 @@ function runTests()
 {
 	describe("Invalid Pathfinding Input", function()
 	{
-		prepareExampleGraph();
+		loadExampleGraph();
 		handleExactRoute();
 		handleShortestRoute();
 		handlePossibleRoutes();
@@ -35,22 +36,14 @@ function runTests()
 }
 
 
-// Creates example graph.
-function prepareExampleGraph()
+// Loads example graph.
+function loadExampleGraph()
 {
-	describe("Prepare Example Graph", function()
+	describe("Load Example Graph", function()
 	{
-		var inpString = null;
-		
-		it("String Written", function(done)
+		it("Loaded", function(done)
 		{
-			inpString = "AE14, CB13, EB7, EA11, BF10, BE20, BD3, BA1, AC2, FD7, GH9";
-			done();
-		});
-		
-		it("Graph Parsed", function(done)
-		{
-			exampleGraph = parseGraph.performParsing(inpString);
+			exampleGraph = graphInput.getObject();
 			done();
 		});
 	});
