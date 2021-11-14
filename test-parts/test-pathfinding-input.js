@@ -251,7 +251,7 @@ function handlePossibleRoutes()
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Not Positive", function()
 		{
-			var routeStops = routeCriteria.defineStopCount(-50, numSigns.EQUAL);
+			var routeStops = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
 			var searchCriteria = [routeStops];
 			
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
@@ -276,28 +276,11 @@ function handlePossibleRoutes()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE WHOLE.");
 		});
 		
-		
-		
-		
-		/*
-		it("Invalid Distance Criteria", function()
-		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", emptyCriteria, invalidCriteria);
-			expect(resultValue).to.equal("INVALID DISTANCE CRITERIA");
-		});
-		
-		it("Invalid Stop Count Criteria", function()
-		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", invalidCriteria, emptyCriteria);
-			expect(resultValue).to.equal(badCriteriaMsg);
-		});
-		
 		it("Impossible Route", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "G", emptyCriteria, emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "G", emptyCriteria);
 			expect(resultValue).to.equal(0);
 		});
-		*/
 		
 	});
 }
