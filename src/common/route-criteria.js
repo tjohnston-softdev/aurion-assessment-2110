@@ -40,6 +40,7 @@ function validateRouteCriteria(givenCriteriaArray)
 	else
 	{
 		validationResult.successful = false;
+		validationResult.reason = "Criteria must be a valid array.";
 	}
 	
 	return validationResult;
@@ -48,58 +49,53 @@ function validateRouteCriteria(givenCriteriaArray)
 
 function iterateCriteriaValidation(givenArray, validResultObj)
 {
-	var criteriaIndex = 0;
+	var loopIndex = 0;
 	var currentElement = null;
-	var currentValid = false;
 	
-	while (criteriaIndex >= 0 && criteriaIndex < givenArray.length && validResultObj.successful === true)
+	while (loopIndex >= 0 && loopIndex < givenArray.length && validResultObj.successful === true)
 	{
-		currentElement = givenArray[criteriaIndex];
-		currentValid = true;
-		criteriaIndex = criteriaIndex + 1;
+		currentElement = givenArray[loopIndex];
+		readCriteria(currentElement, validResultObj, loopIndex);
+		loopIndex = loopIndex + 1;
 	}
 }
 
 
 
 // Validate object.
-function readCriteria(givenObject, resultObject)
+function readCriteria(givenObject, resultObject, criteriaIndex)
 {
 	var correctType = checkValueType(givenObject);
-	var validationResult = false;
 	
 	if (correctType === true && givenObject.type === criteriaTypes.STOP_COUNT)
 	{
 		// Stop Count
-		validationResult = handleNumberSign(givenObject);
+		handleNumberSign(givenObject, resultObject, criteriaIndex, "Stop Count");
 	}
 	else if (correctType === true && givenObject.type === criteriaTypes.TOTAL_DISTANCE)
 	{
 		// Total Distance
-		validationResult = handleNumberSign(givenObject);
+		handleNumberSign(givenObject, resultObject, criteriaIndex, "Total Distance");
 	}
 	else if (correctType === true)
 	{
 		// Unknown criteria type.
-		validationResult = false;
-	}
-	else if (typeFlag === 0)
-	{
-		// Invalid object type.
-		validationResult = false;
+		resultObject.successful = false;
+		resultObject.reason = "Unknown criteria type.";
+		resultObject.itemNo = criteriaIndex + 1;
 	}
 	else
 	{
-		// Empty
-		validationResult = true;
+		// Invalid object type.
+		resultObject.successful = false;
+		resultObject.reason = "Invalid value type.";
+		resultObject.itemNo = criteriaIndex + 1;
 	}
-	
-	return validationResult;
 }
 
 
 // Check 'stop count' and 'total distance' properties.
-function handleNumberSign(criteriaObj)
+function handleNumberSign(criteriaObj, resObj, critInd, critDesc)
 {
 	var numberVal = criteriaObj.number;
 	var correctNumType = Number.isInteger(numberVal);
@@ -107,13 +103,28 @@ function handleNumberSign(criteriaObj)
 	
 	var handleRes = false;
 	
-	// Criteria number must be positive.
 	if (correctNumType === true && correctSignType === true && numberVal > 0)
 	{
 		handleRes = true;
 	}
-	
-	return handleRes;
+	else if (correctNumType === true && correctSignType === true)
+	{
+		resObj.successful = false;
+		resObj.reason = critDesc + " number must be positive.";
+		resObj.itemNo = critInd + 1;
+	}
+	else if (correctNumType === true)
+	{
+		resObj.successful = false;
+		resObj.reason = critDesc + " number sign is invalid.";
+		resObj.itemNo = critInd + 1;
+	}
+	else
+	{
+		resObj.successful = false;
+		resObj.reason = critDesc + " number must be a valid, whole number.";
+		resObj.itemNo = critInd + 1;
+	}
 }
 
 
@@ -122,13 +133,7 @@ function handleNumberSign(criteriaObj)
 function checkValueType(givenObj)
 {
 	var valueType = typeof givenObj;
-	var checkRes = false;
-	
-	if (givenObj !== undefined && givenObj !== null && valueType === "object")
-	{
-		checkRes = true;
-	}
-	
+	var checkRes = (givenObj !== undefined && givenObj !== null && valueType === "object");
 	return checkRes;
 }
 

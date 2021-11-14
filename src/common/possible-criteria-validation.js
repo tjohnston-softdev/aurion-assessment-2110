@@ -114,7 +114,6 @@ function checkIncompleteNumberSign(actualValue, criteriaObj)
 {
 	var matchRes = false;
 	
-	
 	if (criteriaObj.sign === numSigns.LESS && actualValue >= criteriaObj.number)
 	{
 		// Above inclusive cutoff.

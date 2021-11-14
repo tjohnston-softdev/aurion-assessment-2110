@@ -5,6 +5,7 @@ const routeTasks = require("./common/possible-route-tasks");
 const numSigns = require("./common/enum/num-signs");
 const routeCriteria = require("./common/route-criteria");
 const possibleCriteriaValidation = require("./common/possible-criteria-validation");
+const possibleCriteriaMessage = require("./common/possible-criteria-message");
 
 
 // Main function.
@@ -34,7 +35,7 @@ function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 	else if (nodesValid === true)
 	{
 		// Invalid route criteria
-		possibleRes = "INVALID CRITERIA";
+		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
 	}
 	else
 	{
