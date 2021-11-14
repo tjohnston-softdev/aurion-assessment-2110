@@ -1,8 +1,11 @@
 # Changelog
 
 **./test-parts/test-pathfinding-input.js**
-* handlePossibleRoutes
-	* Uncommented "Missing Graph" test case.
-* callPossibleRoutesMissingGraph
-	* Updated 'possibleRoutes.findRoutes' call to match arguments.
-	* Search criteria is set to `null`
+* Uncommented tests in 'handlePossibleRoutes'
+	* "Missing Node Argument"
+	* "Empty Node Argument"
+	* "Unknown Node"
+* Updated 'possibleRoutes.findRoutes' calls to match arguments.
+* Changed "Unknown Node" values.
+	* Before: O and P
+	* After: X and Y

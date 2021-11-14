@@ -203,26 +203,27 @@ function handlePossibleRoutes()
 			callPossibleRoutesMissingGraph();
 		});
 		
-		/*
+		
 		it("Missing Node Argument", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "D", null, emptyCriteria, emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "D", null, emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Empty Node Argument", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "", null, emptyCriteria, emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "", null, emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Unknown Node", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "O", "P", emptyCriteria, emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "X", "Y", emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		
+		/*
 		it("Invalid Distance Criteria", function()
 		{
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", emptyCriteria, invalidCriteria);
