@@ -4,6 +4,8 @@ const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 const inputFile = require("../src/input-file");
+const fileSize = require("../src/test-common/file-size");
+const errorThrowing = require("../src/test-common/error-throwing");
 
 const validFilePath = "./submission.js";
 const invalidFilePath = "./unknown.txt";
@@ -77,7 +79,7 @@ function handleGetFileEntry()
 		{
 			var resultValue = inputFile.getEntry(validFilePath);
 			checkEntry(resultValue, true);
-			checkFileSize(resultValue.sizeBytes);
+			fileSize.checkBytes(resultValue.sizeBytes);
 		});
 		
 		it("Valid Folder Path", function()
@@ -192,7 +194,7 @@ function callUnknownFile()
 	}
 	
 	// Validate result.
-	checkTryCatch(fileRetrieved, correctError, unknownErrorText);
+	errorThrowing.checkTryCatch(fileRetrieved, correctError, unknownErrorText);
 }
 
 
@@ -215,7 +217,7 @@ function callInvalidEntry(entryObj, desiredMessage)
 	}
 	
 	// Validate result.
-	checkTryCatch(entryValid, correctError, desiredMessage);
+	errorThrowing.checkTryCatch(entryValid, correctError, desiredMessage);
 }
 
 
@@ -240,7 +242,7 @@ function callInvalidRead(rPath, desiredMessage)
 	
 	
 	// Validate result.
-	checkTryCatch(readValid, correctError, desiredMessage);
+	errorThrowing.checkTryCatch(readValid, correctError, desiredMessage);
 }
 
 
@@ -260,51 +262,6 @@ function checkEntry(entryObj, useFile)
 }
 
 
-// Validates file size number.
-function checkFileSize(sBytes)
-{
-	var correctType = Number.isInteger(sBytes);
-	var checkRes = false;
-	
-	if (correctType === true && sBytes > 0)
-	{
-		checkRes = true;
-	}
-	else
-	{
-		throw new Error("File size must be a positive, whole number.");
-	}
-	
-	return checkRes;
-}
 
-
-// Validates the result of a 'try-catch' unit test.
-function checkTryCatch(trySuccessful, messageCorrect, expMsgTxt)
-{
-	if (trySuccessful === true)
-	{
-		// No error.
-		throw new Error("No error was thrown.");
-	}
-	else if (messageCorrect === true)
-	{
-		// Valid.
-		expect(true).to.be.true;
-	}
-	else
-	{
-		// Wrong error.
-		flagIncorrectError(expMsgTxt);
-	}
-}
-
-
-// Incorrect error thrown in 'try-catch'
-function flagIncorrectError(vExp)
-{
-	var preparedText = ["Incorrect file system error thrown\r\n", "Should had ended with: '", vExp, "'"].join("");
-	throw new Error(preparedText);
-}
 
 module.exports = runTests;

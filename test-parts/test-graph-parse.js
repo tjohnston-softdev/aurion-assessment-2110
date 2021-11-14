@@ -5,9 +5,9 @@ const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 const parseGraph = require("../src/parse-graph");
+const errorThrowing = require("../src/test-common/error-throwing");
+const parseHelp = require("../src/test-common/parse-help");
 
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const maxEdges = 300;
 const formatErrorText = "Could not parse input into a valid graph.";
 const arrayErrorText = "Parsed graph must have multiple nodes and edges.";
 
@@ -63,7 +63,7 @@ function handleValidCase()
 	{
 		it("Complete Graph", function()
 		{
-			var inclNodes = getNodeList("MEOWHIS");
+			var inclNodes = parseHelp.getNodeList("MEOWHIS");
 			var resultValue = parseGraph.performParsing("ME7, OW8, HI9, SH10");
 			
 			checkParseResult(resultValue);
@@ -82,7 +82,7 @@ function handleIgnoreData()
 		it("Whitespace", function()
 		{
 			var inpGraph = "AB3, CD6,EF5,         GH8, IJ10";
-			var inclNodes = getNodeList("ABCDEFGHIJ");
+			var inclNodes = parseHelp.getNodeList("ABCDEFGHIJ");
 			var resultValue = parseGraph.performParsing(inpGraph);
 			
 			checkParseResult(resultValue);
@@ -92,7 +92,7 @@ function handleIgnoreData()
 		
 		it("Case Sensitivity", function()
 		{
-			var inclNodes = getNodeList("ABCD");
+			var inclNodes = parseHelp.getNodeList("ABCD");
 			var resultValue = parseGraph.performParsing("Ab8, cD16");
 			
 			checkParseResult(resultValue);
@@ -101,8 +101,8 @@ function handleIgnoreData()
 		
 		it("All Possible Nodes", function()
 		{
-			var inpGraph = defineAlphabetGraph();
-			var inclNodes = getNodeList(alphabet);
+			var inpGraph = parseHelp.defineAlphabetGraph();
+			var inclNodes = parseHelp.getNodeList(parseHelp.alphabet);
 			var resultValue = parseGraph.performParsing(inpGraph);
 			
 			checkParseResult(resultValue);
@@ -112,17 +112,17 @@ function handleIgnoreData()
 		
 		it("Hard Edge Limit", function()
 		{
-			var inpGraph = defineMaxEdgesGraph();
+			var inpGraph = parseHelp.defineMaxEdgesGraph();
 			var resultValue = parseGraph.performParsing(inpGraph);
 			
 			checkParseResult(resultValue);
 			expect(resultValue.nodes.length).to.be.at.least(2);
-			expect(resultValue.edges.length).to.equal(maxEdges);
+			expect(resultValue.edges.length).to.equal(parseHelp.maxEdges);
 		});
 		
 		it("Duplicate Edges", function()
 		{
-			var inclNodes = getNodeList("ABCD");
+			var inclNodes = parseHelp.getNodeList("ABCD");
 			var resultValue = parseGraph.performParsing("AB5, CD7, AB9");
 			
 			checkParseResult(resultValue);
@@ -131,7 +131,7 @@ function handleIgnoreData()
 		
 		it("Recursive Edge", function()
 		{
-			var inclNodes = getNodeList("ABCDE");
+			var inclNodes = parseHelp.getNodeList("ABCDE");
 			var resultValue = parseGraph.performParsing("AB6, CC10, DE12");
 			
 			checkParseResult(resultValue);
@@ -140,7 +140,7 @@ function handleIgnoreData()
 		
 		it("Zero Distance", function()
 		{
-			var inclNodes = getNodeList("ABEF");
+			var inclNodes = parseHelp.getNodeList("ABEF");
 			var resultValue = parseGraph.performParsing("AB8, CD0, EF16");
 			
 			checkParseResult(resultValue);
@@ -149,7 +149,7 @@ function handleIgnoreData()
 		
 		it("Distance Too Long", function()
 		{
-			var inclNodes = getNodeList("ABEF");
+			var inclNodes = parseHelp.getNodeList("ABEF");
 			var resultValue = parseGraph.performParsing("AB1, CD9999999999999999999999999999999999, EF1000");
 			
 			checkParseResult(resultValue);
@@ -250,80 +250,6 @@ function disposeOutputData()
 }
 
 
-// Convert alphabet string into node array.
-function getNodeList(entryStr)
-{
-	var listRes = entryStr.split("");
-	return listRes;
-}
-
-
-
-// Defines graph containing every possible node.
-function defineAlphabetGraph()
-{
-	var defineRes = "";
-	
-	defineRes += "AB1, CD2, EF3, GH4, IJ5, KL6, MN7, OP8, QR9, ST10, UV11, WX12, YZ13, ";
-	defineRes += "ZY14, XW15, VU16, TS17, RQ18, PO19, NM20, LK21, JI22, HG23, FE24, DC25, BA26";
-	
-	return defineRes;
-}
-
-
-// Generates a graph with the maximum number of edges.
-function defineMaxEdgesGraph()
-{
-	var originIndex = -1;
-	var destinationIndex = -1;
-	var distanceNumber = 10;
-	
-	var currentOriginNode = "";
-	var currentDestinationNode = "";
-	var currentPart = "";
-	
-	var partArray = [];
-	var loopCutoff = Math.ceil(maxEdges * 1.15);
-	var defineRes = "";
-	
-	// Loop until target number of edges generated, or every possible combination explored.
-	while (partArray.length < loopCutoff && originIndex < alphabet.length)
-	{
-		
-		// Checks if end of alphabet reached for destination node.
-		if (destinationIndex <= 0)
-		{
-			// Start again from A-Z on next origin.
-			originIndex += 1;
-			destinationIndex = 0;
-		}
-		
-		// Origin and destination nodes cannot be the same.
-		if (originIndex !== destinationIndex)
-		{
-			// Create edge part.
-			currentOriginNode = alphabet.charAt(originIndex);
-			currentDestinationNode = alphabet.charAt(destinationIndex);
-			currentPart = [currentOriginNode, currentDestinationNode, distanceNumber].join("");
-			partArray.push(currentPart);
-			
-			// Increment distance.
-			distanceNumber += 1;
-		}
-		
-		
-		// Update destination node index.
-		destinationIndex += 1;
-		destinationIndex = (destinationIndex % alphabet.length);
-	}
-	
-	
-	// Write graph string from parts.
-	defineRes = partArray.join();
-	return defineRes;
-}
-
-
 // Attempts to parse graph using 'try-catch' structure.
 function callInvalidEntry(entryStr, desiredMessage)
 {
@@ -343,24 +269,7 @@ function callInvalidEntry(entryStr, desiredMessage)
 		correctError = parseErr.message.startsWith(desiredMessage);
 	}
 	
-	
-	// Check result.
-	if (parseSuccessful === true)
-	{
-		// No error.
-		throw new Error("No error was thrown.");
-	}
-	else if (correctError === true)
-	{
-		// Valid.
-		expect(true).to.be.true;
-	}
-	else
-	{
-		// Wrong error.
-		flagIncorrectError(desiredMessage);
-	}
-	
+	errorThrowing.checkTryCatch(parseSuccessful, correctError, desiredMessage);
 }
 
 
@@ -390,14 +299,6 @@ function checkGraphContents(parseObj, nodeArr, edgeArr)
 {
 	expect(parseObj.nodes).to.deep.equal(nodeArr);
 	expect(parseObj.edges).to.deep.equal(edgeArr);
-}
-
-
-// Incorrect error thrown in 'try-catch'
-function flagIncorrectError(vExp)
-{
-	var preparedText = ["Incorrect graph parsing error thrown.\r\n", "Should had been: '", vExp, "'"].join("");
-	throw new Error(preparedText);
 }
 
 
