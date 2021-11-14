@@ -222,6 +222,18 @@ function handlePossibleRoutes()
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
+		it("Invalid Criteria Array", function()
+		{
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", 12345);
+			expect(resultValue).to.equal("CRITERIA MUST BE A VALID ARRAY.");
+		});
+		
+		it("Invalid Criteria Object", function()
+		{
+			var numberArray = [123, 456, 789];
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", numberArray);
+		});
+		
 		
 		/*
 		it("Invalid Distance Criteria", function()
