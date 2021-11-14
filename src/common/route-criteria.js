@@ -122,7 +122,7 @@ function handleNumberSign(criteriaObj, resObj, critInd, critDesc)
 	else
 	{
 		resObj.successful = false;
-		resObj.reason = critDesc + " number must be a valid, whole number.";
+		resObj.reason = critDesc + " number must be whole.";
 		resObj.itemNo = critInd + 1;
 	}
 }

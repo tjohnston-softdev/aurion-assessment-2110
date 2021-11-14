@@ -15,7 +15,6 @@ const pathfindingHelp = require("../src/test-common/pathfinding-help");
 const graphErrMsg = "Cannot read property 'nodes' of null";
 const unknownNodesMsg = "UNKNOWN NODES";
 const noRouteMsg = "NO SUCH ROUTE";
-const badCriteriaMsg = "INVALID COUNT CRITERIA";
 
 // Example graph that will be used for these tests.
 var exampleGraph = null;
@@ -236,6 +235,48 @@ function handlePossibleRoutes()
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", numberArray);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "VALUE TYPE NOT ALLOWED.");
 		});
+		
+		it("Unknown Criteria Type", function()
+		{
+			var routeUnknown = routeCriteria.defineStopCount(5, numSigns.LESS_EQUAL);
+			var searchCriteria = [];
+			var resultValue = null;
+			
+			routeUnknown.type = -1;
+			searchCriteria.push(routeUnknown);
+			
+			resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "UNKNOWN CRITERIA TYPE.");
+		});
+		
+		it("Invalid 'Stop Count' / 'Total Distance' - Not Positive", function()
+		{
+			var routeStops = routeCriteria.defineStopCount(-50, numSigns.EQUAL);
+			var searchCriteria = [routeStops];
+			
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "STOP COUNT NUMBER MUST BE POSITIVE.");
+		});
+		
+		it("Invalid 'Stop Count' / 'Total Distance' - Unknown Sign", function()
+		{
+			var routeDist = routeCriteria.defineTotalDistance(100, "NOT SIGN");
+			var searchCriteria = [routeDist];
+			
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER SIGN IS INVALID.");
+		});
+		
+		it("Invalid 'Stop Count' / 'Total Distance' - Number Type", function()
+		{
+			var routeDist = routeCriteria.defineTotalDistance(123.45, numSigns.GREAT_EQUAL);
+			var searchCriteria = [routeDist];
+			
+			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE WHOLE.");
+		});
+		
+		
 		
 		
 		/*

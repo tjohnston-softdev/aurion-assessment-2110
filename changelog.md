@@ -1,21 +1,16 @@
 # Changelog
 
-**./src/common/route-criteria.js - validateRouteCriteria**
-* Changed 'invalid array' reason.
-	* Before "Criteria [...] array."
-	* After: "Input [...] array."
+**./src/common/route-criteria.js - handleNumberSign**
+* Modified reason for invalid number type.
+	* Before: "must be a valid, whole number."
+	* After: "must be whole."
 
 ---
 
-**./src/test-common/pathfinding-help.js**
-* Wrote new functions:
-	* checkInvalidCriteriaMessageText
-	* readCriteriaMessage
-	* flagIncorrectCriteriaMessage
-
----
-
-**./test-parts/test-pathfinding-input.js - handlePossibleRoutes**
-* Modified existing unit tests to use 'pathfindingHelp' for message checking.
-	* "Invalid Criteria Array"
-	* "Invalid Criteria Object"
+**./test-parts/test-pathfinding-input.js**
+* Removed 'badCriteriaMsg' global.
+* Added new unit tests to 'handlePossibleRoutes'
+	* "Unknown Criteria Type"
+	* "Invalid 'Stop Count' / 'Total Distance' - Not Positive"
+	* "Invalid 'Stop Count' / 'Total Distance' - Unknown Sign"
+	* "Invalid 'Stop Count' / 'Total Distance' - Number Type"
