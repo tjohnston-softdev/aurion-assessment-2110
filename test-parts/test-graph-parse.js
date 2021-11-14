@@ -7,6 +7,7 @@ const expect = chai.expect;
 const parseGraph = require("../src/parse-graph");
 const errorThrowing = require("../src/test-common/error-throwing");
 const parseHelp = require("../src/test-common/parse-help");
+const parseOutput = require("../src/test-common/parse-output");
 
 const formatErrorText = "Could not parse input into a valid graph.";
 const arrayErrorText = "Parsed graph must have multiple nodes and edges.";
@@ -29,25 +30,14 @@ function runTests()
 }
 
 
-// Reads external file containing output objects to validate against.
+// Reads script file containing output objects to validate against.
 function loadOutputData()
 {
-	var rawContents = null;
-	
 	describe("Load Output Data", function()
 	{
-		it("File Read", function(done)
+		it("Loaded", function(done)
 		{
-			// Read file contents.
-			rawContents = fs.readFileSync("./test-parts/parse-output.json", "utf8");
-			done();
-		});
-		
-		it("JSON Parsed", function(done)
-		{
-			// Parse as JSON.
-			parseOutputData = JSON.parse(rawContents);
-			rawContents = null;
+			parseOutputData = parseOutput.getObject();
 			done();
 		});
 		

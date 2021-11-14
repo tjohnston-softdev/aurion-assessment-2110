@@ -1,11 +1,23 @@
 # Changelog
 
-**./test-parts/test-pathfinding-input.js - handlePossibleRoutes**
-* Removed commented out unit tests:
-	* "Invalid Distance Criteria"
-	* "Invalid Stop Count Criteria"
-* Uncommented the "Impossible Route" test.
-	* Removed extra 'emptyCriteria' argument.
-* Changed example value for "Invalid 'Stop Count' / 'Total Distance' - Not Positive"
-	* Before: -50
-	* After: -10
+**./src/test-common/parse-output.js**
+* New file - Contains output edge arrays for 'parse' unit tests.
+* Based on '../../test-parts/parse-output.json'
+
+---
+
+**./test-parts/parse-output.json**
+* This file is now empty.
+* Contents moved to '../src/test-common/parse-output.js'
+
+---
+
+**./test-parts/test-graph-parse.js**
+* Required: '../src/test-common/parse-output'
+* Changes to 'loadOutputData'
+	* "external" --> "script" for header comment.
+	* Removed "File Read" step.
+	* Removed 'rawContents' variable.
+	* Renamed "JSON Parsed" to "Loaded"
+	* Removed "Parse as JSON." comment.
+	* Modified "Loaded" to use 'parseOutput'
