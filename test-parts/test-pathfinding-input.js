@@ -197,12 +197,13 @@ function handlePossibleRoutes()
 			expect(resultValue).to.equal(0);
 		});
 		
-		/*
+		
 		it("Missing Graph", function()
 		{
 			callPossibleRoutesMissingGraph();
 		});
 		
+		/*
 		it("Missing Node Argument", function()
 		{
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "D", null, emptyCriteria, emptyCriteria);
@@ -314,7 +315,7 @@ function callPossibleRoutesMissingGraph()
 	try
 	{
 		// Perform pathfinding.
-		possibleRoutes.findRoutes(null, "A", "B", null, null);
+		possibleRoutes.findRoutes(null, "A", "B", null);
 		givenMessage = "";
 	}
 	catch(routeErr)
