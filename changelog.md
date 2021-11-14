@@ -1,4 +1,4 @@
 # Changelog
 
-**./test-parts/parse-output.json**
-* Deleted file.
+**./src/test-common/parse-output.js**
+* Added missing semicolon.

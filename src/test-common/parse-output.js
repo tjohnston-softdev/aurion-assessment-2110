@@ -42,7 +42,7 @@ function getParseOutputObject()
 			{"origin": 0, "destination": 1, "distance": 1},
 			{"origin": 2, "destination": 3, "distance": 1000}
 		]
-	}
+	};
 	
 	return resObj;
 }
