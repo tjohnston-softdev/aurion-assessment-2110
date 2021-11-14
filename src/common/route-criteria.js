@@ -40,7 +40,7 @@ function validateRouteCriteria(givenCriteriaArray)
 	else
 	{
 		validationResult.successful = false;
-		validationResult.reason = "Criteria must be a valid array.";
+		validationResult.reason = "Input must be a valid array.";
 	}
 	
 	return validationResult;

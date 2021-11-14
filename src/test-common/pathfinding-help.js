@@ -36,9 +36,75 @@ function checkMultiplePossibleRoutesResult(countNum)
 }
 
 
+function checkInvalidCriteriaMessageText(givenValue, desiredMessage)
+{
+	var valueType = typeof givenValue;
+	var isolatedMessage = "";
+	
+	var stringExists = false;
+	var correctStart = false;
+	var correctEnd = false;
+	
+	var checkRes = false;
+	
+	if (valueType === "string")
+	{
+		isolatedMessage = readCriteriaMessage(givenValue);
+	}
+	
+	if (isolatedMessage.length > 0)
+	{
+		stringExists = true;
+		correctStart = isolatedMessage.startsWith("INVALID ROUTE CRITERIA");
+		correctEnd = isolatedMessage.endsWith(desiredMessage);
+	}
+	
+	
+	if (stringExists === true && correctStart === true && correctEnd === true)
+	{
+		checkRes = true;
+	}
+	else if (stringExists === true && correctStart === true)
+	{
+		flagIncorrectCriteriaMessage(desireStr);
+	}
+	else if (stringExists === true)
+	{
+		throw new Error("Invalid output message type.");
+	}
+	else
+	{
+		throw new Error("No output message given.");
+	}
+	
+}
+
+
+function readCriteriaMessage(fullText)
+{
+	var bracketInd = fullText.indexOf(" (ITEM ");
+	var substringRes = fullText;
+	
+	if (bracketInd >= 0 && bracketInd < fullText.length)
+	{
+		substringRes = fullText.substring(0, bracketInd);
+	}
+	
+	return substringRes;
+}
+
+
+function flagIncorrectCriteriaMessage(vExp)
+{
+	var preparedText = ["Incorrect criteria message.\r\n", "Should had been: '", vExp, "'"].join("");
+	throw new Error(preparedText);
+}
+
+
 
 module.exports =
 {
 	checkOutputDistance: checkOutputDistanceNumber,
-	checkMultiplePossibleRoutes: checkMultiplePossibleRoutesResult
+	checkMultiplePossibleRoutes: checkMultiplePossibleRoutesResult,
+	checkInvalidCriteriaMessage: checkInvalidCriteriaMessageText
 };

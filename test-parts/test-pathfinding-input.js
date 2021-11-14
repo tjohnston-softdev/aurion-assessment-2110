@@ -227,13 +227,14 @@ function handlePossibleRoutes()
 		it("Invalid Criteria Array", function()
 		{
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", 12345);
-			//expect(resultValue).to.equal("CRITERIA MUST BE A VALID ARRAY.");
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "INPUT MUST BE A VALID ARRAY.");
 		});
 		
 		it("Invalid Criteria Object", function()
 		{
 			var numberArray = [123, 456, 789];
 			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", numberArray);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "VALUE TYPE NOT ALLOWED.");
 		});
 		
 		
