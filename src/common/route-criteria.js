@@ -88,7 +88,7 @@ function readCriteria(givenObject, resultObject, criteriaIndex)
 	{
 		// Invalid object type.
 		resultObject.successful = false;
-		resultObject.reason = "Invalid value type.";
+		resultObject.reason = "Value type not allowed.";
 		resultObject.itemNo = criteriaIndex + 1;
 	}
 }

@@ -1,6 +1,6 @@
 function prepareMessageText(validResObj)
 {
-	var prepTxt = validResObj.reason;
+	var prepTxt = ["Invalid route criteria - ", validResObj.reason].join("");
 	
 	if (validResObj.itemNo > 0)
 	{
