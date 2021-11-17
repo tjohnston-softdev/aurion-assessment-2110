@@ -12,24 +12,23 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 {
 	var criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
-	var targetNodesObject = {};
-	var endReachPossible = false;
+	var criteriaInspection = {};
+	var searchPrepared = false;
+	var infiniteRoutes = false;
 	var possibleRes = null;
-	
 	
 	if (criteriaValidation.successful === true)
 	{
 		// Input valid, perform algorithm.
-		targetNodesObject = routeTasks.setTargetNodes(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
-		//endReachPossible = performInitialSequence(targetNodesObject, graphObject, criteriaListObject, criteriaValidation.ignore);
-		//possibleRes = performMainSearch(targetNodesObject, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
-	}
-	else
-	{
-		// Invalid route criteria
-		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
+		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
+		searchPrepared = true;
+		infiniteRoutes = (criteriaInspection.endNodes.length === 0 && criteriaInspection.cutoffSet !== true);
+		//endReachPossible = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
+		//possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
 	}
 	
+	
+	//possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
 	return possibleRes;
 }
 

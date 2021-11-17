@@ -2,18 +2,20 @@
 
 
 const criteriaTypes = require("./enum/criteria-types");
+const numSigns = require("./enum/num-signs");
 
 
-function setRouteTargetNodes(givenNodesList, givenCriteriaArray, skipLoop)
+function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 {
 	var targetRes = {};
 	
-	targetRes["start"] = [];
-	targetRes["end"] = [];
+	targetRes["startNodes"] = [];
+	targetRes["endNodes"] = [];
+	targetRes["cutoffSet"] = false;
 	
 	if (skipLoop !== true)
 	{
-		loopTargetCriteria(givenNodesList, givenCriteriaArray, targetRes);
+		loopCriteriaInspection(givenNodesList, givenCriteriaArray, targetRes);
 	}
 	
 	return targetRes;
@@ -129,23 +131,29 @@ function countValidCompletedRoutes(compArr)
 }
 
 
-function loopTargetCriteria(nodesArray, criteriaArray, resultObj)
+function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 {
 	var criteriaIndex = 0;
 	var currentCriteria = {};
+	var currentType = null;
+	var cutoffSigns = [numSigns.LESS, numSigns.LESS_EQUAL, numSigns.EQUAL];
 	
 	for (criteriaIndex = 0; criteriaIndex < criteriaArray.length; criteriaIndex = criteriaIndex + 1)
 	{
 		currentCriteria = criteriaArray[criteriaIndex];
-		currentUsed = false;
+		currentType = currentCriteria.type;
 		
-		if (currentCriteria.type === criteriaTypes.START_NODE)
+		if (currentType === criteriaTypes.START_NODE)
 		{
-			addNodeToTarget(currentCriteria.node, resultObj.start);
+			addNodeToTarget(currentCriteria.node, resultObj.startNodes);
 		}
-		else if (currentCriteria.type === criteriaTypes.END_NODE)
+		else if (currentType === criteriaTypes.END_NODE)
 		{
-			addNodeToTarget(currentCriteria.node, resultObj.end);
+			addNodeToTarget(currentCriteria.node, resultObj.endNodes);
+		}
+		else if (currentType === criteriaTypes.STOP_COUNT || currentType === criteriaTypes.TOTAL_DISTANCE)
+		{
+			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
 		}
 		
 	}
@@ -244,7 +252,7 @@ function checkDeriveAllowed(visitStatus, backtrackStatus)
 
 module.exports =
 {
-	setTargetNodes: setRouteTargetNodes,
+	inspectCriteria: inspectRouteCriteria,
 	initializeSingleBacklog: initializeSingleRouteBacklog,
 	initializeMultipleBacklog: initializeMultipleRoutesBacklog,
 	saveComplete: saveCompletedRoute,
