@@ -11,6 +11,7 @@ const numSigns = require("../src/common/enum/num-signs");
 const graphTasks = require("../src/common/graph-tasks");
 const routeCriteria = require("../src/common/route-criteria");
 const errorThrowing = require("../src/test-common/error-throwing");
+const nullGraph = require("../src/test-common/null-graph");
 const pathfindingHelp = require("../src/test-common/pathfinding-help");
 const exampleGraphObject = require("../src/test-common/graph-input");
 
@@ -276,12 +277,12 @@ function callExactRouteMissingGraph()
 	{
 		// Error caught.
 		graphFound = false;
-		correctError = (routeErr.message === errorThrowing.nullGraphText);
+		correctError = (routeErr.message === nullGraph.msgTxt);
 	}
 	
 	
 	// Validate error message.
-	errorThrowing.checkTryCatch(graphFound, correctError, errorThrowing.nullGraphText);
+	errorThrowing.checkTryCatch(graphFound, correctError, nullGraph.msgTxt);
 }
 
 
@@ -302,11 +303,11 @@ function callShortestRouteMissingGraph()
 	{
 		// Error caught.
 		graphFound = false;
-		correctError = (routeErr.message === errorThrowing.nullGraphText);
+		correctError = (routeErr.message === nullGraph.msgTxt);
 	}
 	
 	// Validate error message.
-	errorThrowing.checkTryCatch(graphFound, correctError, errorThrowing.nullGraphText);
+	errorThrowing.checkTryCatch(graphFound, correctError, nullGraph.msgTxt);
 }
 
 
@@ -327,11 +328,11 @@ function callPossibleRoutesMissingGraph()
 	{
 		// Error caught.
 		graphFound = false;
-		correctError = (routeErr.message === errorThrowing.nullGraphText);
+		correctError = (routeErr.message === nullGraph.msgTxt);
 	}
 	
 	// Validate error message.
-	errorThrowing.checkTryCatch(graphFound, correctError, errorThrowing.nullGraphText);
+	errorThrowing.checkTryCatch(graphFound, correctError, nullGraph.msgTxt);
 }
 
 

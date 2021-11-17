@@ -1,4 +1,4 @@
-const nullGraphMessageText = "Cannot read property 'nodes' of null";
+
 
 
 // Validates the result of a 'try-catch' unit test.
@@ -35,6 +35,5 @@ function flagIncorrectError(vExp)
 
 module.exports =
 {
-	nullGraphText: nullGraphMessageText,
 	checkTryCatch: checkTryCatchResult
 };
