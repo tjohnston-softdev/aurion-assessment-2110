@@ -11,7 +11,7 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 // Main function.
 function findPossibleRoutes(graphObject, criteriaListObject)
 {
-	var criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
+	var criteriaValidation = routeCriteria.validateCriteria(graphObject.nodes, criteriaListObject);
 	var searchPrepared = false;
 	var criteriaInspection = {};
 	var preparedStartNodes = [];
@@ -71,7 +71,7 @@ function performInitialSequence(prepData, graphObj, criteriaListObj, ignoreCrite
 		while (currentIteration >= 1 && currentIteration <= maxIterations && currentFound !== true && currentLoop === true)
 		{
 			// Iterate through current set of routes.
-			currentFound = iterateRoutes(prepData, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false);
+			currentFound = iterateRoutes(prepData.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false);
 			currentIteration = currentIteration + 1;
 		}
 		

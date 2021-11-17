@@ -59,12 +59,15 @@ function runTestCase5(givenInputGraph)
 // Test case 6
 function runTestCase6(givenInputGraph)
 {
-	var routeStops = routeCriteria.defineStopCount(3, numSigns.LESS_EQUAL);
-	var searchCriteria = [routeStops];
+	var routeStart = routeCriteria.defineStartNode("C");
+	var routeEnd = routeCriteria.defineEndNode("C");
+	var routeStopCount = routeCriteria.defineStopCount(3, numSigns.LESS_EQUAL);
+	
+	var searchCriteria = [routeStart, routeEnd, routeStopCount];
 	var actualValue = null;
 	var caseResultObject = null;
 	
-	actualValue = possibleRoutes.findRoutes(givenInputGraph, "C", "C", searchCriteria);
+	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
 	caseResultObject = setOutputObject(2, actualValue);
 	return caseResultObject;
 }
@@ -73,12 +76,15 @@ function runTestCase6(givenInputGraph)
 // Test case 7
 function runTestCase7(givenInputGraph)
 {
-	var routeStops = routeCriteria.defineStopCount(4, numSigns.EQUAL);
-	var searchCriteria = [routeStops];
+	var routeStart = routeCriteria.defineStartNode("A");
+	var routeEnd = routeCriteria.defineEndNode("C");
+	var routeStopCount = routeCriteria.defineStopCount(4, numSigns.EQUAL);
+	
+	var searchCriteria = [routeStart, routeEnd, routeStopCount];
 	var actualValue = null;
 	var caseResultObject = null;
 	
-	actualValue = possibleRoutes.findRoutes(givenInputGraph, "A", "C", searchCriteria);
+	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
 	caseResultObject = setOutputObject(3, actualValue);
 	return caseResultObject;
 }
@@ -105,12 +111,15 @@ function runTestCase9(givenInputGraph)
 // Test case 10
 function runTestCase10(givenInputGraph)
 {
+	var routeStart = routeCriteria.defineStartNode("C");
+	var routeEnd = routeCriteria.defineEndNode("C");
 	var routeDist = routeCriteria.defineTotalDistance(30, numSigns.LESS);
-	var searchCriteria = [routeDist];
+	
+	var searchCriteria = [routeStart, routeEnd, routeDist];
 	var actualValue = null;
 	var caseResultObject = null;
 	
-	actualValue = possibleRoutes.findRoutes(givenInputGraph, "C", "C", searchCriteria);
+	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
 	caseResultObject = setOutputObject(7, actualValue);
 	return caseResultObject;
 }
