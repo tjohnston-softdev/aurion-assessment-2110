@@ -151,7 +151,11 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 		{
 			addNodeToTarget(currentCriteria.node, resultObj.endNodes);
 		}
-		else if (currentType === criteriaTypes.STOP_COUNT || currentType === criteriaTypes.TOTAL_DISTANCE)
+		else if (currentType === criteriaTypes.STOP_COUNT && resultObj.cutoffSet !== true)
+		{
+			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
+		}
+		else if (currentType === criteriaTypes.TOTAL_DISTANCE && resultObj.cutoffSet !== true)
 		{
 			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
 		}

@@ -12,21 +12,18 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 {
 	var criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
-	var criteriaInspection = {};
 	var searchPrepared = false;
-	var infiniteRoutes = false;
+	var criteriaInspection = {};
 	var possibleRes = null;
 	
 	if (criteriaValidation.successful === true)
 	{
-		// Input valid, perform algorithm.
-		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
 		searchPrepared = true;
-		infiniteRoutes = (criteriaInspection.endNodes.length === 0 && criteriaInspection.cutoffSet !== true);
+		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
+		
 		//endReachPossible = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
 		//possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
 	}
-	
 	
 	//possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
 	return possibleRes;
