@@ -1,15 +1,17 @@
 # Changelog
 
-**./src/test-common/graph-input.js**
-* File now exports the graph itself instead of the definition function.
+**./src/test-common/error-throwing.js**
+* Declared global 'nullGraphMessageText'
+	* Split from '../../test-parts/test-pathfinding-input.js
+	* Stored in one place.
+	* Accessible by multiple unit test files.
 
 ---
 
 **./test-parts/test-pathfinding-input.js**
-* Removed 'exampleGraph' global variable.
-* Renamed 'graphInput' global to 'exampleGraphObject'
-* Removed functions:
-	* loadExampleGraph
-	* disposeExampleGraph
-* Replaced 'exampleGraph' references with 'exampleGraphObject'
-* Commented out 'handlePossibleRoutes' call.
+* New requirement: '../src/common/graph-tasks'
+* Globals are now assigned using 'graphTasks'
+	* unknownNodesMsg
+	* noRouteMsg
+* Moved 'graphErrMsg' global contents to 'errorThrowing' as 'nullGraphMessageText'
+* Replaced references to 'graphErrMsg' with 'errorThrowing.nullGraphText'

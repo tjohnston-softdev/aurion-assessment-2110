@@ -8,14 +8,14 @@ const exactRoute = require("../src/exact-route");
 const shortestRoute = require("../src/shortest-route");
 const possibleRoutes = require("../src/possible-routes");
 const numSigns = require("../src/common/enum/num-signs");
+const graphTasks = require("../src/common/graph-tasks");
 const routeCriteria = require("../src/common/route-criteria");
 const errorThrowing = require("../src/test-common/error-throwing");
 const pathfindingHelp = require("../src/test-common/pathfinding-help");
 const exampleGraphObject = require("../src/test-common/graph-input");
 
-const graphErrMsg = "Cannot read property 'nodes' of null";
-const unknownNodesMsg = "UNKNOWN NODES";
-const noRouteMsg = "NO SUCH ROUTE";
+const unknownNodesMsg = graphTasks.getUnknownNodesText();
+const noRouteMsg = graphTasks.getNoRouteText();
 
 
 
@@ -276,12 +276,12 @@ function callExactRouteMissingGraph()
 	{
 		// Error caught.
 		graphFound = false;
-		correctError = (routeErr.message === graphErrMsg);
+		correctError = (routeErr.message === errorThrowing.nullGraphText);
 	}
 	
 	
 	// Validate error message.
-	errorThrowing.checkTryCatch(graphFound, correctError, graphErrMsg);
+	errorThrowing.checkTryCatch(graphFound, correctError, errorThrowing.nullGraphText);
 }
 
 
@@ -302,11 +302,11 @@ function callShortestRouteMissingGraph()
 	{
 		// Error caught.
 		graphFound = false;
-		correctError = (routeErr.message === graphErrMsg);
+		correctError = (routeErr.message === errorThrowing.nullGraphText);
 	}
 	
 	// Validate error message.
-	errorThrowing.checkTryCatch(graphFound, correctError, graphErrMsg);
+	errorThrowing.checkTryCatch(graphFound, correctError, errorThrowing.nullGraphText);
 }
 
 
@@ -327,11 +327,11 @@ function callPossibleRoutesMissingGraph()
 	{
 		// Error caught.
 		graphFound = false;
-		correctError = (routeErr.message === graphErrMsg);
+		correctError = (routeErr.message === errorThrowing.nullGraphText);
 	}
 	
 	// Validate error message.
-	errorThrowing.checkTryCatch(graphFound, correctError, graphErrMsg);
+	errorThrowing.checkTryCatch(graphFound, correctError, errorThrowing.nullGraphText);
 }
 
 
