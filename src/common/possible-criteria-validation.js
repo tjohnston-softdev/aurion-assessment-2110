@@ -14,7 +14,15 @@ function loopCriteriaComplete(givenDistance, givenStops, criteriaObjectArray)
 		currentCondition = criteriaObjectArray[itemIndex];
 		currentMatch = false;
 		
-		if (currentCondition.type === criteriaTypes.STOP_COUNT)
+		if (currentCondition.type === criteriaTypes.START_NODE)
+		{
+			currentMatch = true;
+		}
+		else if (currentCondition.type === criteriaTypes.END_NODE)
+		{
+			currentMatch = true;
+		}
+		else if (currentCondition.type === criteriaTypes.STOP_COUNT)
 		{
 			currentMatch = checkCompleteNumberSign(givenStops, currentCondition);
 		}
@@ -48,7 +56,15 @@ function loopCriteriaIncomplete(givenDistance, givenStops, criteriaObjectArray)
 		currentCondition = criteriaObjectArray[itemIndex];
 		currentMatch = false;
 		
-		if (currentCondition.type === criteriaTypes.STOP_COUNT)
+		if (currentCondition.type === criteriaTypes.START_NODE)
+		{
+			currentMatch = true;
+		}
+		else if (currentCondition.type === criteriaTypes.END_NODE)
+		{
+			currentMatch = true;
+		}
+		else if (currentCondition.type === criteriaTypes.STOP_COUNT)
 		{
 			currentMatch = checkIncompleteNumberSign(givenStops, currentCondition);
 		}

@@ -9,63 +9,94 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 
 
 // Main function.
-function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
+function findPossibleRoutes(graphObject, criteriaListObject)
 {
 	var criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
 	var searchPrepared = false;
 	var criteriaInspection = {};
+	var preparedStartNodes = [];
 	var possibleRes = null;
 	
 	if (criteriaValidation.successful === true)
 	{
 		searchPrepared = true;
 		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
-		
-		//endReachPossible = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
-		//possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
 	}
 	
-	//possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
+	if (searchPrepared === true && criteriaInspection.cutoffSet === true)
+	{
+		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
+		possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore, preparedStartNodes);
+	}
+	else if (searchPrepared === true)
+	{
+		possibleRes = Number.POSITIVE_INFINITY;
+	}
+	else
+	{
+		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
+	}
+	
+	
 	return possibleRes;
 }
 
 
 // Searches for a possible route in sequence.
-function performInitialSequence(prepNodes, graphObj, criteriaListObj, ignoreCriteria)
+function performInitialSequence(prepData, graphObj, criteriaListObj, ignoreCriteria)
 {
-	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
-	var exploredRoutes = [];
+	var maxIterations = Math.ceil(graphObj.nodes.length * 1.15);
 	
-	var loopNumber = 1;
-	var loopCutoff = Math.ceil(graphObj.nodes.length * 1.15);
-	var sequenceFound = false;
+	var nodeIndex = 0;
+	var currentStart = false;
+	var currentLoop = false;
 	
-	// Loop until possible route is found without backtracking, or too many iterations.
-	while (loopNumber >= 1 && loopNumber <= loopCutoff && sequenceFound !== true)
+	var currentIteration = 1;
+	var currentBacklog = [];
+	var currentExplored = [];
+	var currentFound = false;
+	
+	var successfulNodes = [];
+	
+	for (nodeIndex = 0; nodeIndex < graphObj.nodes.length; nodeIndex = nodeIndex + 1)
 	{
-		// Iterate through current set of routes.
-		sequenceFound = iterateRoutes(prepNodes, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, exploredRoutes, false);
-		loopNumber = loopNumber + 1;
+		currentStart = prepData.startNodes.includes(nodeIndex);
+		currentLoop = (currentStart === true || prepData.startNodes.length <= 0);
+		
+		currentIteration = 1;
+		currentBacklog = routeTasks.initializeSingleBacklog(nodeIndex);
+		currentExplored = [];
+		currentFound = false;
+		
+		while (currentIteration >= 1 && currentIteration <= maxIterations && currentFound !== true && currentLoop === true)
+		{
+			// Iterate through current set of routes.
+			currentFound = iterateRoutes(prepData, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false);
+			currentIteration = currentIteration + 1;
+		}
+		
+		if (currentFound === true)
+		{
+			successfulNodes.push(nodeIndex);
+		}
+		
 	}
 	
-	return sequenceFound;
+	return successfulNodes;
 }
 
 
 // Search for all possible routes.
-function performMainSearch(prepNodes, graphObj, criteriaListObj, ignoreCriteria, loopEnabled)
+function performMainSearch(prepData, graphObj, criteriaListObj, ignoreCriteria, startPoints)
 {
-	var routeBacklog = routeTasks.initializeBacklog(prepNodes.start);
+	var routeBacklog = routeTasks.initializeMultipleBacklog(startPoints);
 	var completedRoutes = [];
 	
-	if (loopEnabled === true)
+	// Loop until all possible routes have been explored.
+	while (routeBacklog.length > 0)
 	{
-		// Loop until all possible routes have been explored.
-		while (routeBacklog.length > 0)
-		{
-			// Iterate through current set of routes.
-			iterateRoutes(prepNodes, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, true);
-		}
+		// Iterate through current set of routes.
+		iterateRoutes(prepData.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, true);
 	}
 	
 	var searchRes = routeTasks.countValidRoutes(completedRoutes);
@@ -74,12 +105,13 @@ function performMainSearch(prepNodes, graphObj, criteriaListObj, ignoreCriteria,
 
 
 // Loop through current set of possible routes.
-function iterateRoutes(pNodes, graphEdgeArr, critListArr, ignoreCrit, routeArray, compArray, allowBacktracking)
+function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArray, compArray, allowBacktracking)
 {
 	var routeIndex = 0;
 	var currentRoute = {};
 	var currentStops = -1;
 	var currentNode = -1;
+	var currentEndPoint = false;
 	var currentEndValid = false;
 	var currentBranchAllowed = false;
 	var currentAdjEdges = [];
@@ -93,6 +125,7 @@ function iterateRoutes(pNodes, graphEdgeArr, critListArr, ignoreCrit, routeArray
 		currentRoute = routeArray[routeIndex];
 		currentStops = currentRoute.steps.length - 1;
 		currentNode = currentRoute.steps[currentStops];
+		currentEndPoint = endList.includes(currentNode);
 		
 		// Reset result variables.
 		currentEndValid = false;				// Completed route can be saved.
@@ -102,7 +135,7 @@ function iterateRoutes(pNodes, graphEdgeArr, critListArr, ignoreCrit, routeArray
 		
 		
 		// If end node has been reached, save it, and check whether it should be explored further.
-		if (currentNode === pNodes.end)
+		if (currentEndPoint === true || endList.length === 0)
 		{
 			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, critListArr, ignoreCrit);
 			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentEndValid);
