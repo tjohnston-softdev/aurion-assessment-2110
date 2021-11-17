@@ -4,50 +4,80 @@
 // Parse node input.
 function parseStartEndNodes(nodeArray, sNode, eNode)
 {
-	var startMatchFlag = -1;
-	var endMatchFlag = -1;
-	var parseRes = {start: null, end: null};
+	var parseRes = {};
 	
-	// Check if nodes exist.
-	startMatchFlag = nodeArray.indexOf(sNode);
-	endMatchFlag = nodeArray.indexOf(eNode);
-	
-	// Mark start node.
-	if (startMatchFlag >= 0 && startMatchFlag < nodeArray.length)
-	{
-		parseRes.start = startMatchFlag;
-	}
-	
-	// Mark end node.
-	if (endMatchFlag >= 0 && endMatchFlag < nodeArray.length)
-	{
-		parseRes.end = endMatchFlag;
-	}
+	parseRes["start"] = readStartNode(sNode, nodeArray);
+	parseRes["end"] = readEndNode(eNode, nodeArray);
 	
 	return parseRes;
 }
 
-// Validate parsed nodes.
-function validateStartEndNodes(parseObj)
+
+function validateNodeInput(parseObj, nodeArray, inpDesc)
 {
-	// Both start and end must be set.
-	var validationResult = (parseObj.start !== null && parseObj.end !== null);
+	var validationResult = -1;
+	
+	if (parseObj.index !== null && parseObj.index >= 0 && parseObj.index < nodeArray.length)
+	{
+		validationResult = 1;
+	}
+	else if (parseObj.index !== null)
+	{
+		validationResult = 0;
+	}
+	else if (parseObj.ignore === true)
+	{
+		validationResult = 1;
+	}
+	else
+	{
+		validationResult = -1;
+	}
+	
 	return validationResult;
 }
 
 
 // Initialize array of possible routes using start node.
-function initializeRouteBacklog(sNode)
+function initializeRouteBacklog(sNodeOld)
 {
 	var startRoute = {};
 	var intlRes = [];
 	
-	startRoute["steps"] = [sNode];			// List of node steps.
-	startRoute["distance"] = 0;				// Total distance.
+	startRoute["steps"] = [sNodeOld];			// List of node steps.
+	startRoute["distance"] = 0;					// Total distance.
 	
 	intlRes = [startRoute];
 	return intlRes;
 }
+
+
+function initializeSingleRouteBacklog(startNodeIndex)
+{
+	var startRoute = defineRouteObject(startNodeIndex);
+	var intlRes = [startRoute];
+	return intlRes;
+}
+
+function initializeMultipleRoutesBacklog(markedNodes)
+{
+	var markIndex = 0;
+	var currentStart = -1;
+	var currentRoute = {};
+	
+	var intlRes = [];
+	
+	for (markIndex = 0; markIndex < markedNodes.length; markIndex = markIndex + 1)
+	{
+		currentStart = markedNodes[markIndex];
+		currentRoute = defineRouteObject(currentStart);
+		intlRes.push(currentRoute);
+	}
+	
+	return intlRes;
+}
+
+
 
 
 // Check whether to save a complete route after it has been validated.
@@ -131,6 +161,48 @@ function countValidCompletedRoutes(compArr)
 }
 
 
+function readStartNode(nodeVal, nodeArr)
+{
+	var givenType = typeof nodeVal;
+	var readRes = {"index": -1, "ignore": false};
+	
+	if (givenType === "string" && nodeVal.length > 0)
+	{
+		readRes.index = nodeArr.indexOf(nodeVal);
+	}
+	else if (givenType === "string" || nodeVal === null)
+	{
+		readRes.index = null;
+		readRes.ignore = true;
+	}
+	else
+	{
+		readRes.index = null;
+	}
+	
+	return readRes;
+}
+
+
+function readEndNode(nodeVal, nodeArr)
+{
+	var readRes = {"index": -1, "ignore": false};
+	readRes.index = nodeArr.indexOf(nodeVal);
+	return readRes;
+}
+
+
+function defineRouteObject(sNode)
+{
+	var defineRes = {};
+	
+	defineRes["steps"] = [sNode];
+	defineRes["distance"] = 0;
+	
+	return defineRes;
+}
+
+
 // Checks if a given route has already been saved.
 function checkRouteExists(newRouteSteps, existingRoutes)
 {
@@ -200,8 +272,9 @@ function checkDeriveAllowed(visitStatus, backtrackStatus)
 module.exports =
 {
 	parseNodes: parseStartEndNodes,
-	validateNodes: validateStartEndNodes,
-	initializeBacklog: initializeRouteBacklog,
+	validateNode: validateNodeInput,
+	initializeSingleBacklog: initializeSingleRouteBacklog,
+	initializeMultipleBacklog: initializeMultipleRoutesBacklog,
 	saveComplete: saveCompletedRoute,
 	deriveNew: deriveNewRoutes,
 	countValidRoutes: countValidCompletedRoutes

@@ -12,7 +12,8 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 {
 	var preparedNodes = {};
-	var nodesValid = false;
+	var startNodeValid = -1;
+	var endNodeValid = -1;
 	var criteriaValidation = {};
 	
 	var endReachPossible = false;
@@ -20,27 +21,33 @@ function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 	
 	// Parse and validate node input.
 	preparedNodes = routeTasks.parseNodes(graphObject.nodes, startNode, endNode);
-	nodesValid = routeTasks.validateNodes(preparedNodes);
+	startNodeValid = routeTasks.validateNode(preparedNodes.start, graphObject.nodes, "start");
+	endNodeValid = routeTasks.validateNode(preparedNodes.end, graphObject.nodes, "end");
 	
 	// Validate route criteria.
 	criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
 	
 	
-	if (nodesValid === true && criteriaValidation.successful === true)
+	if (startNodeValid > 0 && endNodeValid > 0 && criteriaValidation.successful === true)
 	{
 		// Input valid, perform algorithm.
 		endReachPossible = performInitialSequence(preparedNodes, graphObject, criteriaListObject, criteriaValidation.ignore);
 		possibleRes = performMainSearch(preparedNodes, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
 	}
-	else if (nodesValid === true)
+	else if (startNodeValid > 0 && endNodeValid > 0)
 	{
 		// Invalid route criteria
 		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
 	}
+	else if (startNodeValid > 0)
+	{
+		// Invalid end node.
+		possibleRes = "XXX";
+	}
 	else
 	{
-		// Unknown nodes.
-		possibleRes = graphTasks.getUnknownNodesText();
+		// Invalid start node.
+		possibleRes = "XXX";
 	}
 	
 	return possibleRes;
