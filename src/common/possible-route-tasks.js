@@ -1,54 +1,22 @@
 // Secondary functions for 'all possible routes' pathfinding.
 
 
-// Parse node input.
-function parseStartEndNodes(nodeArray, sNode, eNode)
+const criteriaTypes = require("./enum/criteria-types");
+
+
+function setRouteTargetNodes(givenNodesList, givenCriteriaArray, skipLoop)
 {
-	var parseRes = {};
+	var targetRes = {};
 	
-	parseRes["start"] = readStartNode(sNode, nodeArray);
-	parseRes["end"] = readEndNode(eNode, nodeArray);
+	targetRes["start"] = [];
+	targetRes["end"] = [];
 	
-	return parseRes;
-}
-
-
-function validateNodeInput(parseObj, nodeArray, inpDesc)
-{
-	var validationResult = -1;
-	
-	if (parseObj.index !== null && parseObj.index >= 0 && parseObj.index < nodeArray.length)
+	if (skipLoop !== true)
 	{
-		validationResult = 1;
-	}
-	else if (parseObj.index !== null)
-	{
-		validationResult = 0;
-	}
-	else if (parseObj.ignore === true)
-	{
-		validationResult = 1;
-	}
-	else
-	{
-		validationResult = -1;
+		loopTargetCriteria(givenNodesList, givenCriteriaArray, targetRes);
 	}
 	
-	return validationResult;
-}
-
-
-// Initialize array of possible routes using start node.
-function initializeRouteBacklog(sNodeOld)
-{
-	var startRoute = {};
-	var intlRes = [];
-	
-	startRoute["steps"] = [sNodeOld];			// List of node steps.
-	startRoute["distance"] = 0;					// Total distance.
-	
-	intlRes = [startRoute];
-	return intlRes;
+	return targetRes;
 }
 
 
@@ -161,35 +129,40 @@ function countValidCompletedRoutes(compArr)
 }
 
 
-function readStartNode(nodeVal, nodeArr)
+function loopTargetCriteria(nodesArray, criteriaArray, resultObj)
 {
-	var givenType = typeof nodeVal;
-	var readRes = {"index": -1, "ignore": false};
+	var criteriaIndex = 0;
+	var currentCriteria = {};
 	
-	if (givenType === "string" && nodeVal.length > 0)
+	for (criteriaIndex = 0; criteriaIndex < criteriaArray.length; criteriaIndex = criteriaIndex + 1)
 	{
-		readRes.index = nodeArr.indexOf(nodeVal);
+		currentCriteria = criteriaArray[criteriaIndex];
+		currentUsed = false;
+		
+		if (currentCriteria.type === criteriaTypes.START_NODE)
+		{
+			addNodeToTarget(currentCriteria.node, resultObj.start);
+		}
+		else if (currentCriteria.type === criteriaTypes.END_NODE)
+		{
+			addNodeToTarget(currentCriteria.node, resultObj.end);
+		}
+		
 	}
-	else if (givenType === "string" || nodeVal === null)
-	{
-		readRes.index = null;
-		readRes.ignore = true;
-	}
-	else
-	{
-		readRes.index = null;
-	}
-	
-	return readRes;
 }
 
 
-function readEndNode(nodeVal, nodeArr)
+function addNodeToTarget(nodeInd, tgtArr)
 {
-	var readRes = {"index": -1, "ignore": false};
-	readRes.index = nodeArr.indexOf(nodeVal);
-	return readRes;
+	var alreadyUsed = tgtArr.indexOf(nodeInd);
+	
+	if (alreadyUsed !== true)
+	{
+		tgtArr.push(nodeInd);
+	}
 }
+
+
 
 
 function defineRouteObject(sNode)
@@ -271,8 +244,7 @@ function checkDeriveAllowed(visitStatus, backtrackStatus)
 
 module.exports =
 {
-	parseNodes: parseStartEndNodes,
-	validateNode: validateNodeInput,
+	setTargetNodes: setRouteTargetNodes,
 	initializeSingleBacklog: initializeSingleRouteBacklog,
 	initializeMultipleBacklog: initializeMultipleRoutesBacklog,
 	saveComplete: saveCompletedRoute,

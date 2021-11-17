@@ -5,8 +5,10 @@ function defineOptions()
 {
 	var defineRes = {};
 	
-	defineRes["STOP_COUNT"] = 1;
-	defineRes["TOTAL_DISTANCE"] = 2;
+	defineRes["START_NODE"] = 1;
+	defineRes["END_NODE"] = 2;
+	defineRes["STOP_COUNT"] = 3;
+	defineRes["TOTAL_DISTANCE"] = 4;
 	
 	return defineRes;
 }

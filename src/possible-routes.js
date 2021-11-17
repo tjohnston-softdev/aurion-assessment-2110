@@ -11,43 +11,23 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 // Main function.
 function findPossibleRoutes(graphObject, startNode, endNode, criteriaListObject)
 {
-	var preparedNodes = {};
-	var startNodeValid = -1;
-	var endNodeValid = -1;
-	var criteriaValidation = {};
-	
+	var criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
+	var targetNodesObject = {};
 	var endReachPossible = false;
 	var possibleRes = null;
 	
-	// Parse and validate node input.
-	preparedNodes = routeTasks.parseNodes(graphObject.nodes, startNode, endNode);
-	startNodeValid = routeTasks.validateNode(preparedNodes.start, graphObject.nodes, "start");
-	endNodeValid = routeTasks.validateNode(preparedNodes.end, graphObject.nodes, "end");
 	
-	// Validate route criteria.
-	criteriaValidation = routeCriteria.validateCriteria(criteriaListObject);
-	
-	
-	if (startNodeValid > 0 && endNodeValid > 0 && criteriaValidation.successful === true)
+	if (criteriaValidation.successful === true)
 	{
 		// Input valid, perform algorithm.
-		endReachPossible = performInitialSequence(preparedNodes, graphObject, criteriaListObject, criteriaValidation.ignore);
-		possibleRes = performMainSearch(preparedNodes, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
-	}
-	else if (startNodeValid > 0 && endNodeValid > 0)
-	{
-		// Invalid route criteria
-		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
-	}
-	else if (startNodeValid > 0)
-	{
-		// Invalid end node.
-		possibleRes = "XXX";
+		targetNodesObject = routeTasks.setTargetNodes(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
+		//endReachPossible = performInitialSequence(targetNodesObject, graphObject, criteriaListObject, criteriaValidation.ignore);
+		//possibleRes = performMainSearch(targetNodesObject, graphObject, criteriaListObject, criteriaValidation.ignore, endReachPossible);
 	}
 	else
 	{
-		// Invalid start node.
-		possibleRes = "XXX";
+		// Invalid route criteria
+		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
 	}
 	
 	return possibleRes;

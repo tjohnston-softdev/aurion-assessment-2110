@@ -3,6 +3,22 @@
 const criteriaTypes = require("./enum/criteria-types");
 
 
+// 'Start Node' constructor.
+function defineStartNodeCriteria(inpNode)
+{
+	var defineRes = setTargetNode(criteriaTypes.START_NODE, inpNode);
+	return defineRes;
+}
+
+
+// 'End Node' constructor.
+function defineEndNodeCriteria(inpNode)
+{
+	var defineRes = setTargetNode(criteriaTypes.END_NODE, inpNode);
+	return defineRes;
+}
+
+
 // 'Stop Count' constructor.
 function defineStopCountCriteria(inpCount, inpSign)
 {
@@ -19,7 +35,7 @@ function defineTotalDistanceCriteria(inpDist, inpSign)
 }
 
 
-function validateRouteCriteria(givenCriteriaArray)
+function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 {
 	var arrayValid = Array.isArray(givenCriteriaArray);
 	var validationResult = {};
@@ -31,7 +47,7 @@ function validateRouteCriteria(givenCriteriaArray)
 	
 	if (arrayValid === true)
 	{
-		iterateCriteriaValidation(givenCriteriaArray, validationResult);
+		iterateCriteriaValidation(givenNodesList, givenCriteriaArray, validationResult);
 	}
 	else if (givenCriteriaArray === undefined || givenCriteriaArray === null)
 	{
@@ -47,7 +63,7 @@ function validateRouteCriteria(givenCriteriaArray)
 }
 
 
-function iterateCriteriaValidation(givenArray, validResultObj)
+function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 {
 	var loopIndex = 0;
 	var currentElement = null;
@@ -55,7 +71,7 @@ function iterateCriteriaValidation(givenArray, validResultObj)
 	while (loopIndex >= 0 && loopIndex < givenArray.length && validResultObj.successful === true)
 	{
 		currentElement = givenArray[loopIndex];
-		readCriteria(currentElement, validResultObj, loopIndex);
+		readCriteria(currentElement, validResultObj, loopIndex, givenNodes);
 		loopIndex = loopIndex + 1;
 	}
 }
@@ -63,11 +79,21 @@ function iterateCriteriaValidation(givenArray, validResultObj)
 
 
 // Validate object.
-function readCriteria(givenObject, resultObject, criteriaIndex)
+function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 {
 	var correctType = checkValueType(givenObject);
 	
-	if (correctType === true && givenObject.type === criteriaTypes.STOP_COUNT)
+	if (correctType === true && givenObject.type === criteriaTypes.START_NODE)
+	{
+		// Start node
+		handleTargetNode(givenObject, resultObject, nodeListObject, criteriaIndex, "Start Node");
+	}
+	else if (correctType === true && givenObject.type === criteriaTypes.END_NODE)
+	{
+		// End node
+		handleTargetNode(givenObject, resultObject, nodeListObject, criteriaIndex, "End Node");
+	}
+	else if (correctType === true && givenObject.type === criteriaTypes.STOP_COUNT)
 	{
 		// Stop Count
 		handleNumberSign(givenObject, resultObject, criteriaIndex, "Stop Count");
@@ -91,6 +117,43 @@ function readCriteria(givenObject, resultObject, criteriaIndex)
 		resultObject.reason = "Value type not allowed.";
 		resultObject.itemNo = criteriaIndex + 1;
 	}
+}
+
+
+// Check 'start node' and 'end node' properties.
+function handleTargetNode(criteriaObj, resObj, existingNodes, critInd, critDesc)
+{
+	var givenType = typeof criteriaObj.node;
+	var correctType = (givenType === "string" && criteriaObj.node.length > 0);
+	var searchPerformed = false;
+	var matchFlag = -1;
+	
+	var handleRes = false;
+	
+	if (correctType === true)
+	{
+		searchPerformed = true;
+		matchFlag = existingNodes.indexOf(criteriaObj.node);
+	}
+	
+	if (searchPerformed === true && matchFlag >= 0 && matchFlag < existingNodes.length)
+	{
+		criteriaObj.node = matchFlag;
+		handleRes = true;
+	}
+	else if (searchPerformed === true)
+	{
+		resObj.successful = false;
+		resObj.reason = critDesc + " node does not exist.";
+		resObj.itemNo = critInd + 1;
+	}
+	else
+	{
+		resObj.successful = false;
+		resObj.reason = critDesc + " must be a valid, non-empty string.";
+		resObj.itemNo = critInd + 1;
+	}
+	
 }
 
 
@@ -138,6 +201,17 @@ function checkValueType(givenObj)
 }
 
 
+function setTargetNode(typeVal, nodeVal)
+{
+	var setRes = {};
+	
+	setRes["type"] = typeVal;
+	setRes["node"] = nodeVal;
+	
+	return setRes;
+}
+
+
 function setNumberSign(typeVal, numVal, signVal)
 {
 	var setRes = {};
@@ -152,6 +226,8 @@ function setNumberSign(typeVal, numVal, signVal)
 
 module.exports =
 {
+	defineStartNode: defineStartNodeCriteria,
+	defineEndNode: defineEndNodeCriteria,
 	defineStopCount: defineStopCountCriteria,
 	defineTotalDistance: defineTotalDistanceCriteria,
 	validateCriteria: validateRouteCriteria
