@@ -24,8 +24,4 @@ function getGraphInputObject()
 }
 
 
-
-module.exports =
-{
-	getObject: getGraphInputObject
-};
+module.exports = getGraphInputObject();

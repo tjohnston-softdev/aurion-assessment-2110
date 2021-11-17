@@ -11,14 +11,11 @@ const numSigns = require("../src/common/enum/num-signs");
 const routeCriteria = require("../src/common/route-criteria");
 const errorThrowing = require("../src/test-common/error-throwing");
 const pathfindingHelp = require("../src/test-common/pathfinding-help");
-const graphInput = require("../src/test-common/graph-input");
+const exampleGraphObject = require("../src/test-common/graph-input");
 
 const graphErrMsg = "Cannot read property 'nodes' of null";
 const unknownNodesMsg = "UNKNOWN NODES";
 const noRouteMsg = "NO SUCH ROUTE";
-
-// Example graph that will be used for these tests.
-var exampleGraph = null;
 
 
 
@@ -27,25 +24,9 @@ function runTests()
 {
 	describe("Invalid Pathfinding Input", function()
 	{
-		loadExampleGraph();
 		handleExactRoute();
 		handleShortestRoute();
-		handlePossibleRoutes();
-		disposeExampleGraph();
-	});
-}
-
-
-// Loads example graph.
-function loadExampleGraph()
-{
-	describe("Load Example Graph", function()
-	{
-		it("Loaded", function(done)
-		{
-			exampleGraph = graphInput.getObject();
-			done();
-		});
+		//handlePossibleRoutes();
 	});
 }
 
@@ -61,7 +42,7 @@ function handleExactRoute()
 		
 		it("Correct Output", function()
 		{
-			var resultValue = exactRoute.getDistance(exampleGraph, "AEBA");
+			var resultValue = exactRoute.getDistance(exampleGraphObject, "AEBA");
 			pathfindingHelp.checkOutputDistance(resultValue);
 		});
 		
@@ -72,31 +53,31 @@ function handleExactRoute()
 		
 		it("Missing Route String", function()
 		{
-			var resultValue = exactRoute.getDistance(exampleGraph, null);
+			var resultValue = exactRoute.getDistance(exampleGraphObject, null);
 			expect(resultValue).to.equal(stringMsg);
 		});
 		
 		it("Empty Route String", function()
 		{
-			var resultValue = exactRoute.getDistance(exampleGraph, "");
+			var resultValue = exactRoute.getDistance(exampleGraphObject, "");
 			expect(resultValue).to.equal(tooShortMsg);
 		});
 		
 		it("Single Node Route", function()
 		{
-			var resultValue = exactRoute.getDistance(exampleGraph, "A");
+			var resultValue = exactRoute.getDistance(exampleGraphObject, "A");
 			expect(resultValue).to.equal(tooShortMsg);
 		});
 		
 		it("Unknown Route", function()
 		{
-			var resultValue = exactRoute.getDistance(exampleGraph, "ABCDEF");
+			var resultValue = exactRoute.getDistance(exampleGraphObject, "ABCDEF");
 			expect(resultValue).to.equal(noRouteMsg);
 		});
 		
 		it("Missing Nodes", function()
 		{
-			var resultValue = exactRoute.getDistance(exampleGraph, "ACEGFMO");
+			var resultValue = exactRoute.getDistance(exampleGraphObject, "ACEGFMO");
 			expect(resultValue).to.equal(noRouteMsg);
 		});
 		
@@ -111,13 +92,13 @@ function handleShortestRoute()
 	{
 		it("Correct Output - Open", function()
 		{
-			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "F");
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "F");
 			pathfindingHelp.checkOutputDistance(resultValue);
 		});
 		
 		it("Correct Output - Closed", function()
 		{
-			var resultValue = shortestRoute.findRoute(exampleGraph, "C", "C");
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "C", "C");
 			pathfindingHelp.checkOutputDistance(resultValue);
 		});
 		
@@ -129,25 +110,25 @@ function handleShortestRoute()
 		
 		it("Missing Node Argument", function()
 		{
-			var resultValue = shortestRoute.findRoute(exampleGraph, "A", null);
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", null);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Empty Node Argument", function()
 		{
-			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "");
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "");
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Unknown Node", function()
 		{
-			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "Z");
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "Z");
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Impossible Route", function()
 		{
-			var resultValue = shortestRoute.findRoute(exampleGraph, "A", "G");
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "G");
 			expect(resultValue).to.equal(noRouteMsg);
 		});
 		
@@ -169,7 +150,7 @@ function handlePossibleRoutes()
 			var routeDist = routeCriteria.defineTotalDistance(10, numSigns.LESS_EQUAL);
 			var searchCriteria = [routeStops, routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "C", searchCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "C", searchCriteria);
 			expect(resultValue).to.equal(1);
 		});
 		
@@ -178,7 +159,7 @@ function handlePossibleRoutes()
 			var routeStops = routeCriteria.defineStopCount(5, numSigns.LESS_EQUAL);
 			var searchCriteria = [routeStops];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "F", searchCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "F", searchCriteria);
 			pathfindingHelp.checkMultiplePossibleRoutes(resultValue);
 		});
 		
@@ -187,7 +168,7 @@ function handlePossibleRoutes()
 			var routeDist = routeCriteria.defineTotalDistance(5, numSigns.LESS_EQUAL);
 			var searchCriteria = [routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "F", searchCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "F", searchCriteria);
 			expect(resultValue).to.equal(0);
 		});
 		
@@ -200,32 +181,32 @@ function handlePossibleRoutes()
 		
 		it("Missing Node Argument", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "D", null, emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "D", null, emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Empty Node Argument", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "", null, emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "", null, emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Unknown Node", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "X", "Y", emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "X", "Y", emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
 		
 		it("Invalid Criteria Array", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", 12345);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", 12345);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "INPUT MUST BE A VALID ARRAY.");
 		});
 		
 		it("Invalid Criteria Object", function()
 		{
 			var numberArray = [123, 456, 789];
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", numberArray);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", numberArray);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "VALUE TYPE NOT ALLOWED.");
 		});
 		
@@ -238,7 +219,7 @@ function handlePossibleRoutes()
 			routeUnknown.type = -1;
 			searchCriteria.push(routeUnknown);
 			
-			resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "UNKNOWN CRITERIA TYPE.");
 		});
 		
@@ -247,7 +228,7 @@ function handlePossibleRoutes()
 			var routeStops = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
 			var searchCriteria = [routeStops];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "STOP COUNT NUMBER MUST BE POSITIVE.");
 		});
 		
@@ -256,7 +237,7 @@ function handlePossibleRoutes()
 			var routeDist = routeCriteria.defineTotalDistance(100, "NOT SIGN");
 			var searchCriteria = [routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER SIGN IS INVALID.");
 		});
 		
@@ -265,30 +246,16 @@ function handlePossibleRoutes()
 			var routeDist = routeCriteria.defineTotalDistance(123.45, numSigns.GREAT_EQUAL);
 			var searchCriteria = [routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "B", searchCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE WHOLE.");
 		});
 		
 		it("Impossible Route", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraph, "A", "G", emptyCriteria);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "G", emptyCriteria);
 			expect(resultValue).to.equal(0);
 		});
 		
-	});
-}
-
-
-// Disposes example graph object after tests complete.
-function disposeExampleGraph()
-{
-	describe("Dispose Example Graph", function()
-	{
-		it("Successful", function(done)
-		{
-			exampleGraph = null;
-			done();
-		});
 	});
 }
 
