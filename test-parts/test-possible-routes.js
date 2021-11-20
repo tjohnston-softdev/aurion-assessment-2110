@@ -22,29 +22,35 @@ function runTests()
 		
 		it("Correct Output - Single", function()
 		{
-			var routeStops = routeCriteria.defineStopCount(1, numSigns.EQUAL);
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("C");
+			var routeStopCount = routeCriteria.defineStopCount(1, numSigns.EQUAL);
 			var routeDist = routeCriteria.defineTotalDistance(10, numSigns.LESS_EQUAL);
-			var searchCriteria = [routeStops, routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "C", searchCriteria);
+			var searchCriteria = [routeStart, routeEnd, routeStopCount, routeDist];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			expect(resultValue).to.equal(1);
 		});
 		
 		it("Correct Output - Multiple", function()
 		{
-			var routeStops = routeCriteria.defineStopCount(5, numSigns.LESS_EQUAL);
-			var searchCriteria = [routeStops];
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("F");
+			var routeStopCount = routeCriteria.defineStopCount(5, numSigns.LESS_EQUAL);
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "F", searchCriteria);
+			var searchCriteria = [routeStart, routeEnd, routeStopCount];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkMultiplePossibleRoutes(resultValue);
 		});
 		
 		it("Correct Output - Zero", function()
 		{
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("F");
 			var routeDist = routeCriteria.defineTotalDistance(5, numSigns.LESS_EQUAL);
-			var searchCriteria = [routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "F", searchCriteria);
+			var searchCriteria = [routeStart, routeEnd, routeDist];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			expect(resultValue).to.equal(0);
 		});
 		
@@ -54,7 +60,7 @@ function runTests()
 			callPossibleRoutesMissingGraph();
 		});
 		
-		
+		/*
 		it("Missing Node Argument", function()
 		{
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "D", null, emptyCriteria);
@@ -72,63 +78,78 @@ function runTests()
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "X", "Y", emptyCriteria);
 			expect(resultValue).to.equal(unknownNodesMsg);
 		});
+		*/
 		
 		it("Invalid Criteria Array", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", 12345);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, 12345);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "INPUT MUST BE A VALID ARRAY.");
 		});
 		
 		it("Invalid Criteria Object", function()
 		{
 			var numberArray = [123, 456, 789];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", numberArray);
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, numberArray);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "VALUE TYPE NOT ALLOWED.");
 		});
 		
 		it("Unknown Criteria Type", function()
 		{
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeUnknown = routeCriteria.defineStopCount(5, numSigns.LESS_EQUAL);
+			
 			var searchCriteria = [];
 			var resultValue = null;
 			
 			routeUnknown.type = -1;
-			searchCriteria.push(routeUnknown);
+			searchCriteria.push(routeStart, routeEnd, routeUnknown);
 			
-			resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
+			resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "UNKNOWN CRITERIA TYPE.");
 		});
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Not Positive", function()
 		{
-			var routeStops = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
-			var searchCriteria = [routeStops];
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("B");
+			var routeStopCount = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
+			var searchCriteria = [routeStart, routeEnd, routeStopCount];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "STOP COUNT NUMBER MUST BE POSITIVE.");
 		});
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Unknown Sign", function()
 		{
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeDist = routeCriteria.defineTotalDistance(100, "NOT SIGN");
-			var searchCriteria = [routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
+			var searchCriteria = [routeStart, routeEnd, routeDist];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER SIGN IS INVALID.");
 		});
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Number Type", function()
 		{
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeDist = routeCriteria.defineTotalDistance(123.45, numSigns.GREAT_EQUAL);
-			var searchCriteria = [routeDist];
 			
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "B", searchCriteria);
+			var searchCriteria = [routeStart, routeEnd, routeDist];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE WHOLE.");
 		});
 		
 		it("Impossible Route", function()
 		{
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, "A", "G", emptyCriteria);
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("G");
+			var routeStopCount = routeCriteria.defineStopCount(10, numSigns.LESS_EQUAL);
+			
+			var searchCriteria = [routeStart, routeEnd, routeStopCount];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			expect(resultValue).to.equal(0);
 		});
 		
