@@ -73,15 +73,12 @@ function runTests()
 		
 		it("Unknown Criteria Type", function()
 		{
-			var routeStart = routeCriteria.defineStartNode("A");
-			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeUnknown = routeCriteria.defineStopCount(5, numSigns.LESS_EQUAL);
-			
 			var searchCriteria = [];
 			var resultValue = null;
 			
 			routeUnknown.type = -1;
-			searchCriteria.push(routeStart, routeEnd, routeUnknown);
+			searchCriteria.push(routeUnknown);
 			
 			resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "UNKNOWN CRITERIA TYPE.");
@@ -124,33 +121,24 @@ function runTests()
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Not Positive", function()
 		{
-			var routeStart = routeCriteria.defineStartNode("A");
-			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeStopCount = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
-			
-			var searchCriteria = [routeStart, routeEnd, routeStopCount];
+			var searchCriteria = [routeStopCount];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "STOP COUNT NUMBER MUST BE POSITIVE.");
 		});
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Unknown Sign", function()
 		{
-			var routeStart = routeCriteria.defineStartNode("A");
-			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeDist = routeCriteria.defineTotalDistance(100, "NOT SIGN");
-			
-			var searchCriteria = [routeStart, routeEnd, routeDist];
+			var searchCriteria = [routeDist];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER SIGN IS INVALID.");
 		});
 		
 		it("Invalid 'Stop Count' / 'Total Distance' - Number Type", function()
 		{
-			var routeStart = routeCriteria.defineStartNode("A");
-			var routeEnd = routeCriteria.defineEndNode("B");
 			var routeDist = routeCriteria.defineTotalDistance(123.45, numSigns.GREAT_EQUAL);
-			
-			var searchCriteria = [routeStart, routeEnd, routeDist];
+			var searchCriteria = [routeDist];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE WHOLE.");
 		});
