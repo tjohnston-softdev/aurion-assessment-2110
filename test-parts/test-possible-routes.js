@@ -12,7 +12,7 @@ const exampleGraphObject = require("../src/test-common/graph-input");
 
 
 // Main Function
-function handlePossibleRoutes()
+function runTests()
 {
 	describe("Possible Routes", function()
 	{
@@ -162,4 +162,4 @@ function callPossibleRoutesMissingGraph()
 
 
 
-module.exports = handlePossibleRoutes;
+module.exports = runTests;

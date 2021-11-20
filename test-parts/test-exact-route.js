@@ -12,7 +12,7 @@ const exampleGraphObject = require("../src/test-common/graph-input");
 
 
 // Main Function
-function handleExactRoute()
+function runTests()
 {
 	describe("Exact Route", function()
 	{
@@ -92,4 +92,4 @@ function callExactRouteMissingGraph()
 
 
 
-module.exports = handleExactRoute;
+module.exports = runTests;

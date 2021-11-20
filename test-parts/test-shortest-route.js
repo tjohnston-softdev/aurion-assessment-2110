@@ -10,7 +10,7 @@ const exampleGraphObject = require("../src/test-common/graph-input");
 
 
 // Main Function
-function handleShortestRoute()
+function runTests()
 {
 	var unknownNodesMsg = graphTasks.getUnknownNodesText();
 	var noRouteMsg = graphTasks.getNoRouteText();
@@ -89,4 +89,4 @@ function callShortestRouteMissingGraph()
 
 
 
-module.exports = handleShortestRoute;
+module.exports = runTests;
