@@ -6,20 +6,12 @@ const expect = chai.expect;
 const modeInput = require("../test-parts/mode-input");
 const testInputFunctions = require("../test-parts/test-input-functions");
 const testGraphParse = require("../test-parts/test-graph-parse");
-const testPathfindingInput = require("../test-parts/test-pathfinding-input");
+const testExactRoute = require("../test-parts/test-exact-route");
+const testShortestRoute = require("../test-parts/test-shortest-route");
+const testPossibleRoutes = require("../test-parts/test-possible-routes");
 const testSubmission = require("../test-parts/test-submission");
 
 runUnitTests();
-
-/*
-describe("Unit Tests", function()
-{
-	testInputFunctions();
-	testGraphParse();
-	testPathfindingInput();
-	testSubmission();
-});
-*/
 
 
 function runUnitTests()
@@ -34,9 +26,17 @@ function runUnitTests()
 	{
 		testGraphParse();
 	}
-	else if (enteredMode === "--pathfinding")
+	else if (enteredMode === "--exact")
 	{
-		testPathfindingInput();
+		testExactRoute();
+	}
+	else if (enteredMode === "--shortest")
+	{
+		testShortestRoute();
+	}
+	else if (enteredMode === "--possible")
+	{
+		testPossibleRoutes();
 	}
 	else if (enteredMode === "--submission")
 	{

@@ -6,7 +6,9 @@
   "scripts": {
     "test-input": "node ./node_modules/mocha/bin/mocha --input",
 	"test-parse": "node ./node_modules/mocha/bin/mocha --parse",
-	"test-pathfinding": "node ./node_modules/mocha/bin/mocha --pathfinding",
+	"test-exact": "node ./node_modules/mocha/bin/mocha --exact",
+	"test-shortest": "node ./node_modules/mocha/bin/mocha --shortest",
+	"test-possible": "node ./node_modules/mocha/bin/mocha --possible",
 	"test-submission": "node ./node_modules/mocha/bin/mocha --submission"
   },
   "repository": {
