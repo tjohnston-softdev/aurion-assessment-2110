@@ -1,8 +1,14 @@
 # Changelog
 
+**./src/possible-routes.js - findPossibleRoutes**
+* Initial sequencing is performed immediately after criteria validation.
+* Revised result IF structure.
+	* If there are possible sequences with a known cutoff, perform main search.
+	* If there are possible sequences without a cutoff, return infinity.
+	* If there are no possible sequences, return zero.
+	* Otherwise, input is invalid. Return error message.
+
+---
+
 **./test-parts/test-possible-routes.js - runTests**
-* Removed 'routeStart' and 'routeEnd' criteria from tests:
-	* "Unknown Criteria Type"
-	* "Invalid 'Stop Count' / 'Total Distance' - Not Positive"
-	* "Invalid 'Stop Count' / 'Total Distance' - Unknown Sign"
-	* "Invalid 'Stop Count' / 'Total Distance' - Number Type"
+* Removed 'routeStopCount' criteria from "Impossible Route"

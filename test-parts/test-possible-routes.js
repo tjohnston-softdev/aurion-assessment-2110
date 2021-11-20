@@ -147,9 +147,8 @@ function runTests()
 		{
 			var routeStart = routeCriteria.defineStartNode("A");
 			var routeEnd = routeCriteria.defineEndNode("G");
-			var routeStopCount = routeCriteria.defineStopCount(10, numSigns.LESS_EQUAL);
 			
-			var searchCriteria = [routeStart, routeEnd, routeStopCount];
+			var searchCriteria = [routeStart, routeEnd];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			expect(resultValue).to.equal(0);
 		});

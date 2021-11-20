@@ -21,16 +21,20 @@ function findPossibleRoutes(graphObject, criteriaListObject)
 	{
 		searchPrepared = true;
 		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
+		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
 	}
 	
-	if (searchPrepared === true && criteriaInspection.cutoffSet === true)
+	if (searchPrepared === true && preparedStartNodes.length > 0 && criteriaInspection.cutoffSet === true)
 	{
-		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
 		possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore, preparedStartNodes);
+	}
+	else if (searchPrepared === true && preparedStartNodes.length > 0)
+	{
+		possibleRes = Number.POSITIVE_INFINITY;
 	}
 	else if (searchPrepared === true)
 	{
-		possibleRes = Number.POSITIVE_INFINITY;
+		possibleRes = 0;
 	}
 	else
 	{
