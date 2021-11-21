@@ -77,7 +77,7 @@ function performInitialSequence(inspectObj, graphObj, criteriaListObj, ignoreCri
 		while (currentIteration >= 1 && currentIteration <= maxIterations && currentFound !== true && currentLoop === true)
 		{
 			// Iterate through current set of routes.
-			currentFound = iterateRoutes(inspectObj.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false);
+			currentFound = iterateRoutes(inspectObj.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false, true);
 			currentIteration = currentIteration + 1;
 		}
 		
@@ -96,7 +96,7 @@ function performInitialSequence(inspectObj, graphObj, criteriaListObj, ignoreCri
 function performMainSearch(inspectObj, graphObj, criteriaListObj, ignoreCriteria, startPoints)
 {
 	var endNodesList = inspectObj.endNodes;
-	var useStepBack = inspectObj.backtrack;
+	var useBack = inspectObj.backtrack;
 	var routeBacklog = routeTasks.initializeMultipleBacklog(startPoints);
 	var completedRoutes = [];
 	
@@ -104,7 +104,7 @@ function performMainSearch(inspectObj, graphObj, criteriaListObj, ignoreCriteria
 	while (routeBacklog.length > 0)
 	{
 		// Iterate through current set of routes.
-		iterateRoutes(endNodesList, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useStepBack);
+		iterateRoutes(endNodesList, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useBack, false);
 	}
 	
 	var searchRes = routeTasks.countValidRoutes(completedRoutes);
@@ -113,7 +113,7 @@ function performMainSearch(inspectObj, graphObj, criteriaListObj, ignoreCriteria
 
 
 // Loop through current set of possible routes.
-function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArray, compArray, allowBacktracking)
+function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArray, compArray, allowBacktracking, seqOnly)
 {
 	var routeIndex = 0;
 	var currentRoute = {};
@@ -126,8 +126,9 @@ function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArra
 	var currentOffset = 0;
 	
 	var endReached = false;
+	var canContinue = true;
 	
-	while (routeIndex >= 0 && routeIndex < routeArray.length)
+	while (routeIndex >= 0 && routeIndex < routeArray.length && canContinue === true)
 	{
 		// Read current route with number of stops and previous node.
 		currentRoute = routeArray[routeIndex];
@@ -147,7 +148,7 @@ function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArra
 		{
 			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, critListArr, ignoreCrit);
 			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentEndValid);
-			endReached = true;
+			endReached = (currentStops > 0);
 		}
 		
 		
@@ -160,9 +161,10 @@ function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArra
 		}
 		
 		
-		// Remove current route from backlog and update loop index.
+		// Remove current route from backlog and update loop variables.
 		routeArray.splice(routeIndex, 1);
 		routeIndex = routeIndex + currentOffset;
+		canContinue = (endReached !== true || seqOnly !== true);
 	}
 	
 	return endReached;
