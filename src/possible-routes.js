@@ -13,6 +13,7 @@ function findPossibleRoutes(graphObject, criteriaListObject)
 {
 	var criteriaValidation = routeCriteria.validateCriteria(graphObject.nodes, criteriaListObject);
 	var searchPrepared = false;
+	var useIgnore = false;
 	var criteriaInspection = {};
 	var preparedStartNodes = [];
 	var possibleRes = null;
@@ -20,13 +21,14 @@ function findPossibleRoutes(graphObject, criteriaListObject)
 	if (criteriaValidation.successful === true)
 	{
 		searchPrepared = true;
-		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, criteriaValidation.ignore);
-		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore);
+		useIgnore = criteriaValidation.ignore;
+		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, useIgnore);
+		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, useIgnore);
 	}
 	
 	if (searchPrepared === true && preparedStartNodes.length > 0 && criteriaInspection.cutoffSet === true)
 	{
-		possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, criteriaValidation.ignore, preparedStartNodes);
+		possibleRes = performMainSearch(criteriaInspection, graphObject, criteriaListObject, useIgnore, preparedStartNodes);
 	}
 	else if (searchPrepared === true && preparedStartNodes.length > 0)
 	{
@@ -47,7 +49,7 @@ function findPossibleRoutes(graphObject, criteriaListObject)
 
 
 // Searches for a possible route in sequence.
-function performInitialSequence(prepData, graphObj, criteriaListObj, ignoreCriteria)
+function performInitialSequence(inspectObj, graphObj, criteriaListObj, ignoreCriteria)
 {
 	var maxIterations = Math.ceil(graphObj.nodes.length * 1.15);
 	
@@ -64,8 +66,8 @@ function performInitialSequence(prepData, graphObj, criteriaListObj, ignoreCrite
 	
 	for (nodeIndex = 0; nodeIndex < graphObj.nodes.length; nodeIndex = nodeIndex + 1)
 	{
-		currentStart = prepData.startNodes.includes(nodeIndex);
-		currentLoop = (currentStart === true || prepData.startNodes.length <= 0);
+		currentStart = inspectObj.startNodes.includes(nodeIndex);
+		currentLoop = (currentStart === true || inspectObj.startNodes.length <= 0);
 		
 		currentIteration = 1;
 		currentBacklog = routeTasks.initializeSingleBacklog(nodeIndex);
@@ -75,7 +77,7 @@ function performInitialSequence(prepData, graphObj, criteriaListObj, ignoreCrite
 		while (currentIteration >= 1 && currentIteration <= maxIterations && currentFound !== true && currentLoop === true)
 		{
 			// Iterate through current set of routes.
-			currentFound = iterateRoutes(prepData.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false);
+			currentFound = iterateRoutes(inspectObj.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false);
 			currentIteration = currentIteration + 1;
 		}
 		
@@ -91,8 +93,10 @@ function performInitialSequence(prepData, graphObj, criteriaListObj, ignoreCrite
 
 
 // Search for all possible routes.
-function performMainSearch(prepData, graphObj, criteriaListObj, ignoreCriteria, startPoints)
+function performMainSearch(inspectObj, graphObj, criteriaListObj, ignoreCriteria, startPoints)
 {
+	var endNodesList = inspectObj.endNodes;
+	var useStepBack = inspectObj.backtrack;
 	var routeBacklog = routeTasks.initializeMultipleBacklog(startPoints);
 	var completedRoutes = [];
 	
@@ -100,7 +104,7 @@ function performMainSearch(prepData, graphObj, criteriaListObj, ignoreCriteria, 
 	while (routeBacklog.length > 0)
 	{
 		// Iterate through current set of routes.
-		iterateRoutes(prepData.endNodes, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, true);
+		iterateRoutes(endNodesList, graphObj.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useStepBack);
 	}
 	
 	var searchRes = routeTasks.countValidRoutes(completedRoutes);

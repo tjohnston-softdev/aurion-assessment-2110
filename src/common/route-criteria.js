@@ -34,6 +34,13 @@ function defineTotalDistanceCriteria(inpDist, inpSign)
 	return defineRes;
 }
 
+// 'One Way' constructor.
+function defineOneWayCriteria()
+{
+	var defineRes = {"type": criteriaTypes.ONE_WAY};
+	return defineRes;
+}
+
 
 function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 {
@@ -82,6 +89,7 @@ function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 {
 	var correctType = checkValueType(givenObject);
+	var skipValidation = false;
 	
 	if (correctType === true && givenObject.type === criteriaTypes.START_NODE)
 	{
@@ -102,6 +110,10 @@ function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 	{
 		// Total Distance
 		handleNumberSign(givenObject, resultObject, criteriaIndex, "Total Distance");
+	}
+	else if (correctType === true && givenObject.type === criteriaTypes.ONE_WAY)
+	{
+		skipValidation = true;
 	}
 	else if (correctType === true)
 	{
@@ -230,5 +242,6 @@ module.exports =
 	defineEndNode: defineEndNodeCriteria,
 	defineStopCount: defineStopCountCriteria,
 	defineTotalDistance: defineTotalDistanceCriteria,
+	defineOneWay: defineOneWayCriteria,
 	validateCriteria: validateRouteCriteria
 };

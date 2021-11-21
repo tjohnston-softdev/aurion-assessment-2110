@@ -30,6 +30,10 @@ function loopCriteriaComplete(givenDistance, givenStops, criteriaObjectArray)
 		{
 			currentMatch = checkCompleteNumberSign(givenDistance, currentCondition);
 		}
+		else if (currentCondition.type === criteriaTypes.ONE_WAY)
+		{
+			currentMatch = true;
+		}
 		
 		if (currentMatch !== true)
 		{
@@ -71,6 +75,10 @@ function loopCriteriaIncomplete(givenDistance, givenStops, criteriaObjectArray)
 		else if (currentCondition.type === criteriaTypes.TOTAL_DISTANCE)
 		{
 			currentMatch = checkIncompleteNumberSign(givenDistance, currentCondition);
+		}
+		else if (currentCondition.type === criteriaTypes.ONE_WAY)
+		{
+			currentMatch = true;
 		}
 		
 		if (currentMatch !== true)

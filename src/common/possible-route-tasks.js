@@ -12,6 +12,7 @@ function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 	targetRes["startNodes"] = [];
 	targetRes["endNodes"] = [];
 	targetRes["cutoffSet"] = false;
+	targetRes["backtrack"] = true;
 	
 	if (skipLoop !== true)
 	{
@@ -158,6 +159,10 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 		else if (currentType === criteriaTypes.TOTAL_DISTANCE && resultObj.cutoffSet !== true)
 		{
 			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
+		}
+		else if (currentType === criteriaTypes.ONE_WAY)
+		{
+			resultObj.backtrack = false;
 		}
 		
 	}
