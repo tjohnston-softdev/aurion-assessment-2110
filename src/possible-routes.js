@@ -157,7 +157,6 @@ function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArra
 			// Derive new routes from possible destinations.
 			currentAdjEdges = readIncompleteRoute(currentNode, currentRoute.distance, currentStops, critListArr, ignoreCrit, graphEdgeArr);
 			currentOffset = routeTasks.deriveNew(routeIndex, currentRoute, currentAdjEdges, graphEdgeArr, endList, routeArray, allowBacktracking);
-			//currentOffset = currentAdjEdges.length;
 		}
 		
 		
