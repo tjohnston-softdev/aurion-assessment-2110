@@ -109,6 +109,8 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 			offsetIndex = offsetIndex + 1;
 		}
 	}
+	
+	return (offsetIndex - 1);
 }
 
 // Count number of valid complete routes.
