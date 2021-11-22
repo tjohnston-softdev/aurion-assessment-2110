@@ -72,14 +72,13 @@ function saveCompletedRoute(routeInd, routeObj, routeArr, compArr, routeValid)
 
 
 // Derive new routes using possible destinations.
-function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, routeArr, allowBack)
+function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, routeEnds, routeArr, allowBack)
 {
 	var adjacentIndex = 0;
 	var currentEdgeID = -1;
 	var currentEdgeObject = {};
 	var currentNewRoute = {};
 	var currentInsertIndex = -1;
-	var currentVisited = false;
 	var currentUpdate = false;
 	
 	var offsetIndex = 1;
@@ -94,8 +93,7 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 		// Prepare new route.
 		currentNewRoute = cloneRouteObject(baseRouteObj);
 		currentInsertIndex = baseRouteInd + offsetIndex;
-		currentVisited = currentNewRoute.steps.includes(currentEdgeObject.destination);
-		currentUpdate = checkDeriveAllowed(currentVisited, allowBack);
+		currentUpdate = checkDeriveAllowed(currentEdgeObject.destination, currentNewRoute, routeEnds, allowBack);
 		
 		if (currentUpdate === true)
 		{
@@ -239,11 +237,17 @@ function cloneRouteObject(origObj)
 }
 
 
-function checkDeriveAllowed(visitStatus, backtrackStatus)
+function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 {
+	var visitStatus = newRoute.steps.includes(tgtNode);
+	var endStatus = eNodes.includes(tgtNode);
 	var checkRes = false;
 	
-	if (visitStatus === true && backtrackStatus === true)
+	if (endStatus === true || eNodes.length === 0)
+	{
+		checkRes = true;
+	}
+	else if (visitStatus === true && backtrackStatus === true)
 	{
 		checkRes = true;
 	}
