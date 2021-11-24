@@ -12,7 +12,7 @@ function compileTemplateObjects(givenNodeList, givenCriteriaArray, critInspectOb
 	
 	if (skipLoop !== true)
 	{
-		loopTemplates(givenNodes, givenCriteria, critInspectObj);
+		loopTemplates(givenNodeList, givenCriteriaArray, critInspectObj);
 	}
 	
 	return validationResult;

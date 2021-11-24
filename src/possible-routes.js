@@ -22,16 +22,15 @@ function findPossibleRoutes(graphObject, criteriaListObject)
 	
 	if (criteriaValidation.successful === true)
 	{
-		//searchPrepared = true;
 		useIgnore = criteriaValidation.ignore;
 		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, useIgnore);
-		templateValidation = routeTemplate.compileObjects(graphObj.nodes, criteriaListObj, criteriaInspection, useIgnore);
-		//preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, useIgnore);
+		templateValidation = routeTemplate.compileObjects(graphObject.nodes, criteriaListObject, criteriaInspection, useIgnore);
 	}
 	
 	if (templateValidation.successful === true)
 	{
-		// TODO
+		searchPrepared = true;
+		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, useIgnore);
 	}
 	
 	
@@ -46,6 +45,10 @@ function findPossibleRoutes(graphObject, criteriaListObject)
 	else if (searchPrepared === true)
 	{
 		possibleRes = 0;
+	}
+	else if (criteriaValidation.successful === true)
+	{
+		possibleRes = possibleCriteriaMessage.prepareText(templateValidation);
 	}
 	else
 	{
