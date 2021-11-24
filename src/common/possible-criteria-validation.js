@@ -34,6 +34,11 @@ function loopCriteriaComplete(givenDistance, givenStops, criteriaObjectArray)
 		{
 			currentMatch = true;
 		}
+		else if (currentCondition.type === criteriaTypes.TEMPLATE)
+		{
+			// TODO
+			currentMatch = true;
+		}
 		
 		if (currentMatch !== true)
 		{
@@ -80,6 +85,10 @@ function loopCriteriaIncomplete(givenDistance, givenStops, criteriaObjectArray)
 		{
 			currentMatch = true;
 		}
+		else if (currentCondition.type === criteriaTypes.TEMPLATE)
+		{
+			currentMatch = true;
+		}		
 		
 		if (currentMatch !== true)
 		{

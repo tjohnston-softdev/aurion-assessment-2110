@@ -1,6 +1,7 @@
 // Route criteria objects.
 
 const criteriaTypes = require("./enum/criteria-types");
+const maxStringLength = 1000;
 
 
 // 'Start Node' constructor.
@@ -38,6 +39,19 @@ function defineTotalDistanceCriteria(inpDist, inpSign)
 function defineOneWayCriteria()
 {
 	var defineRes = {"type": criteriaTypes.ONE_WAY};
+	return defineRes;
+}
+
+// 'RegExp' constructor.
+function defineTemplateCriteria(inpString, inpRepeat)
+{
+	var defineRes = {};
+	
+	defineRes["type"] = criteriaTypes.TEMPLATE;
+	defineRes["syntax"] = inpString;
+	defineRes["repeat"] = inpRepeat;
+	defineRes["compiled"] = null;
+	
 	return defineRes;
 }
 
@@ -114,6 +128,11 @@ function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 	else if (correctType === true && givenObject.type === criteriaTypes.ONE_WAY)
 	{
 		skipValidation = true;
+	}
+	else if (correctType === true && givenObject.type === criteriaTypes.TEMPLATE)
+	{
+		// Template
+		handleTemplate(givenObject, resultObject, criteriaIndex);
 	}
 	else if (correctType === true)
 	{
@@ -202,13 +221,44 @@ function handleNumberSign(criteriaObj, resObj, critInd, critDesc)
 	}
 }
 
+// Check 'template' properties.
+function handleTemplate(criteriaObj, resObj, critInd)
+{
+	var givenType = typeof criteriaObj.syntax;
+	var sLength = -1;
+	
+	var handleRes = false;
+	
+	if (givenType === "string")
+	{
+		sLength = criteriaObj.syntax.length;
+	}
+	
+	if (sLength >= 0 && sLength <= maxStringLength)
+	{
+		handleRes = true;
+	}
+	else if (sLength > maxStringLength)
+	{
+		resObj.successful = false;
+		resObj.reason = "Template string is too long.";
+		resObj.itemNo = critInd + 1;
+	}
+	else
+	{
+		resObj.successful = false;
+		resObj.reason = "Template must be a valid, non-empty string.";
+		resObj.itemNo = critInd + 1;
+	}
+}
+
 
 
 // Reads criteria object value type before validation.
 function checkValueType(givenObj)
 {
-	var valueType = typeof givenObj;
-	var checkRes = (givenObj !== undefined && givenObj !== null && valueType === "object");
+	var givenType = typeof givenObj;
+	var checkRes = (givenObj !== undefined && givenObj !== null && givenType === "object");
 	return checkRes;
 }
 
@@ -243,5 +293,6 @@ module.exports =
 	defineStopCount: defineStopCountCriteria,
 	defineTotalDistance: defineTotalDistanceCriteria,
 	defineOneWay: defineOneWayCriteria,
+	defineTemplate: defineTemplateCriteria,
 	validateCriteria: validateRouteCriteria
 };

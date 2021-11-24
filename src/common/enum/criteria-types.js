@@ -10,6 +10,7 @@ function defineOptions()
 	defineRes["STOP_COUNT"] = 3;
 	defineRes["TOTAL_DISTANCE"] = 4;
 	defineRes["ONE_WAY"] = 5;
+	defineRes["TEMPLATE"] = 6;
 	
 	return defineRes;
 }
