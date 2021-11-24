@@ -20,10 +20,13 @@ function findShortestRoute(graphObject, startNode, endNode)
 		visitOtherNodes(dijkstraInfoObject, graphObject);
 		shortRouteRes = checkRouteSuccessful(dijkstraInfoObject);
 	}
+	else if (dijkstraInfoObject.start !== null)
+	{
+		shortRouteRes = "MISSING END NODE";
+	}
 	else
 	{
-		// Unknown nodes.
-		shortRouteRes = graphTasks.getUnknownNodesText();
+		shortRouteRes = "MISSING START NODE";
 	}
 	
 	return shortRouteRes;

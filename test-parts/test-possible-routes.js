@@ -3,7 +3,6 @@ const chai = require("chai");
 const expect = chai.expect;
 const possibleRoutes = require("../src/possible-routes");
 const numSigns = require("../src/common/enum/num-signs");
-const graphTasks = require("../src/common/graph-tasks");
 const routeCriteria = require("../src/common/route-criteria");
 const errorThrowing = require("../src/test-common/error-throwing");
 const nullGraph = require("../src/test-common/null-graph");
@@ -15,9 +14,7 @@ const exampleGraphObject = require("../src/test-common/graph-input");
 function runTests()
 {
 	describe("Possible Routes", function()
-	{
-		var unknownNodesMsg = graphTasks.getUnknownNodesText();
-		
+	{	
 		it("Correct Output - Single", function()
 		{
 			var routeStart = routeCriteria.defineStartNode("A");

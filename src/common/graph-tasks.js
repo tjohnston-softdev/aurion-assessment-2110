@@ -52,13 +52,6 @@ function addEdgeObject(originID, destID, distNum, edgeArray)
 }
 
 
-// 'Unknown Nodes' output string.
-function getUnknownNodesTextString()
-{
-	return "UNKNOWN NODES";
-}
-
-
 // 'No Such Route' output string.
 function getNoRouteTextString()
 {
@@ -119,7 +112,6 @@ module.exports =
 	defineGraph: defineGraphObject,
 	addNode: addNodeDefinition,
 	addEdge: addEdgeObject,
-	getUnknownNodesText: getUnknownNodesTextString,
 	getNoRouteText: getNoRouteTextString,
 	getEdge: getExistingEdge,
 	getAdjacentEdges: getAdjacentEdgesByNode

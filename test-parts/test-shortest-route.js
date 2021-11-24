@@ -12,11 +12,13 @@ const exampleGraphObject = require("../src/test-common/graph-input");
 // Main Function
 function runTests()
 {
-	var unknownNodesMsg = graphTasks.getUnknownNodesText();
 	var noRouteMsg = graphTasks.getNoRouteText();
 	
 	describe("Shortest Route", function()
 	{
+		var invalidStartMsg = "MISSING START NODE";
+		var invalidEndMsg = "MISSING END NODE";
+		
 		it("Correct Output - Open", function()
 		{
 			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "F");
@@ -38,19 +40,25 @@ function runTests()
 		it("Missing Node Argument", function()
 		{
 			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", null);
-			expect(resultValue).to.equal(unknownNodesMsg);
+			expect(resultValue).to.equal(invalidEndMsg);
 		});
 		
 		it("Empty Node Argument", function()
 		{
 			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "");
-			expect(resultValue).to.equal(unknownNodesMsg);
+			expect(resultValue).to.equal(invalidEndMsg);
 		});
 		
-		it("Unknown Node", function()
+		it("Unknown Start Node", function()
+		{
+			var resultValue = shortestRoute.findRoute(exampleGraphObject, "Z", "A");
+			expect(resultValue).to.equal(invalidStartMsg);
+		});
+		
+		it("Unknown End Node", function()
 		{
 			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "Z");
-			expect(resultValue).to.equal(unknownNodesMsg);
+			expect(resultValue).to.equal(invalidEndMsg);
 		});
 		
 		it("Impossible Route", function()
