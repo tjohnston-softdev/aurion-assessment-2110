@@ -4,6 +4,7 @@ const graphTasks = require("./common/graph-tasks");
 const routeTasks = require("./common/possible-route-tasks");
 const numSigns = require("./common/enum/num-signs");
 const routeCriteria = require("./common/route-criteria");
+const routeTemplate = require("./common/possible-route-template");
 const possibleCriteriaValidation = require("./common/possible-criteria-validation");
 const possibleCriteriaMessage = require("./common/possible-criteria-message");
 
@@ -12,19 +13,27 @@ const possibleCriteriaMessage = require("./common/possible-criteria-message");
 function findPossibleRoutes(graphObject, criteriaListObject)
 {
 	var criteriaValidation = routeCriteria.validateCriteria(graphObject.nodes, criteriaListObject);
-	var searchPrepared = false;
 	var useIgnore = false;
 	var criteriaInspection = {};
+	var templateValidation = {};
+	var searchPrepared = false;
 	var preparedStartNodes = [];
 	var possibleRes = null;
 	
 	if (criteriaValidation.successful === true)
 	{
-		searchPrepared = true;
+		//searchPrepared = true;
 		useIgnore = criteriaValidation.ignore;
 		criteriaInspection = routeTasks.inspectCriteria(graphObject.nodes, criteriaListObject, useIgnore);
-		preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, useIgnore);
+		templateValidation = routeTemplate.compileObjects(graphObj.nodes, criteriaListObj, criteriaInspection, useIgnore);
+		//preparedStartNodes = performInitialSequence(criteriaInspection, graphObject, criteriaListObject, useIgnore);
 	}
+	
+	if (templateValidation.successful === true)
+	{
+		// TODO
+	}
+	
 	
 	if (searchPrepared === true && preparedStartNodes.length > 0 && criteriaInspection.cutoffSet === true)
 	{

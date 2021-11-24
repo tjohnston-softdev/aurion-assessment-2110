@@ -13,6 +13,7 @@ function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 	targetRes["endNodes"] = [];
 	targetRes["cutoffSet"] = false;
 	targetRes["backtrack"] = true;
+	targetRes["templatePointers"] = [];
 	
 	if (skipLoop !== true)
 	{
@@ -163,6 +164,10 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 		else if (currentType === criteriaTypes.ONE_WAY)
 		{
 			resultObj.backtrack = false;
+		}
+		else if (currentType === criteriaTypes.TEMPLATE)
+		{
+			resultObj.templatePointers.push(criteriaIndex);
 		}
 		
 	}

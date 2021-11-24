@@ -1,30 +1,24 @@
 # Changelog
 
-**./src/common/enum/criteria-types.js**
-* Defined 'TEMPLATE' type.
+**./src/common/possible-route-tasks.js**
+* Added 'templatePointers' result property to 'inspectRouteCriteria'
+* Changes to 'loopCriteriaInspection'
+	* Expanded IF structure to consider 'TEMPLATE' criteria.
+	* On 'TEMPLATE', add 'criteriaIndex' to 'resultObj.templatePointers'
 
 ---
 
-**./src/common/route-criteria.js**
-* Declared 'maxStringLength' global.
-* Wrote new function 'defineTemplateCriteria'
-	* Constructor for 'TEMPLATE' type.
-	* Inputs syntax string and repeat boolean.
-	* Compiled into a full RegExp object after inspection.
-* Wrote new function 'handleTemplate'
-	* Validates template string type and length.
-	* Does not validate or compile the RegExp itself.
-* Expanded IF structure in 'readCriteria' to include 'TEMPLATE' criteria types.
-* Changes to 'checkValueType'
-	* Renamed 'valueType' variable to 'givenType'
+**./src/common/possible-route-template.js**
+* New file - Prepares and validates 'TEMPLATE' criteria.
+* Same syntax as RegExp but with custom character groups for start/end nodes.
 
 ---
 
-**./src/common/possible-criteria-validation.js**
-* Changes to 'loopCriteriaComplete'
-	* Expanded IF structure to consider 'TEMPLATE' criteria.
-	* Route template will be validated upon completion.
-	* Marked with "TODO" comment.
-* Changes to 'loopCriteriaComplete'
-	* Expanded IF structure to consider 'TEMPLATE' criteria.
-	* Validation is skipped as the route is incomplete.
+**./src/possible-routes.js**
+* Added requirement for './common/possible-route-template'
+* Changes to 'findPossibleRoutes'
+	* Declared 'templateValidation' variable.
+	* Moved 'searchPrepared' variable to before 'preparedStartNodes'
+	* Commented out assignments: 'searchPrepared', 'preparedStartNodes'
+	* Assigned 'templateValidation' using 'routeTemplate'
+	* New block: `if (templateValidation.successful === true)` - Only a placeholder for now.
