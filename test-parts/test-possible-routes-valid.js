@@ -55,7 +55,7 @@ function handleCount()
 			expect(resultValue).to.equal(0);
 		});
 		
-		it("Infinite Routes", function()
+		it("Infinite", function()
 		{
 			var routeStart = routeCriteria.defineStartNode("A");
 			var routeEnd = routeCriteria.defineEndNode("C");
