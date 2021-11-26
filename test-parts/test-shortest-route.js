@@ -12,26 +12,41 @@ const exampleGraphObject = require("../src/test-common/graph-input");
 // Main Function
 function runTests()
 {
-	var noRouteMsg = graphTasks.getNoRouteText();
-	
 	describe("Shortest Route", function()
 	{
-		var invalidStartMsg = "MISSING START NODE";
-		var invalidEndMsg = "MISSING END NODE";
-		
-		it("Correct Output - Open", function()
+		handleCorrectOutput();
+		handleIncorrectOutput();
+	});
+}
+
+
+function handleCorrectOutput()
+{
+	describe("Correct Output", function()
+	{
+		it("Open", function()
 		{
 			var resultValue = shortestRoute.findRoute(exampleGraphObject, "A", "F");
 			pathfindingHelp.checkOutputDistance(resultValue);
 		});
 		
-		it("Correct Output - Closed", function()
+		it("Closed", function()
 		{
 			var resultValue = shortestRoute.findRoute(exampleGraphObject, "C", "C");
 			pathfindingHelp.checkOutputDistance(resultValue);
 		});
-		
-		
+	});
+}
+
+
+function handleIncorrectOutput()
+{
+	var noRouteMsg = graphTasks.getNoRouteText();
+	var invalidStartMsg = "MISSING START NODE";
+	var invalidEndMsg = "MISSING END NODE";
+	
+	describe("Incorrect Output", function()
+	{
 		it("Missing Graph", function()
 		{
 			callShortestRouteMissingGraph();
@@ -71,7 +86,6 @@ function runTests()
 }
 
 
-
 // Attempts pathfinding on a missing graph.
 function callShortestRouteMissingGraph()
 {
@@ -94,7 +108,5 @@ function callShortestRouteMissingGraph()
 	// Validate error message.
 	errorThrowing.checkTryCatch(graphFound, correctError, nullGraph.msgTxt);
 }
-
-
 
 module.exports = runTests;
