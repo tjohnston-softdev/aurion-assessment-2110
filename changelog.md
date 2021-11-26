@@ -1,18 +1,31 @@
 # Changelog
 
 **./src/common/possible-criteria-validation.js - loopCriteriaComplete**
-* Removed parameters: 'givenDistance', 'givenStops'
-* Declared new parameter 'givenRoute'
-* Declared new variables: 'finalDistance', 'finalStops'
-* Replaced 'givenStops' reference with 'finalStops'
-* Replaced 'givenDistance' reference with 'finalDistance'
+* Declared 'givenNodesArray' parameter.
+
+---
+
+**./src/exact-route.js**
+* Renamed function parameters:
+	* 'graphObject' to 'inputGraphObject' (getRouteDistance)
+	* 'graphObj' to 'graphObject' (loopSteps)
+
+---
+
+**./src/shortest-route.js**
+* Renamed function parameters:
+	* 'graphObject' to 'inputGraphObject' (findShortestRoute)
+	* 'graphObj' to 'graphObject' (visitStartNode, visitOtherNodes)
 
 ---
 
 **./src/possible-routes.js**
-* Changes to 'validateCompletedRoute'
-	* Removed parameters: 'distVal', 'stopCount'
-	* Declared new parameter 'compRoute'
-	* Updated 'possibleCriteriaValidation' call to use correct arguments.
+* Renamed function parameters:
+	* 'graphObject' to 'inputGraphObject' (findPossibleRoutes)
+	* 'graphObj' to 'graphObject' (performInitialSequence, performMainSearch)
 * Changes to 'iterateRoutes'
-	* Updated 'validateCompletedRoute' call to use correct arguments.
+	* Removed 'graphEdgeArr' parameter.
+	* Declared 'graphObj' parameter.
+	* Replaced 'graphEdgeArr' references with 'graphObj.edges'
+* Changes to 'validateCompletedRoute'
+	* Declared 'graphNodesList' parameter.

@@ -3,7 +3,7 @@
 const graphTasks = require("./common/graph-tasks");
 
 // Main function.
-function getRouteDistance(graphObject, pathString)
+function getRouteDistance(inputGraphObject, pathString)
 {
 	var argValid = (typeof pathString === "string");
 	var resultValue = null;
@@ -11,7 +11,7 @@ function getRouteDistance(graphObject, pathString)
 	if (argValid === true && pathString.length >= 2)
 	{
 		// Follow path.
-		resultValue = loopSteps(graphObject, pathString);
+		resultValue = loopSteps(inputGraphObject, pathString);
 	}
 	else if (argValid === true)
 	{
@@ -29,7 +29,7 @@ function getRouteDistance(graphObject, pathString)
 
 
 // Follow the given route step-by-step.
-function loopSteps(graphObj, stepStr)
+function loopSteps(graphObject, stepStr)
 {
 	var loopIndex = 0;
 	var offsetIndex = 1;
@@ -52,11 +52,11 @@ function loopSteps(graphObj, stepStr)
 		offsetIndex = loopIndex + 1;
 		currentOriginChar = stepStr.charAt(loopIndex);
 		currentDestChar = stepStr.charAt(offsetIndex);
-		currentOriginID = graphObj.nodes.indexOf(currentOriginChar);
-		currentDestID = graphObj.nodes.indexOf(currentDestChar);
+		currentOriginID = graphObject.nodes.indexOf(currentOriginChar);
+		currentDestID = graphObject.nodes.indexOf(currentDestChar);
 		
 		// Retrieve corresponding edge.
-		currentEdge = graphTasks.getEdge(currentOriginID, currentDestID, graphObj.edges);
+		currentEdge = graphTasks.getEdge(currentOriginID, currentDestID, graphObject.edges);
 		
 		
 		if (currentEdge !== null)

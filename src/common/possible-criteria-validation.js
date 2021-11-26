@@ -1,7 +1,7 @@
 const numSigns = require("./enum/num-signs");
 const criteriaTypes = require("./enum/criteria-types");
 
-function loopCriteriaComplete(givenRoute, criteriaObjectArray)
+function loopCriteriaComplete(givenRoute, givenNodesArray, criteriaObjectArray)
 {
 	var finalDistance = givenRoute.distance;
 	var finalStops = givenRoute.steps.length - 1;

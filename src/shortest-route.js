@@ -5,19 +5,19 @@ const dsktraTasks = require("./common/dsktra-tasks");
 
 
 // Main function.
-function findShortestRoute(graphObject, startNode, endNode)
+function findShortestRoute(inputGraphObject, startNode, endNode)
 {
 	var dijkstraInfoObject = dsktraTasks.defineInfo();
 	var shortRouteRes = null;
 	
 	// Prepare nodes table.
-	dsktraTasks.setNodes(dijkstraInfoObject, graphObject.nodes, startNode, endNode);
+	dsktraTasks.setNodes(dijkstraInfoObject, inputGraphObject.nodes, startNode, endNode);
 	
 	if (dijkstraInfoObject.start !== null && dijkstraInfoObject.end !== null)
 	{
 		// Start and end nodes valid - Execute algorithm.
-		visitStartNode(dijkstraInfoObject, graphObject);
-		visitOtherNodes(dijkstraInfoObject, graphObject);
+		visitStartNode(dijkstraInfoObject, inputGraphObject);
+		visitOtherNodes(dijkstraInfoObject, inputGraphObject);
 		shortRouteRes = checkRouteSuccessful(dijkstraInfoObject);
 	}
 	else if (dijkstraInfoObject.start !== null)
@@ -34,7 +34,7 @@ function findShortestRoute(graphObject, startNode, endNode)
 
 
 // First iteration of Dijkstra, visiting the start node.
-function visitStartNode(dsktraInfoObj, graphObj)
+function visitStartNode(dsktraInfoObj, graphObject)
 {
 	var startID = -1;
 	var startObj = null;
@@ -45,8 +45,8 @@ function visitStartNode(dsktraInfoObj, graphObj)
 	startObj = dsktraInfoObj.nodes[startID];
 	
 	// Retrieve destination nodes and update accordingly.
-	adjEdges = graphTasks.getAdjacentEdges(startID, graphObj.edges);
-	dsktraTasks.evaluateNodes(startID, 0, adjEdges, dsktraInfoObj, graphObj.edges);
+	adjEdges = graphTasks.getAdjacentEdges(startID, graphObject.edges);
+	dsktraTasks.evaluateNodes(startID, 0, adjEdges, dsktraInfoObj, graphObject.edges);
 	
 	// Start node visited.
 	startObj.visited = true;
@@ -54,7 +54,7 @@ function visitStartNode(dsktraInfoObj, graphObj)
 
 
 // Continue iterating over other graph nodes.
-function visitOtherNodes(dsktraInfoObj, graphObj)
+function visitOtherNodes(dsktraInfoObj, graphObject)
 {
 	var currentVisitingNode = null;
 	var currentID = -1;
@@ -87,8 +87,8 @@ function visitOtherNodes(dsktraInfoObj, graphObj)
 			currentDistance = currentVisitingNode.distanceFromStart;
 			
 			// Retrieve destination nodes and update accordingly.
-			currentAdjEdges = graphTasks.getAdjacentEdges(currentVisitingNode.nodeID, graphObj.edges);
-			dsktraTasks.evaluateNodes(currentID, currentDistance, currentAdjEdges, dsktraInfoObj, graphObj.edges);
+			currentAdjEdges = graphTasks.getAdjacentEdges(currentVisitingNode.nodeID, graphObject.edges);
+			dsktraTasks.evaluateNodes(currentID, currentDistance, currentAdjEdges, dsktraInfoObj, graphObject.edges);
 			
 			// Node visited.
 			currentVisitingNode.visited = true;
