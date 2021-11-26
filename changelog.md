@@ -1,15 +1,11 @@
 # Changelog
 
-**./src/common/possible-criteria-validation.js**
-* Changes to 'loopCriteriaComplete'
-	* Removed parameters: 'givenDistance', 'givenStops'
-	* Declared new parameter 'givenRoute'
-	* Declared new variables: 'finalDistance', 'finalStops'
-	* Replaced 'givenStops' reference with 'finalStops'
-	* Replaced 'givenDistance' reference with 'finalDistance'
-* Wrote new functions:
-	* x
-	* x
+**./src/common/possible-criteria-validation.js - loopCriteriaComplete**
+* Removed parameters: 'givenDistance', 'givenStops'
+* Declared new parameter 'givenRoute'
+* Declared new variables: 'finalDistance', 'finalStops'
+* Replaced 'givenStops' reference with 'finalStops'
+* Replaced 'givenDistance' reference with 'finalDistance'
 
 ---
 
