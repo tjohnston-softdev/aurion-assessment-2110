@@ -12,7 +12,7 @@ function compileTemplateObjects(givenNodeList, givenCriteriaArray, critInspectOb
 	
 	if (skipLoop !== true)
 	{
-		loopTemplates(givenNodeList, givenCriteriaArray, critInspectObj);
+		loopTemplates(givenNodeList, givenCriteriaArray, critInspectObj, validationResult);
 	}
 	
 	return validationResult;
@@ -113,6 +113,8 @@ function compileRegularExpression(syntaxStr, flagStr)
 	{
 		compileRes = null;
 	}
+	
+	return compileRes;
 }
 
 

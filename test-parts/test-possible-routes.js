@@ -148,6 +148,40 @@ function runTests()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE WHOLE.");
 		});
 		
+		it("Invalid Template - String Too Long", function()
+		{
+			var longStr = writeLongTemplateString();
+			var routeTemplate = routeCriteria.defineTemplate(longStr, false);
+			var searchCriteria = [routeTemplate];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TEMPLATE STRING IS TOO LONG.");
+		});
+		
+		it("Invalid Template - String Type", function()
+		{
+			var routeTemplate = routeCriteria.defineTemplate(null, false);
+			var searchCriteria = [routeTemplate];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TEMPLATE MUST BE A VALID, NON-EMPTY STRING.");
+		});
+		
+		it("Invalid Template - Empty String", function()
+		{
+			var routeTemplate = routeCriteria.defineTemplate("             ", true);
+			var searchCriteria = [routeTemplate];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TEMPLATE STRING CANNOT BE EMPTY.");
+		});
+		
+		it("Invalid Template - Regular Expression", function()
+		{
+			var routeTemplate = routeCriteria.defineTemplate("AB((CD[EF", false);
+			var searchCriteria = [routeTemplate];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TEMPLATE STRING IS NOT A VALID REGULAR EXPRESSION.");
+		});
+		
+		
 		it("Impossible Route", function()
 		{
 			var routeStart = routeCriteria.defineStartNode("A");
@@ -171,6 +205,19 @@ function runTests()
 		
 		
 	});
+}
+
+
+function writeLongTemplateString()
+{
+	var writeRes = "";
+	
+	while (writeRes.length < 1100)
+	{
+		writeRes += "ABCDEF";
+	}
+	
+	return writeRes;
 }
 
 
