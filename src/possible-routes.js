@@ -158,7 +158,7 @@ function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArra
 		// If end node has been reached, save it, and check whether it should be explored further.
 		if (currentEndPoint === true || endList.length === 0)
 		{
-			currentEndValid = validateCompletedRoute(currentRoute.distance, currentStops, critListArr, ignoreCrit);
+			currentEndValid = validateCompletedRoute(currentRoute, critListArr, ignoreCrit);
 			currentBranchAllowed = routeTasks.saveComplete(routeIndex, currentRoute, routeArray, compArray, currentEndValid);
 			endReached = (currentStops > 0);
 		}
@@ -183,14 +183,14 @@ function iterateRoutes(endList, graphEdgeArr, critListArr, ignoreCrit, routeArra
 
 
 // Check whether a completed route meets the criteria.
-function validateCompletedRoute(distVal, stopCount, criteriaList, skipCriteria)
+function validateCompletedRoute(compRoute, criteriaList, skipCriteria)
 {
 	var criteriaMatch = true;
 	var validRes = false;
 	
 	if (skipCriteria !== true)
 	{
-		criteriaMatch = possibleCriteriaValidation.loopComplete(distVal, stopCount, criteriaList);
+		criteriaMatch = possibleCriteriaValidation.loopComplete(compRoute, criteriaList);
 	}
 	
 	if (criteriaMatch === true && stopCount > 0)

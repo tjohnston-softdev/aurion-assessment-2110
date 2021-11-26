@@ -1,8 +1,11 @@
 const numSigns = require("./enum/num-signs");
 const criteriaTypes = require("./enum/criteria-types");
 
-function loopCriteriaComplete(givenDistance, givenStops, criteriaObjectArray)
+function loopCriteriaComplete(givenRoute, criteriaObjectArray)
 {
+	var finalDistance = givenRoute.distance;
+	var finalStops = givenRoute.steps.length - 1;
+	
 	var itemIndex = 0;
 	var currentCondition = null;
 	var currentMatch = false;
@@ -24,11 +27,11 @@ function loopCriteriaComplete(givenDistance, givenStops, criteriaObjectArray)
 		}
 		else if (currentCondition.type === criteriaTypes.STOP_COUNT)
 		{
-			currentMatch = checkCompleteNumberSign(givenStops, currentCondition);
+			currentMatch = checkCompleteNumberSign(finalStops, currentCondition);
 		}
 		else if (currentCondition.type === criteriaTypes.TOTAL_DISTANCE)
 		{
-			currentMatch = checkCompleteNumberSign(givenDistance, currentCondition);
+			currentMatch = checkCompleteNumberSign(finalDistance, currentCondition);
 		}
 		else if (currentCondition.type === criteriaTypes.ONE_WAY)
 		{
@@ -139,7 +142,6 @@ function checkCompleteNumberSign(actualValue, criteriaObj)
 	
 	return matchRes;
 }
-
 
 
 
