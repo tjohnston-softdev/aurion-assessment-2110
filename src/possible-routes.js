@@ -120,8 +120,8 @@ function performMainSearch(inspectObj, graphObject, criteriaListObj, ignoreCrite
 		iterateRoutes(endNodesList, graphObject, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useBack, false);
 	}
 	
-	var searchRes = routeTasks.countValidRoutes(completedRoutes);
-	return searchRes;
+	routeTasks.filterValidRoutes(completedRoutes);
+	return completedRoutes;
 }
 
 

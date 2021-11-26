@@ -68,7 +68,7 @@ function runTestCase6(givenInputGraph)
 	var caseResultObject = null;
 	
 	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
-	caseResultObject = setOutputObject(2, actualValue);
+	caseResultObject = setOutputObject(2, actualValue.length);
 	return caseResultObject;
 }
 
@@ -85,7 +85,7 @@ function runTestCase7(givenInputGraph)
 	var caseResultObject = null;
 	
 	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
-	caseResultObject = setOutputObject(3, actualValue);
+	caseResultObject = setOutputObject(3, actualValue.length);
 	return caseResultObject;
 }
 
@@ -120,7 +120,7 @@ function runTestCase10(givenInputGraph)
 	var caseResultObject = null;
 	
 	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
-	caseResultObject = setOutputObject(7, actualValue);
+	caseResultObject = setOutputObject(7, actualValue.length);
 	return caseResultObject;
 }
 

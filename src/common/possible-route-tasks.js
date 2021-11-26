@@ -112,7 +112,7 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 	return (offsetIndex - 1);
 }
 
-// Count number of valid complete routes.
+/*
 function countValidCompletedRoutes(compArr)
 {
 	var entryIndex = 0;
@@ -131,6 +131,30 @@ function countValidCompletedRoutes(compArr)
 	
 	return countRes;
 }
+*/
+
+
+// Remove invalid routes from array.
+function filterValidCompleteRoutes(compArr)
+{
+	var entryIndex = 0;
+	var currentEntry = {};
+	
+	while (entryIndex >= 0 && entryIndex < compArr.length)
+	{
+		currentEntry = compArr[entryIndex];
+		
+		if (currentEntry.valid === true)
+		{
+			entryIndex = entryIndex + 1;
+		}
+		else
+		{
+			compArr.splice(entryIndex, 1);
+		}
+	}
+}
+
 
 
 function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
@@ -277,5 +301,5 @@ module.exports =
 	initializeMultipleBacklog: initializeMultipleRoutesBacklog,
 	saveComplete: saveCompletedRoute,
 	deriveNew: deriveNewRoutes,
-	countValidRoutes: countValidCompletedRoutes
+	filterValidRoutes: filterValidCompleteRoutes
 };
