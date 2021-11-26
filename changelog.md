@@ -1,31 +1,21 @@
 # Changelog
 
-**./src/common/possible-criteria-validation.js - loopCriteriaComplete**
-* Declared 'givenNodesArray' parameter.
-
----
-
-**./src/exact-route.js**
-* Renamed function parameters:
-	* 'graphObject' to 'inputGraphObject' (getRouteDistance)
-	* 'graphObj' to 'graphObject' (loopSteps)
-
----
-
-**./src/shortest-route.js**
-* Renamed function parameters:
-	* 'graphObject' to 'inputGraphObject' (findShortestRoute)
-	* 'graphObj' to 'graphObject' (visitStartNode, visitOtherNodes)
+**./src/common/possible-criteria-validation.js**
+* Wrote new functions:
+	* checkCompleteTemplate
+	* writeRouteString
+* Changes to 'loopCriteriaComplete'
+	* On `criteriaTypes.TEMPLATE`, call 'checkCompleteTemplate'
+	* Removed "TODO" comment.
 
 ---
 
 **./src/possible-routes.js**
-* Renamed function parameters:
-	* 'graphObject' to 'inputGraphObject' (findPossibleRoutes)
-	* 'graphObj' to 'graphObject' (performInitialSequence, performMainSearch)
-* Changes to 'iterateRoutes'
-	* Removed 'graphEdgeArr' parameter.
-	* Declared 'graphObj' parameter.
-	* Replaced 'graphEdgeArr' references with 'graphObj.edges'
-* Changes to 'validateCompletedRoute'
-	* Declared 'graphNodesList' parameter.
+* Updated 'stop count' IF condition in 'validateCompletedRoute'
+	* Before: `stopCount > 0`
+	* After: `compRoute.steps.length > 1`
+* Changes to 'performInitialSequence'
+	* Replaced 'graphObject.edges' with 'graphObject'
+	* Declared 'endNodesList' variable. - Shortcut for 'inspectObj.endNodes'
+* Changes to 'performMainSearch'
+	* Replaced 'graphObject.edges' with 'graphObject'

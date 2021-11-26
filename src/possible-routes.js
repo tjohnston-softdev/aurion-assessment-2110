@@ -64,6 +64,7 @@ function findPossibleRoutes(inputGraphObject, criteriaListObject)
 function performInitialSequence(inspectObj, graphObject, criteriaListObj, ignoreCriteria)
 {
 	var maxIterations = Math.ceil(graphObject.nodes.length * 1.15);
+	var endNodesList = inspectObj.endNodes;
 	
 	var nodeIndex = 0;
 	var currentStart = false;
@@ -89,7 +90,7 @@ function performInitialSequence(inspectObj, graphObject, criteriaListObj, ignore
 		while (currentIteration >= 1 && currentIteration <= maxIterations && currentFound !== true && currentLoop === true)
 		{
 			// Iterate through current set of routes.
-			currentFound = iterateRoutes(inspectObj.endNodes, graphObject.edges, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false, true);
+			currentFound = iterateRoutes(endNodesList, graphObject, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false, true);
 			currentIteration = currentIteration + 1;
 		}
 		
@@ -116,7 +117,7 @@ function performMainSearch(inspectObj, graphObject, criteriaListObj, ignoreCrite
 	while (routeBacklog.length > 0)
 	{
 		// Iterate through current set of routes.
-		iterateRoutes(endNodesList, graphObject.edges, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useBack, false);
+		iterateRoutes(endNodesList, graphObject, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useBack, false);
 	}
 	
 	var searchRes = routeTasks.countValidRoutes(completedRoutes);
@@ -193,7 +194,7 @@ function validateCompletedRoute(compRoute, graphNodesList, criteriaList, skipCri
 		criteriaMatch = possibleCriteriaValidation.loopComplete(compRoute, graphNodesList, criteriaList);
 	}
 	
-	if (criteriaMatch === true && stopCount > 0)
+	if (criteriaMatch === true && compRoute.steps.length > 1)
 	{
 		validRes = true;
 	}
