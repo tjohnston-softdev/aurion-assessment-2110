@@ -116,7 +116,16 @@ function runTests()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "START NODE NODE DOES NOT EXIST.");
 		});
 		
-		it("Invalid 'Stop Count' / 'Total Distance' - Not Positive", function()
+		it("Invalid Criteria - Zero Number", function()
+		{
+			var routeDist = routeCriteria.defineTotalDistance(0, numSigns.EQUAL);
+			var searchCriteria = [routeDist];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE POSITIVE.");
+		});
+		
+		
+		it("Invalid Criteria - Negative Number", function()
 		{
 			var routeStopCount = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
 			var searchCriteria = [routeStopCount];
@@ -124,7 +133,7 @@ function runTests()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "STOP COUNT NUMBER MUST BE POSITIVE.");
 		});
 		
-		it("Invalid 'Stop Count' / 'Total Distance' - Unknown Sign", function()
+		it("Invalid Criteria - Unknown Sign", function()
 		{
 			var routeDist = routeCriteria.defineTotalDistance(100, "NOT SIGN");
 			var searchCriteria = [routeDist];
@@ -132,7 +141,7 @@ function runTests()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER SIGN IS INVALID.");
 		});
 		
-		it("Invalid 'Stop Count' / 'Total Distance' - Number Type", function()
+		it("Invalid Criteria - Number Type", function()
 		{
 			var routeDist = routeCriteria.defineTotalDistance(123.45, numSigns.GREAT_EQUAL);
 			var searchCriteria = [routeDist];
