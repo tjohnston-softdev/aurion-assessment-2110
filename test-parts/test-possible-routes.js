@@ -124,7 +124,6 @@ function runTests()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "TOTAL DISTANCE NUMBER MUST BE POSITIVE.");
 		});
 		
-		
 		it("Invalid Criteria - Negative Number", function()
 		{
 			var routeStopCount = routeCriteria.defineStopCount(-10, numSigns.EQUAL);
@@ -173,7 +172,6 @@ function runTests()
 		
 	});
 }
-
 
 
 // Attempts pathfinding on a missing graph.
