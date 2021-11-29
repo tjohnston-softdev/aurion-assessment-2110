@@ -13,7 +13,7 @@ function runTests()
 	describe("Possible Routes - Valid", function()
 	{
 		handleArguments();
-		handleCount();
+		handleRouteCount();
 	});
 }
 
@@ -43,9 +43,9 @@ function handleArguments()
 
 
 
-function handleCount()
+function handleRouteCount()
 {
-	describe("Count", function()
+	describe("Route Count", function()
 	{
 		it("Single", function()
 		{
