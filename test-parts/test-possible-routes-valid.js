@@ -12,9 +12,35 @@ function runTests()
 {
 	describe("Possible Routes - Valid", function()
 	{
+		handleArguments();
 		handleCount();
 	});
 }
+
+
+function handleArguments()
+{
+	describe("Arguments", function()
+	{
+		it("Empty Criteria", function()
+		{
+			var searchCriteria = [];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			expect(resultValue).to.equal(Number.POSITIVE_INFINITY);
+		});
+		
+		it("Impossible Route", function()
+		{
+			var routeStart = routeCriteria.defineStartNode("A");
+			var routeEnd = routeCriteria.defineEndNode("G");
+			
+			var searchCriteria = [routeStart, routeEnd];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			expect(resultValue).to.equal(0);
+		});
+	});
+}
+
 
 
 function handleCount()

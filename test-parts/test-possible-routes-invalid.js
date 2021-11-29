@@ -57,23 +57,6 @@ function handleArguments()
 			pathfindingHelp.checkInvalidCriteriaMessage(resultValue, "UNKNOWN CRITERIA TYPE.");
 		});
 		
-		it("Empty Criteria", function()
-		{
-			var searchCriteria = [];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			expect(resultValue).to.equal(Number.POSITIVE_INFINITY);
-		});
-		
-		it("Impossible Route", function()
-		{
-			var routeStart = routeCriteria.defineStartNode("A");
-			var routeEnd = routeCriteria.defineEndNode("G");
-			
-			var searchCriteria = [routeStart, routeEnd];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			expect(resultValue).to.equal(0);
-		});
-		
 	});
 }
 
