@@ -248,10 +248,31 @@ function cloneRouteObject(origObj)
 
 function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 {
+	var startNode = newRoute.steps[0];
+	var startEnd = eNodes.includes(startNode);
 	var visitStatus = newRoute.steps.includes(tgtNode);
 	var endStatus = eNodes.includes(tgtNode);
 	var checkRes = false;
 	
+	if (visitStatus === true && backtrackStatus === true)
+	{
+		checkRes = true;
+	}
+	else if (visitStatus === true && startEnd === true)
+	{
+		checkRes = true;
+	}
+	else if (visitStatus === true)
+	{
+		checkRes = false;
+	}
+	else
+	{
+		checkRes = true;
+	}
+	
+	
+	/*
 	if (endStatus === true || eNodes.length === 0)
 	{
 		checkRes = true;
@@ -268,6 +289,7 @@ function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 	{
 		checkRes = true;
 	}
+	*/
 	
 	return checkRes;
 }
