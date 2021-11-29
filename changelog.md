@@ -1,6 +1,5 @@
 # Changelog
 
-**./test-parts/test-possible-routes-valid.js**
-* Renamed:
-	* 'handleCount' function to 'handleRouteCount'
-	* "Count" group to "Route Count"
+**./src/common/possible-route-tasks.js**
+* Removed commented out function: countValidCompletedRoutes
+* When finding a 'ONE_WAY' condition, 'cutoffSet' is True. (loopCriteriaInspection)

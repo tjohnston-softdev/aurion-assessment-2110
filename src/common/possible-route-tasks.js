@@ -112,27 +112,6 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 	return (offsetIndex - 1);
 }
 
-/*
-function countValidCompletedRoutes(compArr)
-{
-	var entryIndex = 0;
-	var currentEntry = {};
-	var countRes = 0;
-	
-	for (entryIndex = 0; entryIndex < compArr.length; entryIndex = entryIndex + 1)
-	{
-		currentEntry = compArr[entryIndex];
-		
-		if (currentEntry.valid === true)
-		{
-			countRes += 1;
-		}
-	}
-	
-	return countRes;
-}
-*/
-
 
 // Remove invalid routes from array.
 function filterValidCompleteRoutes(compArr)
@@ -188,6 +167,7 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 		else if (currentType === criteriaTypes.ONE_WAY)
 		{
 			resultObj.backtrack = false;
+			resultObj.cutoffSet = true;
 		}
 		else if (currentType === criteriaTypes.TEMPLATE)
 		{
