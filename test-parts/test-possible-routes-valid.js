@@ -3,8 +3,10 @@ const chai = require("chai");
 const expect = chai.expect;
 const possibleRoutes = require("../src/possible-routes");
 const numSigns = require("../src/common/enum/num-signs");
+const testScenarios = require("../src/common/enum/possible-route-tests");
 const routeCriteria = require("../src/common/route-criteria");
 const pathfindingHelp = require("../src/test-common/pathfinding-help");
+const routeResults = require("../src/test-common/possible-route-results");
 const exampleGraphObject = require("../src/test-common/graph-input");
 
 // Main function.
@@ -12,8 +14,24 @@ function runTests()
 {
 	describe("Possible Routes - Valid", function()
 	{
-		handleArguments();
-		handleRouteCount();
+		handleOneWay();
+		//handleArguments();
+		//handleRouteCount();
+	});
+}
+
+
+function handleOneWay()
+{
+	describe("One-Way", function()
+	{
+		it("Enabled", function()
+		{
+			var routeOneWay = routeCriteria.defineOneWay();
+			var searchCriteria = [routeOneWay];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ONE_WAY);
+		});
 	});
 }
 

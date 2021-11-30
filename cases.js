@@ -10,11 +10,13 @@ const resultDisplay = require("./src/result-display");
 const routeCriteria = require("./src/common/route-criteria");
 const numSigns = require("./src/common/enum/num-signs");
 
+/*
 const exampleGraphObject = require("./src/test-common/graph-input");
 var routeOneWay = routeCriteria.defineOneWay();
 var searchCriteria = [routeOneWay];
 var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 console.log(resultValue);
+*/
 
 
 // Test case 1
