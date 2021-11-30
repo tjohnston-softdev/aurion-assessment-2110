@@ -271,26 +271,6 @@ function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 		checkRes = true;
 	}
 	
-	
-	/*
-	if (endStatus === true || eNodes.length === 0)
-	{
-		checkRes = true;
-	}
-	else if (visitStatus === true && backtrackStatus === true)
-	{
-		checkRes = true;
-	}
-	else if (visitStatus === true)
-	{
-		checkRes = false;
-	}
-	else
-	{
-		checkRes = true;
-	}
-	*/
-	
 	return checkRes;
 }
 

@@ -1,6 +1,3 @@
-
-
-
 // Validates the result of a 'try-catch' unit test.
 function checkTryCatchResult(trySuccessful, messageCorrect, expMsgTxt)
 {
