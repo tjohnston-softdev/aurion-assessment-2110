@@ -10,19 +10,6 @@ const resultDisplay = require("./src/result-display");
 const routeCriteria = require("./src/common/route-criteria");
 const numSigns = require("./src/common/enum/num-signs");
 
-/* DEBUG */
-const exampleGraphObject = require("./src/test-common/graph-input");
-
-var routeEndD = routeCriteria.defineEndNode("D");
-var routeEndE = routeCriteria.defineEndNode("E");
-var routeEndF = routeCriteria.defineEndNode("F");
-var routeOneWay = routeCriteria.defineOneWay();
-
-var searchCriteria = [routeEndD, routeEndE, routeEndF, routeOneWay];
-var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-console.log(resultValue);
-/* END DEBUG */
-
 
 // Test case 1
 function runTestCase1(givenInputGraph)

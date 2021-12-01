@@ -99,7 +99,6 @@ function handleEndNode()
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.END_SINGLE, resultParas);
 		});
 		
-		/*
 		it("Multiple", function()
 		{
 			var routeEndD = routeCriteria.defineEndNode("D");
@@ -123,7 +122,6 @@ function handleEndNode()
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.END_MULT, resultParas);
 		});
-		*/
 		
 	});
 }
