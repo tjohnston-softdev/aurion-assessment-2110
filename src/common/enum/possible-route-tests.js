@@ -7,6 +7,7 @@ function defineOptions()
 	defineRes["START_MULT"] = 3;
 	defineRes["END_SINGLE"] = 4;
 	defineRes["END_MULT"] = 5;
+	defineRes["ROUTE_TYPE"] = 6;
 	
 	return defineRes;
 }

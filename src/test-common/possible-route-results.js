@@ -55,6 +55,11 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 		{
 			expect(parasObj.targetList).to.include(currentEnd);
 		}
+		else if (sceFlag === testScenarios.ROUTE_TYPE)
+		{
+			expect(parasObj.start).to.include(currentStart);
+			expect(parasObj.end).to.include(currentEnd);
+		}
 		
 	}
 }
