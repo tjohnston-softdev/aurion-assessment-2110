@@ -4,14 +4,14 @@ const expect = chai.expect;
 const testScenarios = require("../common/enum/possible-route-tests");
 
 
-function checkResultObject(pathResObj, inputGraphObj, scenarioFlag)
+function checkResultObject(pathResObj, inputGraphObj, scenarioFlag, inputParasObj)
 {
 	expect(pathResObj).to.be.an("array").that.is.not.empty;
-	loopRoutes(pathResObj, inputGraphObj, scenarioFlag);
+	loopRoutes(pathResObj, inputGraphObj, scenarioFlag, inputParasObj);
 }
 
 
-function loopRoutes(routeArr, graphObject, sceFlag)
+function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 {
 	var loopIndex = 0;
 	var currentElement = null;
@@ -38,6 +38,14 @@ function loopRoutes(routeArr, graphObject, sceFlag)
 		if (sceFlag === testScenarios.ONE_WAY)
 		{
 			checkOneWaySequence(currentElement.route.steps, currentStart, currentEnd);
+		}
+		else if (sceFlag === testScenarios.START_SINGLE)
+		{
+			expect(currentStart).to.equal(parasObj.targetNode);
+		}
+		else if (sceFlag === testScenarios.START_MULT)
+		{
+			expect(parasObj.targetList).to.include(currentStart);
 		}
 		
 	}
