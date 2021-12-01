@@ -2,34 +2,22 @@
 
 **./src/common/enum/possible-route-tests.js**
 * Defined new options:
-	* START_SINGLE
-	* START_MULT
-* Removed 'SCENARIO_N' placeholder.
-
----
-
-**./src/test-common/route-check-parameters.js**
-* New file
-	* Constructors for 'result parameter' objects.
-	* Used for valid 'possible route' pathfinding unit tests.
-	* Only contains 'Single Node' and 'Multiple Nodes' for start-end conditions.
+	* END_SINGLE
+	* END_MULT
 
 ---
 
 **./src/test-common/possible-route-results.js**
-* Declared parameters:
-	* inputParasObj (checkResultObject)
-	* parasObj (loopRoutes)
-* Modified 'loopRoutes' to support scenarios:
-	* START_SINGLE
-	* START_MULT
+* Modified 'loopRoutes' to consider scenarios:
+	* END_SINGLE
+	* END_MULT
+* Simplified `undefined` and `null` checks in 'checkBaseSchema'
 
 ---
 
 **./test-parts/test-possible-routes-valid.js**
-* Added new requirement: '../src/test-common/route-check-parameters'
-* Added `null` argument to 'routeResults' call in 'handleOneWay'
-* Defined new unit test group: "Start Node" (handleStartNode)
-	* Single
-	* Multiple
-	* All
+* Changed 'searchCriteria' in "Start Node" - "Single" to use correct variable order.
+* Started writing new test group "End Node" (handleEndNode)
+	* Same basic structure as "Start Node"
+	* "Single" test works successfully.
+	* "Multiple" and "All" are commented out due to bugs.

@@ -47,6 +47,14 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 		{
 			expect(parasObj.targetList).to.include(currentStart);
 		}
+		else if (sceFlag === testScenarios.END_SINGLE)
+		{
+			expect(currentEnd).to.equal(parasObj.targetNode);
+		}
+		else if (sceFlag === testScenarios.END_MULT)
+		{
+			expect(parasObj.targetList).to.include(currentEnd);
+		}
 		
 	}
 }
@@ -54,15 +62,13 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 
 function checkBaseSchema(entryObject)
 {	
-	expect(entryObject).to.not.be.undefined;
-	expect(entryObject).to.not.be.null;
+	expect(entryObject).to.exist;
 	expect(entryObject).to.be.an("object");
 	
 	expect(entryObject).to.have.property("route");
 	expect(entryObject).to.have.property("valid");
 	
-	expect(entryObject.route).to.not.be.undefined;
-	expect(entryObject.route).to.not.be.null;
+	expect(entryObject.route).to.exist;
 	expect(entryObject.route).to.be.an("object");
 	
 	expect(entryObject.valid).to.be.true;

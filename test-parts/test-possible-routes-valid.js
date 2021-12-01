@@ -17,6 +17,7 @@ function runTests()
 	{
 		handleOneWay();
 		handleStartNode();
+		handleEndNode();
 		//handleArguments();
 		//handleRouteCount();
 	});
@@ -47,7 +48,7 @@ function handleStartNode()
 			var routeStart = routeCriteria.defineStartNode("A");
 			var routeOneWay = routeCriteria.defineOneWay();
 			
-			var searchCriteria = [routeOneWay, routeStart];
+			var searchCriteria = [routeStart, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			var resultParas = routeCheckParameters.defineSingleNode("A", exampleGraphObject.nodes);
 			
@@ -78,6 +79,51 @@ function handleStartNode()
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.START_MULT, resultParas);
 		});
 		
+	});
+}
+
+
+function handleEndNode()
+{
+	describe("End Node", function()
+	{
+		it("Single", function()
+		{
+			var routeEnd = routeCriteria.defineEndNode("D");
+			var routeOneWay = routeCriteria.defineOneWay();
+			
+			var searchCriteria = [routeEnd, routeOneWay];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			var resultParas = routeCheckParameters.defineSingleNode("D", exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.END_SINGLE, resultParas);
+		});
+		
+		/*
+		it("Multiple", function()
+		{
+			var routeEndD = routeCriteria.defineEndNode("D");
+			var routeEndE = routeCriteria.defineEndNode("E");
+			var routeEndF = routeCriteria.defineEndNode("F");
+			var routeOneWay = routeCriteria.defineOneWay();
+			
+			var searchCriteria = [routeEndD, routeEndE, routeEndF, routeOneWay];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			var resultParas = routeCheckParameters.defineMultipleNodes("DEF", exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.END_MULT, resultParas);
+		});
+		
+		it("All", function()
+		{
+			var routeOneWay = routeCriteria.defineOneWay();
+			var searchCriteria = [routeOneWay];
+			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			var resultParas = routeCheckParameters.defineMultipleNodes("ABCDEFGH", exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.END_MULT, resultParas);
+		});
+		*/
 		
 	});
 }
