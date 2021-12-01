@@ -39,23 +39,7 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 		{
 			checkOneWaySequence(currentElement.route.steps, currentStart, currentEnd);
 		}
-		else if (sceFlag === testScenarios.START_SINGLE)
-		{
-			expect(currentStart).to.equal(parasObj.targetNode);
-		}
-		else if (sceFlag === testScenarios.START_MULT)
-		{
-			expect(parasObj.targetList).to.include(currentStart);
-		}
-		else if (sceFlag === testScenarios.END_SINGLE)
-		{
-			expect(currentEnd).to.equal(parasObj.targetNode);
-		}
-		else if (sceFlag === testScenarios.END_MULT)
-		{
-			expect(parasObj.targetList).to.include(currentEnd);
-		}
-		else if (sceFlag === testScenarios.ROUTE_TYPE)
+		else if (sceFlag === testScenarios.START_END)
 		{
 			expect(parasObj.start).to.include(currentStart);
 			expect(parasObj.end).to.include(currentEnd);

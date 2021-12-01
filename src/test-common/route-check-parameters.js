@@ -1,19 +1,4 @@
-function defineSingleNodeObject(inpNode, inpGraphNodes)
-{
-	var defineRes = {};
-	defineRes["targetNode"] = inpGraphNodes.indexOf(inpNode);
-	return defineRes;
-}
-
-
-function defineMultipleNodesObject(inpNodeList, inpGraphNodes)
-{
-	var defineRes = {};
-	defineRes["targetList"] = mapNodes(inpNodeList, inpGraphNodes);
-	return defineRes;
-}
-
-function defineRouteTypeObject(inpStartNodes, inpEndNodes, inpGraphNodes)
+function defineStartEndObject(inpStartNodes, inpEndNodes, inpGraphNodes)
 {
 	var defineRes = {};
 	
@@ -53,7 +38,5 @@ function mapNodes(inputNodes, graphNodes)
 
 module.exports =
 {
-	defineSingleNode: defineSingleNodeObject,
-	defineMultipleNodes: defineMultipleNodesObject,
-	defineRouteType: defineRouteTypeObject
+	defineStartEnd: defineStartEndObject
 };
