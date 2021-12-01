@@ -37,7 +37,7 @@ function loopRoutes(routeArr, graphObject, sceFlag)
 		
 		if (sceFlag === testScenarios.ONE_WAY)
 		{
-			expect(true).to.be.true;
+			checkOneWaySequence(currentElement.route.steps, currentStart, currentEnd);
 		}
 		
 	}
@@ -131,6 +131,54 @@ function checkBaseSequence(routeObj, graphObj)
 }
 
 
+function checkOneWaySequence(routeStepArray, startNode, endNode)
+{	
+	var stepIndex = 0;
+	var currentNode = -1;
+	var currentSkip = false;
+	var currentRepeat = false;
+	var currentValid = false;
+	
+	var skipNodesArray = [];
+	var sequenceValid = true;
+	
+	while (stepIndex >= 0 && stepIndex < routeStepArray.length && sequenceValid === true)
+	{
+		currentNode = routeStepArray[stepIndex];
+		currentSkip = skipNodesArray.includes(currentNode);
+		currentRepeat = searchNodeRepeat(routeStepArray, currentNode, stepIndex);
+		currentValid = false;
+		
+		if (currentSkip === true)
+		{
+			currentValid = true;
+		}
+		else if (currentRepeat === true && currentNode === startNode && currentNode === endNode)
+		{
+			currentValid = true;
+			skipNodesArray.push(currentNode);
+		}
+		else if (currentRepeat === true)
+		{
+			sequenceValid = false;
+		}
+		else
+		{
+			currentValid = true;
+			skipNodesArray.push(currentNode);
+		}
+		
+		stepIndex = stepIndex + 1;
+	}
+	
+	if (sequenceValid !== true)
+	{
+		throw new Error("Route is not one-way");
+	}
+	
+}
+
+
 function searchEdge(edgeArr, srcNode, destNode)
 {
 	var edgeIndex = 0;
@@ -149,6 +197,14 @@ function searchEdge(edgeArr, srcNode, destNode)
 		edgeIndex = edgeIndex + 1;
 	}
 	
+	return searchRes;
+}
+
+
+function searchNodeRepeat(stepArr, tgtNode, sIndex)
+{
+	var matchFlag = stepArr.indexOf(tgtNode, sIndex + 1);
+	var searchRes = (matchFlag >= 0 && matchFlag > sIndex && matchFlag < stepArr.length);
 	return searchRes;
 }
 
