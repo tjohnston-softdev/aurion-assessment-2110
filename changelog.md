@@ -1,7 +1,7 @@
 # Changelog
 
-**./test-parts/test-possible-routes-valid.js**
-* Removed commented out 'handleRouteTypes' call.
-* Added call to 'handleStartEndNodes'
-* Replaced calls to 'routeCheckParameters.defineRouteType' with 'routeCheckParameters.defineStartEnd'
-* Removed duplicate 'searchCriteria' variable from "Start-End Nodes" - "All-To-One"
+**./test-parts/test-possible-routes-valid.js - handleStartEndNodes**
+* `"ABCDEFGH"` is now its own variable 'allNodes'
+* Wrote new tests:
+	* "All-To-Multiple"
+	* "All-To-All"
