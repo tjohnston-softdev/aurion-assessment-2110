@@ -7,13 +7,10 @@ const expect = chai.expect;
 const parseGraph = require("../src/parse-graph");
 const errorThrowing = require("../src/test-common/error-throwing");
 const parseHelp = require("../src/test-common/parse-help");
-const parseOutput = require("../src/test-common/parse-output");
+const parseOutputData = require("../src/test-common/parse-output");
 
 const formatErrorText = "Could not parse input into a valid graph.";
 const arrayErrorText = "Parsed graph must have multiple nodes and edges.";
-
-// External output edge data.
-var parseOutputData = null;
 
 
 // Main function.
@@ -21,26 +18,9 @@ function runTests()
 {
 	describe("Parse Graph", function()
 	{
-		loadOutputData();
 		handleValidCase();
 		handleIgnoreData();
 		handleInvalidCases();
-		disposeOutputData();
-	});
-}
-
-
-// Reads script file containing output objects to validate against.
-function loadOutputData()
-{
-	describe("Load Output Data", function()
-	{
-		it("Loaded", function(done)
-		{
-			parseOutputData = parseOutput.getObject();
-			done();
-		});
-		
 	});
 }
 
@@ -226,20 +206,6 @@ function handleInvalidCases()
 }
 
 
-// Dispose external output data after unit tests complete.
-function disposeOutputData()
-{
-	describe("Dispose Output Data", function()
-	{
-		it("Successful", function(done)
-		{
-			parseOutputData = null;
-			done();
-		});
-	});
-}
-
-
 // Attempts to parse graph using 'try-catch' structure.
 function callInvalidEntry(entryStr, desiredMessage)
 {
@@ -266,8 +232,7 @@ function callInvalidEntry(entryStr, desiredMessage)
 // Validates parse result object.
 function checkParseResult(parseObj)
 {
-	expect(parseObj).to.not.be.undefined;
-	expect(parseObj).to.not.be.null;
+	expect(parseObj).to.exist;
 	expect(parseObj).to.be.an("object");
 	
 	expect(parseObj).to.have.property("nodes");

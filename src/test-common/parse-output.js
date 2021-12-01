@@ -1,4 +1,4 @@
-function getParseOutputObject()
+function getObject()
 {
 	var resObj =
 	{
@@ -48,7 +48,4 @@ function getParseOutputObject()
 }
 
 
-module.exports =
-{
-	getObject: getParseOutputObject
-};
+module.exports = getObject();
