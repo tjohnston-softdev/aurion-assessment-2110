@@ -251,14 +251,15 @@ function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 	var startNode = newRoute.steps[0];
 	var startEnd = eNodes.includes(startNode);
 	var visitStatus = newRoute.steps.includes(tgtNode);
-	var endStatus = eNodes.includes(tgtNode);
+	var endMatch = eNodes.includes(tgtNode);
+	var endFound = (endMatch === true || eNodes.length === 0);
 	var checkRes = false;
 	
 	if (visitStatus === true && backtrackStatus === true)
 	{
 		checkRes = true;
 	}
-	else if (visitStatus === true && startEnd === true)
+	else if (visitStatus === true && startEnd === true && endFound === true)
 	{
 		checkRes = true;
 	}
