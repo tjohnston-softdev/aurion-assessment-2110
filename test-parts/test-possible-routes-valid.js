@@ -16,7 +16,7 @@ function runTests()
 	describe("Possible Routes - Valid", function()
 	{
 		handleOneWay();
-		//handleRouteTypes();
+		handleStartEndNodes();
 		//handleArguments();
 		//handleRouteCount();
 	});
@@ -50,7 +50,7 @@ function handleStartEndNodes()
 			
 			var searchCriteria = [routeStart, routeEnd, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("A", "C", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("A", "C", exampleGraphObject.nodes);
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
@@ -64,7 +64,7 @@ function handleStartEndNodes()
 			
 			var searchCriteria = [routeStart, routeEndD, routeEndE, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("A", "DE", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("A", "DE", exampleGraphObject.nodes);
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
@@ -76,7 +76,7 @@ function handleStartEndNodes()
 			
 			var searchCriteria = [routeStart, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("C", "ABCDEFGH", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("C", "ABCDEFGH", exampleGraphObject.nodes);
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
@@ -91,7 +91,7 @@ function handleStartEndNodes()
 			
 			var searchCriteria = [routeStartA, routeStartB, routeStartC, routeEnd, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("ABC", "F", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("ABC", "F", exampleGraphObject.nodes);
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
@@ -106,7 +106,7 @@ function handleStartEndNodes()
 			
 			var searchCriteria = [routeStartA, routeStartB, routeEndC, routeEndD, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("AB", "CD", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("AB", "CD", exampleGraphObject.nodes);
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
@@ -119,7 +119,7 @@ function handleStartEndNodes()
 			
 			var searchCriteria = [routeStartA, routeStartB, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("AB", "ABCDEFGH", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("AB", "ABCDEFGH", exampleGraphObject.nodes);
 		});
 		
 		it("All-To-One", function()
@@ -128,10 +128,8 @@ function handleStartEndNodes()
 			var routeOneWay = routeCriteria.defineOneWay();
 			
 			var searchCriteria = [routeEnd, routeOneWay];
-			
-			var searchCriteria = [routeStartA, routeStartB, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			var resultParas = routeCheckParameters.defineRouteType("ABCDEFGH", "B", exampleGraphObject.nodes);
+			var resultParas = routeCheckParameters.defineStartEnd("ABCDEFGH", "B", exampleGraphObject.nodes);
 		});
 		
 	});
