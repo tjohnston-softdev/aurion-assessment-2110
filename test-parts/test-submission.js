@@ -135,8 +135,7 @@ function handleDispose()
 // Validates example case result.
 function checkResultValue(rVal)
 {
-	expect(rVal).to.not.be.undefined;
-	expect(rVal).to.not.be.null;
+	expect(rVal).to.exist;
 	expect(rVal).to.be.an("object");
 	
 	expect(rVal).to.have.property("expected");

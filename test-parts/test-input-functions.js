@@ -249,8 +249,7 @@ function callInvalidRead(rPath, desiredMessage)
 // Tests retrieved file system entry object.
 function checkEntry(entryObj, useFile)
 {
-	expect(entryObj).to.not.be.undefined;
-	expect(entryObj).to.not.be.null;
+	expect(entryObj).to.exist;
 	expect(entryObj).to.be.an("object");
 	
 	expect(entryObj).to.have.property("retrieved");

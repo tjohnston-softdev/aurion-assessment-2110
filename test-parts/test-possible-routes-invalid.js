@@ -179,7 +179,7 @@ function writeLongTemplateString()
 {
 	var writeRes = "";
 	
-	while (writeRes.length < 1100)
+	while (writeRes.length < 1005)
 	{
 		writeRes += "ABCDEF";
 	}

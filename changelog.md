@@ -1,16 +1,6 @@
 # Changelog
 
-**./src/test-common/parse-output.js**
-* Renamed function from 'getParseOutputObject' to 'getObject'
-* File exports result of 'getObject' and not the function itself.
-
----
-
-**./test-parts/test-graph-parse.js**
-* Removed 'parseOutputData' global variable.
-* Renamed 'parseOutput' requirement to 'parseOutputData'
-* Removed "External output edge data." comment.
-* Removed tests:
-	* "Load Output Data" (loadOutputData)
-	* "Dispose Output Data" (disposeOutputData)
-* Simplified 'parseObj' exist check. (checkParseResult)
+**./test-parts/**
+* Simplified 'entryObj' exist check. (test-input-functions.js - checkEntry)
+* Changed string length from 1100 to 1005 (test-possible-routes-invalid.js - writeLongTemplateString)
+* Simplified 'rVal' exist check. (test-submission.js - checkResultValue)
