@@ -8,8 +8,7 @@ const testInputFunctions = require("../test-parts/test-input-functions");
 const testGraphParse = require("../test-parts/test-graph-parse");
 const testExactRoute = require("../test-parts/test-exact-route");
 const testShortestRoute = require("../test-parts/test-shortest-route");
-const testPossibleRoutesValid = require("../test-parts/test-possible-routes-valid");
-const testPossibleRoutesInvalid = require("../test-parts/test-possible-routes-invalid");
+const testPossibleRoutes = require("../test-parts/test-possible-routes");
 const testSubmission = require("../test-parts/test-submission");
 
 runUnitTests();
@@ -35,13 +34,9 @@ function runUnitTests()
 	{
 		testShortestRoute();
 	}
-	else if (enteredMode === "--possible-valid")
+	else if (enteredMode === "--possible")
 	{
-		testPossibleRoutesValid();
-	}
-	else if (enteredMode === "--possible-invalid")
-	{
-		testPossibleRoutesInvalid();
+		testPossibleRoutes();
 	}
 	else if (enteredMode === "--submission")
 	{

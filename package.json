@@ -8,8 +8,7 @@
 	"test-parse": "node ./node_modules/mocha/bin/mocha --parse",
 	"test-exact": "node ./node_modules/mocha/bin/mocha --exact",
 	"test-shortest": "node ./node_modules/mocha/bin/mocha --shortest",
-	"test-possible-valid": "node ./node_modules/mocha/bin/mocha --possible-valid",
-	"test-possible-invalid": "node ./node_modules/mocha/bin/mocha --possible-invalid",
+	"test-possible": "node ./node_modules/mocha/bin/mocha --possible",
 	"test-submission": "node ./node_modules/mocha/bin/mocha --submission"
   },
   "repository": {
