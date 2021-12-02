@@ -28,7 +28,7 @@ function runTests()
 		
 		it("Missing Graph", function()
 		{
-			callExactRouteMissingGraph();
+			callMissingGraph();
 		});
 		
 		it("Missing Route String", function()
@@ -67,7 +67,7 @@ function runTests()
 
 
 // Attempts pathfinding on a missing graph.
-function callExactRouteMissingGraph()
+function callMissingGraph()
 {
 	var graphFound = false;
 	var correctError = false;
