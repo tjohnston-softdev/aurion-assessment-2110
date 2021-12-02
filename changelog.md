@@ -1,42 +1,41 @@
 # Changelog
 
-**./test-parts/input/**
-* New folder - Test groups split from '../test-input-functions.js'
-* Each test group has its own file.
-	* 'path-arg.js' - Path argument
-	* 'entry-retrieval.js' - Get Input File Entry
-	* 'entry-validation.js - Validate Input File Entry
-	* 'file-reading.js' - Read Contents
+**./src/test-common/parse-help.js**
+* New requirements:
+	* mocha
+	* chai
+* Received functions from '../../test-parts/test-graph-parse.js'
+	* 'checkParseResult' as 'checkParseResultObject'
+	* 'checkGraphContents' as 'checkResultGraphContents'
 
 ---
 
-**./test-parts/test-input-functions.js**
-* Wrote new function 'defineInputData'
-* Merged global variables into a single object 'inputDataObject'
-	* validFilePath
-	* invalidFilePath
-	* unknownErrorText
-* 'inputDataObject' is assigned using 'defineInputData'
-* Moved functions to './input/path-arg.js'
-	* 'handleArgumentFunction' as 'callArgumentTests'
-	* defineArgsObject
-* Moved functions to './input/entry-retrieval.js'
-	* 'handleGetFileEntry' as 'callEntryRetrievalTests'
-	* callUnknownFile
-	* checkEntry
-* Moved functions to './input/entry-validation.js'
-	* 'handleValidateFileEntry' as 'callEntryValidationTests'
-	* defineRetrievedEntry
-	* callInvalidEntry
-* Moved functions to './input/file-reading.js'
-	* 'handleReadFile' as 'callFileReadTests'
-	* callInvalidRead
+**./test-parts/parse/**
+* New folder - Test groups split from '../test-graph-parse.js'
+	* 'valid-case.js' - Valid graph input.
+	* 'ignore-cases.js' - Graph input that is ignored without error.
+	* 'invalid-cases.js' - Graph input that causes error.
+
+---
+
+**./test-parts/test-graph-parse.js**
+* Moved functions to 'parseHelp'
+	* 'checkParseResult' as 'checkParseResultObject'
+	* 'checkGraphContents' as 'checkResultGraphContents'
+* Moved 'handleValidCase' to './parse/valid-case.js' as 'callValidTest'
+* Moved 'handleIgnoreData' to './parse/ignore-cases.js' as 'callIgnoreDataTests'
+* Moved the following to './parse/invalid-cases.js'
+	* 'handleInvalidCases' function as 'callInvalidCaseTests'
+	* 'callInvalidEntry' function.
+	* 'formatErrorText' global.
+	* 'arrayErrorText' global.
 * Removed requirements:
-	* inputFile
-	* fileSize
+	* fs
+	* parseGraph
 	* errorThrowing
-* Added requirements:
-	* ./input/path-arg
-	* ./input/entry-retrieval
-	* ./input/entry-validation
-	* ./input/file-reading
+	* parseHelp
+	* parseOutputData
+* Added new requirements:
+	* ./parse/valid-case
+	* ./parse/ignore-cases
+	* ./parse/invalid-cases

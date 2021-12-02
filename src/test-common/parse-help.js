@@ -1,3 +1,7 @@
+const mocha = require("mocha");
+const chai = require("chai");
+const expect = chai.expect;
+
 const maxEdgesNum = 300;
 const alphabetString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -77,11 +81,42 @@ function defineMaxEdgesGraphString()
 
 
 
+// Validates parse result object.
+function checkParseResultObject(parseObj)
+{
+	expect(parseObj).to.exist;
+	expect(parseObj).to.be.an("object");
+	
+	expect(parseObj).to.have.property("nodes");
+	expect(parseObj).to.have.property("edges");
+	expect(parseObj).to.have.property("valid");
+	
+	expect(parseObj.nodes).to.be.an("array");
+	expect(parseObj.edges).to.be.an("array");
+	
+	expect(parseObj.nodes.length).to.be.at.least(2);
+	expect(parseObj.edges.length).to.be.at.least(2);
+	
+	expect(parseObj.valid).to.be.true;
+}
+
+
+// Checks whether parsed graph matches the given contents.
+function checkResultGraphContents(parseObj, nodeArr, edgeArr)
+{
+	expect(parseObj.nodes).to.deep.equal(nodeArr);
+	expect(parseObj.edges).to.deep.equal(edgeArr);
+}
+
+
+
 module.exports =
 {
 	maxEdges: maxEdgesNum,
 	alphabet: alphabetString,
 	getNodeList: getNodeListObject,
 	defineAlphabetGraph: defineAlphabetGraphString,
-	defineMaxEdgesGraph: defineMaxEdgesGraphString
+	defineMaxEdgesGraph: defineMaxEdgesGraphString,
+	checkParseResult: checkParseResultObject,
+	checkGraphContents: checkResultGraphContents
 };
