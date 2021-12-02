@@ -1,3 +1,4 @@
 # Changelog
 
-Deleted './test-parts/possible-routes-valid.js'
+**./test-parts/possible/valid/start-end.js**
+* Added missing 'routeResults.checkObject' calls to respective tests.

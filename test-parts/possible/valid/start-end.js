@@ -93,6 +93,8 @@ function callStartEndNodeTests()
 			var searchCriteria = [routeStartA, routeStartB, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			var resultParas = routeCheckParameters.defineStartEnd("AB", allNodes, exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
 		
 		it("All-To-One", function()
@@ -103,6 +105,8 @@ function callStartEndNodeTests()
 			var searchCriteria = [routeEnd, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			var resultParas = routeCheckParameters.defineStartEnd(allNodes, "B", exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
 		
 		it("All-To-Multiple", function()
@@ -114,6 +118,8 @@ function callStartEndNodeTests()
 			var searchCriteria = [routeEndB, routeEndC, routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			var resultParas = routeCheckParameters.defineStartEnd(allNodes, "BC", exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
 		
 		it("All-To-All", function()
@@ -122,6 +128,8 @@ function callStartEndNodeTests()
 			var searchCriteria = [routeOneWay];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			var resultParas = routeCheckParameters.defineStartEnd(allNodes, allNodes, exampleGraphObject.nodes);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, testScenarios.ROUTE_TYPE, resultParas);
 		});
 		
 	});
