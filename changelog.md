@@ -1,41 +1,24 @@
 # Changelog
 
-**./src/test-common/parse-help.js**
-* New requirements:
-	* mocha
-	* chai
-* Received functions from '../../test-parts/test-graph-parse.js'
-	* 'checkParseResult' as 'checkParseResultObject'
-	* 'checkGraphContents' as 'checkResultGraphContents'
+**./test-parts/shortest/**
+* New folder - Test groups split from '../test-shortest-route.js'
+	* correct-cases.js
+	* invalid-cases.js
 
 ---
 
-**./test-parts/parse/**
-* New folder - Test groups split from '../test-graph-parse.js'
-	* 'valid-case.js' - Valid graph input.
-	* 'ignore-cases.js' - Graph input that is ignored without error.
-	* 'invalid-cases.js' - Graph input that causes error.
-
----
-
-**./test-parts/test-graph-parse.js**
-* Moved functions to 'parseHelp'
-	* 'checkParseResult' as 'checkParseResultObject'
-	* 'checkGraphContents' as 'checkResultGraphContents'
-* Moved 'handleValidCase' to './parse/valid-case.js' as 'callValidTest'
-* Moved 'handleIgnoreData' to './parse/ignore-cases.js' as 'callIgnoreDataTests'
-* Moved the following to './parse/invalid-cases.js'
-	* 'handleInvalidCases' function as 'callInvalidCaseTests'
-	* 'callInvalidEntry' function.
-	* 'formatErrorText' global.
-	* 'arrayErrorText' global.
+**./test-parts/test-shortest-route.js**
+* Moved 'handleCorrectOutput' to './shortest/correct-cases.js' as 'callCorrectTestCases'
+* Moved functions to './shortest/invalid-cases.js'
+	* 'handleIncorrectOutput' as 'callInvalidTestCases'
+	* 'callShortestRouteMissingGraph' as 'callMissingGraph'
 * Removed requirements:
-	* fs
-	* parseGraph
+	* shortestRoute
+	* graphTasks
 	* errorThrowing
-	* parseHelp
-	* parseOutputData
-* Added new requirements:
-	* ./parse/valid-case
-	* ./parse/ignore-cases
-	* ./parse/invalid-cases
+	* nullGraph
+	* pathfindingHelp
+	* exampleGraphObject
+* Added requirements:
+	* ./shortest/correct-cases
+	* ./shortest/invalid-cases
