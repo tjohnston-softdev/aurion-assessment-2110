@@ -4,6 +4,7 @@ const expect = chai.expect;
 const validOneWay = require("./possible/valid/one-way");
 const validStartEnd = require("./possible/valid/start-end");
 const validStopCount = require("./possible/valid/stop-count");
+const validTotalDist = require("./possible/valid/total-dist");
 const invalidNodeCriteria = require("./possible/invalid/node-criteria");
 const invalidSearchArgs = require("./possible/invalid/search-args");
 const invalidStopDistCriteria = require("./possible/invalid/stop-dist-criteria");
@@ -27,6 +28,7 @@ function handleValidGroup()
 		validOneWay.callTest();
 		validStartEnd.callTests();
 		validStopCount.callTests();
+		validTotalDist.callTests();
 	});
 }
 

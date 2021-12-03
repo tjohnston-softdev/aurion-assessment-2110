@@ -60,6 +60,22 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 		{
 			expect(currentStopCount).to.be.within(parasObj.min, parasObj.max);
 		}
+		else if (sceFlag === testScenarios.DIST_MIN)
+		{
+			expect(currentElement.route.distance).to.be.at.least(parasObj.numberValue);
+		}
+		else if (sceFlag === testScenarios.DIST_MAX)
+		{
+			expect(currentElement.route.distance).to.be.at.most(parasObj.numberValue);
+		}
+		else if (sceFlag === testScenarios.DIST_EXACT)
+		{
+			expect(currentElement.route.distance).to.equal(parasObj.numberValue);
+		}
+		else if (sceFlag === testScenarios.DIST_BETWEEN)
+		{
+			expect(currentElement.route.distance).to.be.within(parasObj.min, parasObj.max);
+		}
 		
 	}
 }
