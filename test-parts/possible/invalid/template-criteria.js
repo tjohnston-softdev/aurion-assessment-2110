@@ -63,5 +63,5 @@ function writeLongString()
 
 module.exports =
 {
-	runTests: callTemplateCriteriaTests
+	callTests: callTemplateCriteriaTests
 };

@@ -9,6 +9,28 @@ function defineStartEndObject(inpStartNodes, inpEndNodes, inpGraphNodes)
 }
 
 
+function defineNumberObject(inpNum)
+{
+	var defineRes = {"numberValue": inpNum}
+	return defineRes;
+}
+
+
+function defineRangeObject(inpLower, inpUpper)
+{
+	var defineRes = {"min": inpLower, "max": inpUpper};
+	
+	if (inpLower > inpUpper || inpUpper < inpLower)
+	{
+		defineRes.min = inpUpper;
+		defineRes.max = inpLower;
+	}
+	
+	return defineRes;
+}
+
+
+
 
 function mapNodes(inputNodes, graphNodes)
 {
@@ -38,5 +60,7 @@ function mapNodes(inputNodes, graphNodes)
 
 module.exports =
 {
-	defineStartEnd: defineStartEndObject
+	defineStartEnd: defineStartEndObject,
+	defineNumber: defineNumberObject,
+	defineRange: defineRangeObject
 };

@@ -44,6 +44,22 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 			expect(parasObj.start).to.include(currentStart);
 			expect(parasObj.end).to.include(currentEnd);
 		}
+		else if (sceFlag === testScenarios.STOPS_MIN)
+		{
+			expect(currentStopCount).to.be.at.least(parasObj.numberValue);
+		}
+		else if (sceFlag === testScenarios.STOPS_MAX)
+		{
+			expect(currentStopCount).to.be.at.most(parasObj.numberValue);
+		}
+		else if (sceFlag === testScenarios.STOPS_EXACT)
+		{
+			expect(currentStopCount).to.equal(parasObj.numberValue);
+		}
+		else if (sceFlag === testScenarios.STOPS_BETWEEN)
+		{
+			expect(currentStopCount).to.be.within(parasObj.min, parasObj.max);
+		}
 		
 	}
 }
