@@ -1,14 +1,13 @@
 # Changelog
 
 **./src/test-common/possible-route-template.js**
-* Renamed function parameters:
-	* 'pathResObj' to 'pathRes'
-	* 'nodeListObj' to 'nodeArr'
+* Restored original function parameter names: 'pathResObj' and 'nodeListObj'
 
 ---
 
-**./test-parts/possible/valid/template-criteria.js**
-* Wrote basis for "Wildcard" test.
-	* Pathfinding executes successfully.
-	* Result object output to console.
-	* Route template not tested yet.
+**./src/test-common/possible-route-results.js**
+* Re-wrote 'searchRes' variable for readability. (searchNodeRepeat)
+* Wrote new function 'checkNodeExists' - Checks if a given node index is valid.
+* Variables in 'checkBaseSequence' are now assigned using 'checkNodeExists'
+	* currentNodeExists
+	* currentOffsetExists

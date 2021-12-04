@@ -1,7 +1,7 @@
-function followExactTemplate(pathRes, nodeArr)
+function followExactTemplate(pathResObj, nodeListObj)
 {
 	var routeString = "AEBFD";
-	var routeObject = pathRes[0];
+	var routeObject = pathResObj[0];
 	
 	var loopIndex = 0;
 	var currentTargetNode = "";
@@ -21,9 +21,9 @@ function followExactTemplate(pathRes, nodeArr)
 			currentVisitNodeID = routeObject.route.steps[loopIndex];
 		}
 		
-		if (currentVisitNodeID >= 0 && currentVisitNodeID <= nodeArr.length)
+		if (currentVisitNodeID >= 0 && currentVisitNodeID <= nodeListObj.length)
 		{
-			currentVisitNodeChar = nodeArr[currentVisitNodeID];
+			currentVisitNodeChar = nodeListObj[currentVisitNodeID];
 		}
 		
 		if (currentVisitNodeChar !== currentTargetNode)

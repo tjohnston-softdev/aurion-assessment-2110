@@ -130,8 +130,8 @@ function checkBaseSequence(routeObj, graphObj)
 	{
 		currentNodeIndex = routeObj.steps[stepIndex];
 		currentOffsetIndex = routeObj.steps[stepIndex + 1];
-		currentNodeExists = (currentNodeIndex >= 0 && currentNodeIndex < graphObj.nodes.length);
-		currentOffsetExists = (currentOffsetIndex >= 0 && currentOffsetIndex < graphObj.nodes.length);
+		currentNodeExists = checkNodeExists(currentNodeIndex, graphObj.nodes.length);
+		currentOffsetExists = checkNodeExists(currentOffsetIndex, graphObj.nodes.length);
 		currentDistance = -1;
 		currentMatch = false;
 		
@@ -239,8 +239,21 @@ function searchEdge(edgeArr, srcNode, destNode)
 function searchNodeRepeat(stepArr, tgtNode, sIndex)
 {
 	var matchFlag = stepArr.indexOf(tgtNode, sIndex + 1);
-	var searchRes = (matchFlag >= 0 && matchFlag > sIndex && matchFlag < stepArr.length);
+	var searchRes = false;
+	
+	if (matchFlag >= 0 && matchFlag > sIndex && matchFlag < stepArr.length)
+	{
+		searchRes = true;
+	}
+	
 	return searchRes;
+}
+
+
+function checkNodeExists(tgtIndex, nCount)
+{
+	var checkRes = (tgtIndex >= 0 && tgtIndex < nCount);
+	return checkRes;
 }
 
 
