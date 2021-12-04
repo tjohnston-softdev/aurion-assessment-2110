@@ -19,52 +19,51 @@ function callTemplateTests()
 		{
 			var routeTemplate = routeCriteria.defineTemplate("^AEBFD$", false);
 			var routeOneWay = routeCriteria.defineOneWay();
-			
 			var searchCriteria = [routeTemplate, routeOneWay];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			
-			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
-			expect(resultValue.length).to.equal(1);
-			possibleRouteTemplates.checkObject(resultValue, exampleGraphObject.nodes, testScenarios.TEMPLATE_EXACT);
+			var resultCount = handlePathfinding(searchCriteria, testScenarios.TEMPLATE_EXACT);
+			expect(resultCount).to.equal(1);
 		});
 		
 		it("Wildcard", function()
 		{
 			var routeTemplate = routeCriteria.defineTemplate("A..C$", false);
 			var routeDist = routeCriteria.defineTotalDistance(40, numSigns.LESS_EQUAL);
-			
 			var searchCriteria = [routeTemplate, routeDist];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			
-			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
-			possibleRouteTemplates.checkObject(resultValue, exampleGraphObject.nodes, testScenarios.TEMPLATE_WILDCARD);
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_WILDCARD);
 		});
 		
 		it("Sequence Once", function()
 		{
 			var routeTemplate = routeCriteria.defineTemplate("AEB", false);
 			var routeOneWay = routeCriteria.defineOneWay();
-			
 			var searchCriteria = [routeTemplate, routeOneWay];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			
-			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
-			possibleRouteTemplates.checkObject(resultValue, exampleGraphObject.nodes, testScenarios.TEMPLATE_SEQ_ONCE);
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_SEQ_ONCE);
 		});
 		
 		it("Sequence Repeat", function()
 		{
 			var routeTemplate = routeCriteria.defineTemplate("EAC", true);
 			var routeDist = routeCriteria.defineTotalDistance(40, numSigns.LESS_EQUAL);
-			
 			var searchCriteria = [routeTemplate, routeDist];
-			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			
-			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
-			possibleRouteTemplates.checkObject(resultValue, exampleGraphObject.nodes, testScenarios.TEMPLATE_SEQ_REPEAT);
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_SEQ_REPEAT);
 		});
 		
 	});
+}
+
+
+function handlePathfinding(testCriteria, testFlag)
+{
+	var searchResultObject = possibleRoutes.findRoutes(exampleGraphObject, testCriteria);
+	
+	routeResults.checkObject(searchResultObject, exampleGraphObject, null, null);
+	possibleRouteTemplates.checkObject(searchResultObject, exampleGraphObject.nodes, testFlag);
+	
+	return searchResultObject.length;
 }
 
 
