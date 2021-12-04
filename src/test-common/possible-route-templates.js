@@ -12,7 +12,7 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		
 		if (scenarioFlag === testScenarios.TEMPLATE_EXACT)
 		{
-			followExactTemplate(currentEntry.route.steps, nodeListObj);
+			followExact(currentEntry.route.steps, nodeListObj);
 		}
 		else if (scenarioFlag === testScenarios.TEMPLATE_WILDCARD)
 		{
@@ -24,7 +24,7 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 }
 
 
-function followExactTemplate(stepArr, nodeArr)
+function followExact(stepArr, nodeArr)
 {
 	var routeString = "AEBFD";
 	
@@ -93,6 +93,7 @@ function followWildcard(stepArr, nodeArr)
 		{
 			currentVisitChar = nodeArr[currentVisitID];
 		}
+		
 		
 		if (currentVisitChar !== null && currentTargetNode === ".")
 		{

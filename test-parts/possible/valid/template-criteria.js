@@ -31,7 +31,7 @@ function callTemplateTests()
 		it("Wildcard", function()
 		{
 			var routeTemplate = routeCriteria.defineTemplate("A..C$", false);
-			var routeDist = routeCriteria.defineTotalDistance(50, numSigns.LESS_EQUAL);
+			var routeDist = routeCriteria.defineTotalDistance(40, numSigns.LESS_EQUAL);
 			
 			var searchCriteria = [routeTemplate, routeDist];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
