@@ -25,7 +25,7 @@ function callTemplateTests()
 			
 			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
 			expect(resultValue.length).to.equal(1);
-			possibleRouteTemplates.followExact(resultValue, exampleGraphObject.nodes);
+			possibleRouteTemplates.checkObject(resultValue, exampleGraphObject.nodes, testScenarios.TEMPLATE_EXACT);
 		});
 		
 		it("Wildcard", function()
@@ -36,7 +36,8 @@ function callTemplateTests()
 			var searchCriteria = [routeTemplate, routeDist];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
 			
-			console.log(resultValue);
+			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
+			possibleRouteTemplates.checkObject(resultValue, exampleGraphObject.nodes, testScenarios.TEMPLATE_WILDCARD);
 		});
 		
 	});

@@ -12,6 +12,8 @@ function defineOptions()
 	defineRes["DIST_MAX"] = 8;
 	defineRes["DIST_EXACT"] = 9;
 	defineRes["DIST_BETWEEN"] = 10;
+	defineRes["TEMPLATE_EXACT"] = 11;
+	defineRes["TEMPLATE_WILDCARD"] = 12;
 	
 	return defineRes;
 }

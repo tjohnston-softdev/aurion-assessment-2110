@@ -196,6 +196,7 @@ function checkOneWaySequence(routeStepArray, startNode, endNode)
 		else if (currentRepeat === true)
 		{
 			sequenceValid = false;
+			throw new Error("Route is not one-way");
 		}
 		else
 		{
@@ -204,11 +205,6 @@ function checkOneWaySequence(routeStepArray, startNode, endNode)
 		}
 		
 		stepIndex = stepIndex + 1;
-	}
-	
-	if (sequenceValid !== true)
-	{
-		throw new Error("Route is not one-way");
 	}
 	
 }
