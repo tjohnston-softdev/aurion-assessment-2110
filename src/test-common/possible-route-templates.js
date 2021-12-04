@@ -5,18 +5,28 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 {
 	var entryIndex = 0;
 	var currentEntry = null;
+	var currentMatch = false;
 	
-	for (entryIndex = 0; entryIndex < pathResObj.length; entryIndex = entryIndex + 1)
+	var canContinue = true;
+	
+	for (entryIndex >= 0 && entryIndex < pathResObj.length && canContinue === true)
 	{
 		currentEntry = pathResObj[entryIndex];
+		currentMatch = true;
 		
 		if (scenarioFlag === testScenarios.TEMPLATE_EXACT)
 		{
-			followExact(currentEntry.route.steps, nodeListObj);
+			currentMatch = currentMatch = followExact(currentEntry.route.steps, nodeListObj);
 		}
 		else if (scenarioFlag === testScenarios.TEMPLATE_WILDCARD)
 		{
-			followWildcard(currentEntry.route.steps, nodeListObj);
+			currentMatch = currentMatch = followWildcard(currentEntry.route.steps, nodeListObj);
+		}
+		
+		if (currentMatch !== true)
+		{
+			canContinue = false;
+			throw new Error("Retrieved route does not match template");
 		}
 		
 	}
@@ -54,12 +64,13 @@ function followExact(stepArr, nodeArr)
 		if (currentVisitChar !== currentTargetNode)
 		{
 			matchSuccessful = false;
-			throw new Error("Retrieved route does not match exact template.");
 		}
 		
 		loopIndex = loopIndex + 1;
 	}
 	
+	
+	return matchSuccessful;
 }
 
 
@@ -106,12 +117,12 @@ function followWildcard(stepArr, nodeArr)
 		else
 		{
 			matchSuccessful = false;
-			throw new Error("Retrieved route does not match wildcard template.");
 		}
 		
 		loopIndex = loopIndex + 1;
 	}
 	
+	return matchSuccessful;
 }
 
 
