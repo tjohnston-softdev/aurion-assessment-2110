@@ -12,7 +12,7 @@ const exampleGraphObject = require("../../../src/test-common/graph-input");
 
 function callDistanceTests()
 {
-	describe("Distance", function()
+	describe("Total Distance", function()
 	{
 		it("Minimum", function()
 		{
