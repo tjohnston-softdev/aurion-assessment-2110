@@ -14,6 +14,8 @@ function defineOptions()
 	defineRes["DIST_BETWEEN"] = 10;
 	defineRes["TEMPLATE_EXACT"] = 11;
 	defineRes["TEMPLATE_WILDCARD"] = 12;
+	defineRes["TEMPLATE_SEQ_ONCE"] = 13;
+	defineRes["TEMPLATE_SEQ_REPEAT"] = 14;
 	
 	return defineRes;
 }

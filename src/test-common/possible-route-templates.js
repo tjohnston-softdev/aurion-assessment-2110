@@ -9,26 +9,36 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 	
 	var canContinue = true;
 	
-	for (entryIndex >= 0 && entryIndex < pathResObj.length && canContinue === true)
+	while (entryIndex >= 0 && entryIndex < pathResObj.length && canContinue === true)
 	{
 		currentEntry = pathResObj[entryIndex];
 		currentMatch = true;
 		
 		if (scenarioFlag === testScenarios.TEMPLATE_EXACT)
 		{
-			currentMatch = currentMatch = followExact(currentEntry.route.steps, nodeListObj);
+			currentMatch = followExact(currentEntry.route.steps, nodeListObj);
 		}
 		else if (scenarioFlag === testScenarios.TEMPLATE_WILDCARD)
 		{
-			currentMatch = currentMatch = followWildcard(currentEntry.route.steps, nodeListObj);
+			currentMatch = followWildcard(currentEntry.route.steps, nodeListObj);
+		}
+		else if (scenarioFlag === testScenarios.TEMPLATE_SEQ_ONCE)
+		{
+			currentMatch = followSequence(currentEntry.route.steps, nodeListObj, "AEB", false);
+		}
+		else if (scenarioFlag === testScenarios.TEMPLATE_SEQ_REPEAT)
+		{
+			currentMatch = followSequence(currentEntry.route.steps, nodeListObj, "EAC", true);
 		}
 		
 		if (currentMatch !== true)
 		{
+			console.log(currentEntry.route.steps);
 			canContinue = false;
 			throw new Error("Retrieved route does not match template");
 		}
 		
+		entryIndex = entryIndex + 1;
 	}
 	
 }
@@ -54,10 +64,6 @@ function followExact(stepArr, nodeArr)
 		if (loopIndex >= 0 && loopIndex < stepArr.length)
 		{
 			currentVisitID = stepArr[loopIndex];
-		}
-		
-		if (currentVisitID >= 0 && currentVisitID <= nodeArr.length)
-		{
 			currentVisitChar = nodeArr[currentVisitID];
 		}
 		
@@ -98,19 +104,15 @@ function followWildcard(stepArr, nodeArr)
 		if (currentStep >= 0 && currentStep < stepArr.length)
 		{
 			currentVisitID = stepArr[currentStep];
-		}
-		
-		if (currentVisitID >= 0 && currentVisitID < nodeArr.length)
-		{
 			currentVisitChar = nodeArr[currentVisitID];
 		}
 		
 		
-		if (currentVisitChar !== null && currentTargetNode === ".")
+		if (currentTargetNode === ".")
 		{
 			currentValid = true;
 		}
-		else if (currentVisitChar !== null && currentVisitChar === currentTargetNode)
+		else if (currentVisitChar === currentTargetNode)
 		{
 			currentValid = true;
 		}
@@ -123,6 +125,69 @@ function followWildcard(stepArr, nodeArr)
 	}
 	
 	return matchSuccessful;
+}
+
+
+function followSequence(stepArr, nodeArr, seqString, useGlobal)
+{
+	var startNode = seqString.charAt(0);
+	
+	var stepIndex = 0;
+	var currentVisitID = -1;
+	var currentVisitChar = "";
+	var currentSequenceNode = null;
+	var currentMatch = false;
+	
+	var sequenceIndex = -1;
+	var sequenceFound = false;
+	var canStep = true;
+	
+	while (stepIndex >= 0 && stepIndex < stepArr.length && sequenceFound !== true && canStep === true)
+	{
+		currentVisitID = stepArr[stepIndex];
+		currentVisitChar = nodeArr[currentVisitID];
+		currentSequenceNode = null;
+		currentMatch = false;
+		
+		if (currentVisitChar === startNode)
+		{
+			sequenceIndex = 1;
+		}
+		else if (sequenceIndex >= 0 && sequenceIndex < seqString.length)
+		{
+			currentSequenceNode = seqString.charAt(sequenceIndex);
+			currentMatch = (currentVisitChar === currentSequenceNode);
+			sequenceIndex = updateSequenceProgression(currentMatch, sequenceIndex);
+		}
+		else if (sequenceIndex >= seqString.length)
+		{
+			sequenceIndex = -1;
+			sequenceFound = true;
+			canStep = useGlobal;
+		}
+		
+		stepIndex = stepIndex + 1;
+	}
+	
+	if (sequenceIndex >= seqString.length)
+	{
+		sequenceFound = true;
+	}
+	
+	return sequenceFound;
+}
+
+
+function updateSequenceProgression(nodesMatch, seqInd)
+{
+	var newValue = -1;
+	
+	if (nodesMatch === true)
+	{
+		newValue = seqInd + 1;
+	}
+	
+	return newValue;
 }
 
 
