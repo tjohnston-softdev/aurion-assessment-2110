@@ -1,29 +1,21 @@
 # Changelog
 
-**./src/common/enum/possible-route-tests.js**
-* Defined new scenarios:
-	* DIST_MIN
-	* DIST_MAX
-	* DIST_EXACT
-	* DIST_BETWEEN
+**./src/test-common/possible-route-template.js**
+* New file - Used to validate retrieved routes by their template.
+* This is applied after base validation in 'possible-route-results.js'
 
 ---
 
-**./src/test-common/possible-route-results.js - loopRoutes**
-* Added support for scenarios:
-	* DIST_MIN
-	* DIST_MAX
-	* DIST_EXACT
-	* DIST_BETWEEN
-
----
-
-**./test-parts/possible/valid/total-dist.js**
-* New file - Unit test group for route total distance.
-* Same structure as 'stop-count.js'
+**./test-parts/possible/valid/template-criteria.js**
+* New file - Valid unit tests for template criteria.
+* Not to be confused with the file in '../invalid'
+* Only 'Exact' template at this stage.
 
 ---
 
 **./test-parts/test-possible-routes.js**
-* New requirement: './possible/valid/total-dist'
-* Added call to 'validTotalDist'
+* Added new requirement: './possible/valid/template-criteria'
+* Added call to 'validTemplateCriteria'
+* Commented out calls:
+	* 'handleInvalidGroup' function.
+	* All tests in 'handleValidGroup' except for 'validTemplateCriteria'

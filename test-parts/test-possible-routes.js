@@ -5,6 +5,7 @@ const validOneWay = require("./possible/valid/one-way");
 const validStartEnd = require("./possible/valid/start-end");
 const validStopCount = require("./possible/valid/stop-count");
 const validTotalDist = require("./possible/valid/total-dist");
+const validTemplateCriteria = require("./possible/valid/template-criteria");
 const invalidNodeCriteria = require("./possible/invalid/node-criteria");
 const invalidSearchArgs = require("./possible/invalid/search-args");
 const invalidStopDistCriteria = require("./possible/invalid/stop-dist-criteria");
@@ -16,7 +17,7 @@ function runTests()
 	describe("Possible Routes", function()
 	{
 		handleValidGroup();
-		handleInvalidGroup();
+		//handleInvalidGroup();
 	});
 }
 
@@ -25,10 +26,11 @@ function handleValidGroup()
 {
 	describe("Valid", function()
 	{
-		validOneWay.callTest();
-		validStartEnd.callTests();
-		validStopCount.callTests();
-		validTotalDist.callTests();
+		//validOneWay.callTest();
+		//validStartEnd.callTests();
+		//validStopCount.callTests();
+		//validTotalDist.callTests();
+		validTemplateCriteria.callTests();
 	});
 }
 
