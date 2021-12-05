@@ -82,6 +82,16 @@ function callTemplateTests()
 			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_CHAR_GRPS);
 		});
 		
+		it("Nested Loop", function()
+		{
+			var routeTemplate = routeCriteria.defineTemplate("^.(AC)+$", false);
+			var routeDist = routeCriteria.defineTotalDistance(25, numSigns.LESS_EQUAL);
+			var searchCriteria = [routeTemplate, routeDist];
+			
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_NEST);
+		});
+		
+		
 		
 		
 		

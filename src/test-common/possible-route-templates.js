@@ -38,6 +38,10 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		{
 			currentMatch = followCharacterGroups(currentEntry.route.steps, nodeListObj);
 		}
+		else if (scenarioFlag === testScenarios.TEMPLATE_NEST)
+		{
+			currentMatch = followNesting(currentEntry.route.steps, nodeListObj);
+		}
 		
 		if (currentMatch !== true)
 		{
@@ -228,6 +232,43 @@ function followCharacterGroups(stepArr, nodeArr)
 	var endMatch = allowedEnd.includes(endGroupChar);
 	
 	var matchSuccessful = (startMatch === true && endMatch === true);
+	return matchSuccessful;
+}
+
+
+function followNesting(stepArr, nodeArr)
+{
+	var stepIndex = 1;
+	var currentAlternateFlag = -1;
+	var currentNodeID = -1;
+	var currentNodeChar = "";
+	var currentValid = false;
+	
+	var matchSuccessful = true;
+	
+	while (stepIndex > 0 && stepIndex < stepArr.length && matchSuccessful === true)
+	{
+		currentAlternateFlag = stepIndex % 2;
+		currentNodeID = stepArr[stepIndex];
+		currentNodeChar = nodeArr[currentNodeID];
+		currentValid = false;
+		
+		if (currentAlternateFlag === 1 && currentNodeChar === "A")
+		{
+			currentValid = true;
+		}
+		else if (currentAlternateFlag === 0 && currentNodeChar === "C")
+		{
+			currentValid = true;
+		}
+		else
+		{
+			matchSuccessful = false;
+		}
+		
+		stepIndex = stepIndex + 1;
+	}
+	
 	return matchSuccessful;
 }
 

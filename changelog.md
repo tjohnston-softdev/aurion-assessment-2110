@@ -1,22 +1,19 @@
 # Changelog
 
 **./src/common/enum/possible-route-tests.js**
-* Defined 'TEMPLATE_CHAR_GRPS' scenario.
+* Defined 'TEMPLATE_NEST' scenario.
 
 ---
 
 **./src/test-common/possible-route-templates.js**
-* Wrote new function 'followCharacterGroups'
+* Wrote new function 'followNesting'
 * Changes to 'checkResultObject'
-	* Added support for 'TEMPLATE_CHAR_GRPS'
-	* 'TEMPLATE_CHAR_GRPS' calls 'followCharacterGroups'
+	* Supported 'TEMPLATE_NEST' scenario.
+	* 'TEMPLATE_NEST' calls 'followNesting'
 
 ---
 
 **./test-parts/possible/valid/template-criteria.js**
-* Changed 'repeat' argument from True to False in tests:
-	* "Choice"
-	* "Invert"
-* Added new "Character Groups" test.
-	* Second step must be a possible start node. (A, B, C)
-	* Fourth step must be a possible end node. (D, E, F)
+* Defined new "Nested Loop" test.
+	* First step can be anything.
+	* Route goes back and forth between A and C from second step onwards.
