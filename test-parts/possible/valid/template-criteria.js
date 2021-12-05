@@ -43,6 +43,16 @@ function callTemplateTests()
 			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_SEQUENCE);
 		});
 		
+		it("Choice", function()
+		{
+			var routeTemplate = routeCriteria.defineTemplate("^..[ABC](.)*$", true);
+			var routeOneWay = routeCriteria.defineOneWay();
+			var searchCriteria = [routeTemplate, routeOneWay];
+			
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_CHOICE);
+		});
+		
+		
 	});
 }
 

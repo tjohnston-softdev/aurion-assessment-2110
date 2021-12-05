@@ -26,6 +26,10 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		{
 			currentMatch = followSequence(currentEntry.route.steps, nodeListObj);
 		}
+		else if (scenarioFlag === testScenarios.TEMPLATE_CHOICE)
+		{
+			currentMatch = followChoice(currentEntry.route.steps, nodeListObj);
+		}
 		
 		if (currentMatch !== true)
 		{
@@ -168,6 +172,17 @@ function followSequence(stepArr, nodeArr)
 	}
 	
 	return sequenceFound;
+}
+
+
+function followChoice(stepArr, nodeArr)
+{
+	var allowedNodes = ["A", "B", "C"];
+	var visitID = stepArr[2];
+	var visitChar = nodeArr[visitID];
+	var matchSuccessful = allowedNodes.includes(visitChar);
+	
+	return matchSuccessful;
 }
 
 

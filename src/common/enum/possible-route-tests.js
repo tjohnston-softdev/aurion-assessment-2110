@@ -15,6 +15,7 @@ function defineOptions()
 	defineRes["TEMPLATE_EXACT"] = 11;
 	defineRes["TEMPLATE_WILDCARD"] = 12;
 	defineRes["TEMPLATE_SEQUENCE"] = 13;
+	defineRes["TEMPLATE_CHOICE"] = 14;
 	
 	return defineRes;
 }
