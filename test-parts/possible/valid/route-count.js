@@ -22,6 +22,8 @@ function callRouteCountTests()
 			
 			var searchCriteria = [routeStart, routeEnd, routeStopCount, routeDist];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
 			expect(resultValue.length).to.equal(1);
 		});
 		
@@ -33,6 +35,8 @@ function callRouteCountTests()
 			
 			var searchCriteria = [routeStart, routeEnd, routeStopCount];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
+			
+			routeResults.checkObject(resultValue, exampleGraphObject, null, null);
 			pathfindingHelp.checkMultiplePossibleRoutes(resultValue.length);
 		});
 		
