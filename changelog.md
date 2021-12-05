@@ -1,4 +1,8 @@
 # Changelog
 
-**./src/parse-graph.js - validateGraphParse**
-* Added comments regarding object count validation.
+**./src/possible-routes.js**
+* Revised comments in functions:
+	* findPossibleRoutes
+	* performInitialSequence
+	* performMainSearch
+	* validateCompletedRoute

@@ -22,6 +22,7 @@ function findPossibleRoutes(inputGraphObject, criteriaListObject)
 	
 	if (criteriaValidation.successful === true)
 	{
+		// Input valid - Prepare criteria and validate templates.
 		useIgnore = criteriaValidation.ignore;
 		criteriaInspection = routeTasks.inspectCriteria(inputGraphObject.nodes, criteriaListObject, useIgnore);
 		templateValidation = routeTemplate.compileObjects(inputGraphObject.nodes, criteriaListObject, criteriaInspection, useIgnore);
@@ -29,6 +30,7 @@ function findPossibleRoutes(inputGraphObject, criteriaListObject)
 	
 	if (templateValidation.successful === true)
 	{
+		// Templates valid - Perform initial sequencing from start to end nodes.
 		searchPrepared = true;
 		preparedStartNodes = performInitialSequence(criteriaInspection, inputGraphObject, criteriaListObject, useIgnore);
 	}
@@ -36,22 +38,27 @@ function findPossibleRoutes(inputGraphObject, criteriaListObject)
 	
 	if (searchPrepared === true && preparedStartNodes.length > 0 && criteriaInspection.cutoffSet === true)
 	{
+		// Search possible routes.
 		possibleRes = performMainSearch(criteriaInspection, inputGraphObject, criteriaListObject, useIgnore, preparedStartNodes);
 	}
 	else if (searchPrepared === true && preparedStartNodes.length > 0)
 	{
+		// Infinite number of routes.
 		possibleRes = Number.POSITIVE_INFINITY;
 	}
 	else if (searchPrepared === true)
 	{
+		// No possible routes.
 		possibleRes = 0;
 	}
 	else if (criteriaValidation.successful === true)
 	{
+		// Invalid templates.
 		possibleRes = possibleCriteriaMessage.prepareText(templateValidation);
 	}
 	else
 	{
+		// Invalid input.
 		possibleRes = possibleCriteriaMessage.prepareText(criteriaValidation);
 	}
 	
@@ -77,16 +84,21 @@ function performInitialSequence(inspectObj, graphObject, criteriaListObj, ignore
 	
 	var successfulNodes = [];
 	
+	
+	// Loop graph nodes.
 	for (nodeIndex = 0; nodeIndex < graphObject.nodes.length; nodeIndex = nodeIndex + 1)
 	{
+		// Check if the current node is a start point. If there are no start nodes, use all of them.
 		currentStart = inspectObj.startNodes.includes(nodeIndex);
 		currentLoop = (currentStart === true || inspectObj.startNodes.length <= 0);
 		
+		// Initializes route starting from current node.
 		currentIteration = 1;
 		currentBacklog = routeTasks.initializeSingleBacklog(nodeIndex);
 		currentExplored = [];
 		currentFound = false;
 		
+		// Sequence from current node to any valid end point.
 		while (currentIteration >= 1 && currentIteration <= maxIterations && currentFound !== true && currentLoop === true)
 		{
 			// Iterate through current set of routes.
@@ -96,6 +108,7 @@ function performInitialSequence(inspectObj, graphObject, criteriaListObj, ignore
 		
 		if (currentFound === true)
 		{
+			// Valid start point.
 			successfulNodes.push(nodeIndex);
 		}
 		
@@ -120,7 +133,10 @@ function performMainSearch(inspectObj, graphObject, criteriaListObj, ignoreCrite
 		iterateRoutes(endNodesList, graphObject, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useBack, false);
 	}
 	
+	// Remove invalid routes.
 	routeTasks.filterValidRoutes(completedRoutes);
+	
+	
 	return completedRoutes;
 }
 
@@ -191,11 +207,13 @@ function validateCompletedRoute(compRoute, graphNodesList, criteriaList, skipCri
 	
 	if (skipCriteria !== true)
 	{
+		// Check if criteria has been met.
 		criteriaMatch = possibleCriteriaValidation.loopComplete(compRoute, graphNodesList, criteriaList);
 	}
 	
 	if (criteriaMatch === true && compRoute.steps.length > 1)
 	{
+		// Complete route is valid.
 		validRes = true;
 	}
 	
