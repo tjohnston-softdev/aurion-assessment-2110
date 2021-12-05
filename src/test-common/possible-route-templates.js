@@ -45,7 +45,6 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		
 		if (currentMatch !== true)
 		{
-			console.log(currentEntry.route.steps);
 			canContinue = false;
 			throw new Error("Retrieved route does not match template");
 		}

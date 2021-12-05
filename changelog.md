@@ -1,3 +1,4 @@
 # Changelog
 
-Template unit tests complete.
+**./src/test-common/possible-route-templates.js**
+* Removed `console.log` from 'checkResultObject'
