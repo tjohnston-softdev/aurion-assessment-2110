@@ -52,6 +52,16 @@ function callTemplateTests()
 			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_CHOICE);
 		});
 		
+		it("Invert", function()
+		{
+			var routeTemplate = routeCriteria.defineTemplate("^.[^AB].[^DE](.)*$", true);
+			var routeOneWay = routeCriteria.defineOneWay();
+			var searchCriteria = [routeTemplate, routeOneWay];
+			
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_INVERT);
+		});
+		
+		
 		
 	});
 }

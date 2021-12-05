@@ -1,17 +1,19 @@
 # Changelog
 
 **./src/common/enum/possible-route-tests.js**
-* Defined 'TEMPLATE_CHOICE' scenario.
+* Defined 'TEMPLATE_INVERT' scenario.
 
 ---
 
 **./src/test-common/possible-route-templates.js**
-* Wrote new function 'followChoice'
-* Changes to 'loopRoutes'
-	* Added support for the 'TEMPLATE_CHOICE' scenario.
-	* 'TEMPLATE_CHOICE' calls 'followChoice'
+* Wrote new function 'followInvert'
+* Changes to 'checkResultObject'
+	* Added support for the 'TEMPLATE_INVERT' scenario.
+	* 'TEMPLATE_INVERT' calls 'followInvert'
 
 ---
 
 **./test-parts/possible/valid/template-criteria.js**
-* Wrote new "Choice" test. The third node must be A, B, or C.
+* Wrote new "Invert" test.
+	* The second node cannot be A or B.
+	* The fourth node cannot be D or E.

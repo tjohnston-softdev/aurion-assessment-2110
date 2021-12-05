@@ -16,6 +16,7 @@ function defineOptions()
 	defineRes["TEMPLATE_WILDCARD"] = 12;
 	defineRes["TEMPLATE_SEQUENCE"] = 13;
 	defineRes["TEMPLATE_CHOICE"] = 14;
+	defineRes["TEMPLATE_INVERT"] = 15;
 	
 	return defineRes;
 }

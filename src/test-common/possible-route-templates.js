@@ -30,6 +30,10 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		{
 			currentMatch = followChoice(currentEntry.route.steps, nodeListObj);
 		}
+		else if (scenarioFlag === testScenarios.TEMPLATE_INVERT)
+		{
+			currentMatch = followInvert(currentEntry.route.steps, nodeListObj);
+		}
 		
 		if (currentMatch !== true)
 		{
@@ -182,6 +186,25 @@ function followChoice(stepArr, nodeArr)
 	var visitChar = nodeArr[visitID];
 	var matchSuccessful = allowedNodes.includes(visitChar);
 	
+	return matchSuccessful;
+}
+
+
+function followInvert(stepArr, nodeArr)
+{
+	var firstAvoid = ["A", "B"];
+	var secondAvoid = ["D", "E"];
+	
+	var firstID = stepArr[1];
+	var firstChar = nodeArr[firstID];
+	
+	var secondID = stepArr[3];
+	var secondChar = nodeArr[secondID];
+	
+	var firstIncl = firstAvoid.includes(firstChar);
+	var secondIncl = secondAvoid.includes(secondChar);
+	
+	var matchSuccessful = (firstIncl !== true && secondIncl !== true);
 	return matchSuccessful;
 }
 
