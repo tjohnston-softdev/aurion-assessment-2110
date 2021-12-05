@@ -1,3 +1,5 @@
+// Unit tests for 'possible routes' pathfinding.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -14,6 +16,7 @@ const invalidStopDistCriteria = require("./possible/invalid/stop-dist-criteria")
 const invalidTemplateCriteria = require("./possible/invalid/template-criteria");
 
 
+// Main function
 function runTests()
 {
 	describe("Possible Routes", function()
@@ -24,6 +27,7 @@ function runTests()
 }
 
 
+// Valid tests
 function handleValidGroup()
 {
 	describe("Valid", function()
@@ -38,6 +42,8 @@ function handleValidGroup()
 	});
 }
 
+
+// Invalid tests
 function handleInvalidGroup()
 {
 	describe("Invalid", function()

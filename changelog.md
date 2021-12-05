@@ -1,8 +1,9 @@
 # Changelog
 
-**./src/possible-routes.js**
-* Revised comments in functions:
-	* findPossibleRoutes
-	* performInitialSequence
-	* performMainSearch
-	* validateCompletedRoute
+**./test-parts/**
+* Added comments to:
+	* mode-input.js
+	* test-possible-routes.js
+* Added header comments to:
+	* test-input-functions.js - defineInputData
+	* test-shortest-route.js

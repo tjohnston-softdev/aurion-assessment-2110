@@ -24,6 +24,7 @@ function runTests()
 }
 
 
+// Defines input paths and error message.
 function defineInputData()
 {
 	var defineRes = {};
