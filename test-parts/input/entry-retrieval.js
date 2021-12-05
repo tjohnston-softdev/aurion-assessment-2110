@@ -1,3 +1,5 @@
+// 'Entry Retrieval' for input file unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -5,7 +7,7 @@ const inputFile = require("../../src/input-file");
 const fileSize = require("../../src/test-common/file-size");
 const errorThrowing = require("../../src/test-common/error-throwing");
 
-
+// Main function
 function callEntryRetrievalTests(inpDataObj)
 {
 	describe("Get Input File Entry", function()

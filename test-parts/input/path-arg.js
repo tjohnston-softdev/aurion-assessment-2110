@@ -1,9 +1,11 @@
+// 'Path argument reading' for input file unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 const inputFile = require("../../src/input-file");
 
-
+// Main function
 function callArgumentTests()
 {
 	describe("Read Path Argument", function()

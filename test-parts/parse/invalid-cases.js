@@ -1,10 +1,12 @@
+// Invalid data cases for graph parsing unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 const parseGraph = require("../../src/parse-graph");
 const errorThrowing = require("../../src/test-common/error-throwing");
 
-
+// Main function
 function callInvalidCaseTests()
 {
 	var formatErrorText = "Could not parse input into a valid graph.";

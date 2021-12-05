@@ -1,3 +1,5 @@
+// Valid template criteria tests for 'possible routes'
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -10,6 +12,7 @@ const exampleGraphObject = require("../../../src/test-common/graph-input");
 const possibleRouteTemplates = require("../../../src/test-common/possible-route-templates");
 
 
+// Main function
 function callTemplateTests()
 {
 	describe("Templates", function()
@@ -104,6 +107,7 @@ function callTemplateTests()
 }
 
 
+// Shared code.
 function handlePathfinding(testCriteria, testFlag)
 {
 	var searchResultObject = possibleRoutes.findRoutes(exampleGraphObject, testCriteria);

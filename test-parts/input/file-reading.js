@@ -1,10 +1,12 @@
+// 'File Reading' for input file unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 const inputFile = require("../../src/input-file");
 const errorThrowing = require("../../src/test-common/error-throwing");
 
-
+// Main function
 function callFileReadTests(inpDataObj)
 {
 	describe("Read Contents", function()

@@ -1,10 +1,12 @@
+// 'Entry Validation' for input file unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 const inputFile = require("../../src/input-file");
 const errorThrowing = require("../../src/test-common/error-throwing");
 
-
+// Main function
 function callEntryValidationTests()
 {
 	describe("Validate Input File Entry", function()
@@ -41,7 +43,12 @@ function callEntryValidationTests()
 // Creates object simulating file system entry.
 function defineRetrievedEntry(corrType, sBytes)
 {
-	var objectRes = {"retrieved": true, "correctType": corrType, "sizeBytes": sBytes};
+	var objectRes = {};
+	
+	objectRes["retrieved"] = true;
+	objectRes["correctType"] = corrType;
+	objectRes["sizeBytes"] = sBytes;
+	
 	return objectRes;
 }
 

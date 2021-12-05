@@ -1,3 +1,5 @@
+// Invalid argument tests for 'possible routes'
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -9,6 +11,8 @@ const nullGraph = require("../../../src/test-common/null-graph");
 const pathfindingHelp = require("../../../src/test-common/pathfinding-help");
 const exampleGraphObject = require("../../../src/test-common/graph-input");
 
+
+// Main function
 function callArgumentTests()
 {
 	describe("Arguments", function()

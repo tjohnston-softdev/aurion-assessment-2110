@@ -1,3 +1,5 @@
+// Ignored cases for graph parsing unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -5,7 +7,7 @@ const parseGraph = require("../../src/parse-graph");
 const parseHelp = require("../../src/test-common/parse-help");
 const parseOutputData = require("../../src/test-common/parse-output");
 
-
+// Main function
 function callIgnoreDataTests()
 {
 	describe("Ignore Data", function()

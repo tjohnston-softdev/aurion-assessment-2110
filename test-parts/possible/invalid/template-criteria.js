@@ -1,3 +1,5 @@
+// Invalid template criteria tests for 'possible routes'
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -6,7 +8,7 @@ const routeCriteria = require("../../../src/common/route-criteria");
 const pathfindingHelp = require("../../../src/test-common/pathfinding-help");
 const exampleGraphObject = require("../../../src/test-common/graph-input");
 
-
+// Main function
 function callTemplateCriteriaTests()
 {
 	describe("Template", function()
@@ -47,11 +49,12 @@ function callTemplateCriteriaTests()
 }
 
 
-
+// Writes a really long string so length test fails.
 function writeLongString()
 {
 	var writeRes = "";
 	
+	// Slightly above limit.
 	while (writeRes.length < 1005)
 	{
 		writeRes += "ABCDEF";

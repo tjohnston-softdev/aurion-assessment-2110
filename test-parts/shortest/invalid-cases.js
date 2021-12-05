@@ -1,3 +1,5 @@
+// Invalid cases for 'shortest route' unit tests.
+
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
@@ -8,7 +10,7 @@ const nullGraph = require("../../src/test-common/null-graph");
 const pathfindingHelp = require("../../src/test-common/pathfinding-help");
 const exampleGraphObject = require("../../src/test-common/graph-input");
 
-
+// Main function
 function callInvalidTestCases()
 {
 	var noRouteMsg = graphTasks.getNoRouteText();
