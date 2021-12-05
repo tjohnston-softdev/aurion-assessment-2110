@@ -273,6 +273,16 @@ function followNesting(stepArr, nodeArr)
 }
 
 
+function followIntegration(stepArr, nodeArr)
+{
+	var allowedNodes = ["A", "B", "C", "D"];
+	var choiceID = stepArr[2];
+	var choiceChar = nodeArr[choiceID];
+	var matchSuccessful = allowedNodes.includes(choiceChar);
+	return matchSuccessful;
+}
+
+
 function updateSequenceProgression(nodesMatch, seqInd)
 {
 	var newValue = -1;

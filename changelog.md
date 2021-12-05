@@ -1,19 +1,21 @@
 # Changelog
 
 **./src/common/enum/possible-route-tests.js**
-* Defined 'TEMPLATE_NEST' scenario.
+* Defined 'TEMPLATE_INT' scenario.
 
 ---
 
 **./src/test-common/possible-route-templates.js**
-* Wrote new function 'followNesting'
+* Wrote new function 'followIntegration'
 * Changes to 'checkResultObject'
-	* Supported 'TEMPLATE_NEST' scenario.
-	* 'TEMPLATE_NEST' calls 'followNesting'
+	* Supported 'TEMPLATE_INT' scenario.
+	* 'TEMPLATE_INT' calls 'followIntegration'
 
 ---
 
 **./test-parts/possible/valid/template-criteria.js**
-* Defined new "Nested Loop" test.
-	* First step can be anything.
-	* Route goes back and forth between A and C from second step onwards.
+* Removed 'routeCheckParameters' requirement.
+* Removed duplicate 'routeTemplate' from "Character Groups"
+* Defined new "Integrated Groups" test.
+	* Third node must be A, B, or a possible start node.
+	* In this case, the start nodes are C and D.

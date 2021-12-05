@@ -6,7 +6,6 @@ const testScenarios = require("../../../src/common/enum/possible-route-tests");
 const numSigns = require("../../../src/common/enum/num-signs");
 const routeCriteria = require("../../../src/common/route-criteria");
 const routeResults = require("../../../src/test-common/possible-route-results");
-const routeCheckParameters = require("../../../src/test-common/route-check-parameters");
 const exampleGraphObject = require("../../../src/test-common/graph-input");
 const possibleRouteTemplates = require("../../../src/test-common/possible-route-templates");
 
@@ -74,7 +73,6 @@ function callTemplateTests()
 			var routeDist = routeCriteria.defineTotalDistance(50, numSigns.LESS_EQUAL);
 			var searchCriteria = [];
 			
-			searchCriteria.push(routeTemplate);
 			searchCriteria.push(routeStartA, routeStartB, routeStartC);
 			searchCriteria.push(routeEndD, routeEndE, routeEndF);
 			searchCriteria.push(routeTemplate, routeDist);
@@ -91,9 +89,16 @@ function callTemplateTests()
 			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_NEST);
 		});
 		
-		
-		
-		
+		it("Integrated Groups", function()
+		{
+			var routeStartC = routeCriteria.defineStartNode("C");
+			var routeStartD = routeCriteria.defineStartNode("D");
+			var routeTemplate = routeCriteria.defineTemplate("^..[AB\\S](.)*$", false);
+			var routeDist = routeCriteria.defineTotalDistance(40, numSigns.LESS_EQUAL);
+			
+			var searchCriteria = [routeStartC, routeStartD, routeTemplate, routeDist];
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_INT);
+		});
 		
 	});
 }
