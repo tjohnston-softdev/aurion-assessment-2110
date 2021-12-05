@@ -56,11 +56,13 @@ function defineTemplateCriteria(inpString, inpRepeat)
 }
 
 
+// Validate route criteria list.
 function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 {
 	var arrayValid = Array.isArray(givenCriteriaArray);
 	var validationResult = {};
 	
+	// Result properties.
 	validationResult["successful"] = true;
 	validationResult["reason"] = "";
 	validationResult["itemNo"] = -1;
@@ -68,14 +70,17 @@ function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 	
 	if (arrayValid === true)
 	{
+		// Loop criteria objects.
 		iterateCriteriaValidation(givenNodesList, givenCriteriaArray, validationResult);
 	}
 	else if (givenCriteriaArray === undefined || givenCriteriaArray === null)
 	{
+		// Empty criteria.
 		validationResult.ignore = true;
 	}
 	else
 	{
+		// Invalid value type.
 		validationResult.successful = false;
 		validationResult.reason = "Input must be a valid array.";
 	}
@@ -84,11 +89,13 @@ function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 }
 
 
+// Loop criteria objects for validation.
 function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 {
 	var loopIndex = 0;
 	var currentElement = null;
 	
+	// Loop until end reached or error found.
 	while (loopIndex >= 0 && loopIndex < givenArray.length && validResultObj.successful === true)
 	{
 		currentElement = givenArray[loopIndex];
@@ -99,7 +106,7 @@ function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 
 
 
-// Validate object.
+// Validate criteria object.
 function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 {
 	var correctType = checkValueType(givenObject);
@@ -163,23 +170,28 @@ function handleTargetNode(criteriaObj, resObj, existingNodes, critInd, critDesc)
 	
 	if (correctType === true)
 	{
+		// Check if node exists.
 		searchPerformed = true;
 		matchFlag = existingNodes.indexOf(criteriaObj.node);
 	}
 	
+	
 	if (searchPerformed === true && matchFlag >= 0 && matchFlag < existingNodes.length)
 	{
+		// Valid.
 		criteriaObj.node = matchFlag;
 		handleRes = true;
 	}
 	else if (searchPerformed === true)
 	{
+		// Unknown node.
 		resObj.successful = false;
 		resObj.reason = critDesc + " node does not exist.";
 		resObj.itemNo = critInd + 1;
 	}
 	else
 	{
+		// Invalid type.
 		resObj.successful = false;
 		resObj.reason = critDesc + " must be a valid, non-empty string.";
 		resObj.itemNo = critInd + 1;
@@ -199,22 +211,26 @@ function handleNumberSign(criteriaObj, resObj, critInd, critDesc)
 	
 	if (correctNumType === true && correctSignType === true && numberVal > 0)
 	{
+		// Valid.
 		handleRes = true;
 	}
 	else if (correctNumType === true && correctSignType === true)
 	{
+		// Must be positive.
 		resObj.successful = false;
 		resObj.reason = critDesc + " number must be positive.";
 		resObj.itemNo = critInd + 1;
 	}
 	else if (correctNumType === true)
 	{
+		// Invalid sign.
 		resObj.successful = false;
 		resObj.reason = critDesc + " number sign is invalid.";
 		resObj.itemNo = critInd + 1;
 	}
 	else
 	{
+		// Invalid value type.
 		resObj.successful = false;
 		resObj.reason = critDesc + " number must be whole.";
 		resObj.itemNo = critInd + 1;
@@ -231,21 +247,26 @@ function handleTemplate(criteriaObj, resObj, critInd)
 	
 	if (givenType === "string")
 	{
+		// Read string length.
 		sLength = criteriaObj.syntax.length;
 	}
 	
+	
 	if (sLength >= 0 && sLength <= maxStringLength)
 	{
+		// Valid length.
 		handleRes = true;
 	}
 	else if (sLength > maxStringLength)
 	{
+		// Too long.
 		resObj.successful = false;
 		resObj.reason = "Template string is too long.";
 		resObj.itemNo = critInd + 1;
 	}
 	else
 	{
+		// Invalid value type.
 		resObj.successful = false;
 		resObj.reason = "Template must be a valid, non-empty string.";
 		resObj.itemNo = critInd + 1;
@@ -263,6 +284,7 @@ function checkValueType(givenObj)
 }
 
 
+// Creates object for 'start' and 'end' criteria.
 function setTargetNode(typeVal, nodeVal)
 {
 	var setRes = {};
@@ -274,6 +296,7 @@ function setTargetNode(typeVal, nodeVal)
 }
 
 
+// Creates object for 'stop count' or 'total distance' criteria.
 function setNumberSign(typeVal, numVal, signVal)
 {
 	var setRes = {};

@@ -1,3 +1,8 @@
+/*
+	'Possible Route' test scenarios.
+	Used for valid unit tests.
+*/
+
 function defineOptions()
 {
 	var defineRes = {};

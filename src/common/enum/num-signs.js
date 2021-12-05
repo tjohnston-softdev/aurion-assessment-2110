@@ -4,7 +4,6 @@
 	eg. Distance is LESS than 30
 */
 
-
 function defineOptions()
 {
 	var defineRes = {};

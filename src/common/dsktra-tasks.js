@@ -1,5 +1,6 @@
 // Secondary functions for Dijkstra pathfinding.
 
+
 // Pathfinding metadata.
 function defineDijkstraInfo()
 {	

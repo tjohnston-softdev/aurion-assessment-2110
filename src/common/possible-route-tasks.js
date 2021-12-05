@@ -5,10 +5,12 @@ const criteriaTypes = require("./enum/criteria-types");
 const numSigns = require("./enum/num-signs");
 
 
+// Prepare route criteria for pathfinding.
 function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 {
 	var targetRes = {};
 	
+	// Result properties.
 	targetRes["startNodes"] = [];
 	targetRes["endNodes"] = [];
 	targetRes["cutoffSet"] = false;
@@ -17,6 +19,7 @@ function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 	
 	if (skipLoop !== true)
 	{
+		// Run criteria loop.
 		loopCriteriaInspection(givenNodesList, givenCriteriaArray, targetRes);
 	}
 	
@@ -24,6 +27,7 @@ function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 }
 
 
+// Initialize route backlog with only one node.
 function initializeSingleRouteBacklog(startNodeIndex)
 {
 	var startRoute = defineRouteObject(startNodeIndex);
@@ -31,6 +35,7 @@ function initializeSingleRouteBacklog(startNodeIndex)
 	return intlRes;
 }
 
+// Initialize route backlog with multiple nodes.
 function initializeMultipleRoutesBacklog(markedNodes)
 {
 	var markIndex = 0;
@@ -39,8 +44,10 @@ function initializeMultipleRoutesBacklog(markedNodes)
 	
 	var intlRes = [];
 	
+	// Loop marked nodes.
 	for (markIndex = 0; markIndex < markedNodes.length; markIndex = markIndex + 1)
 	{
+		// Create route object from current node.
 		currentStart = markedNodes[markIndex];
 		currentRoute = defineRouteObject(currentStart);
 		intlRes.push(currentRoute);
@@ -125,52 +132,64 @@ function filterValidCompleteRoutes(compArr)
 		
 		if (currentEntry.valid === true)
 		{
+			// Keep
 			entryIndex = entryIndex + 1;
 		}
 		else
 		{
+			// Remove
 			compArr.splice(entryIndex, 1);
 		}
 	}
 }
 
 
-
+// Performs criteria preperation loop.
 function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 {
 	var criteriaIndex = 0;
 	var currentCriteria = {};
 	var currentType = null;
-	var cutoffSigns = [numSigns.LESS, numSigns.LESS_EQUAL, numSigns.EQUAL];
+	var cutoffSigns = [];
+	
+	// These number signs enforce limits to stop count or total distance.
+	cutoffSigns.push(numSigns.LESS, numSigns.LESS_EQUAL, numSigns.EQUAL);
 	
 	for (criteriaIndex = 0; criteriaIndex < criteriaArray.length; criteriaIndex = criteriaIndex + 1)
 	{
+		// Read current criteria.
 		currentCriteria = criteriaArray[criteriaIndex];
 		currentType = currentCriteria.type;
 		
 		if (currentType === criteriaTypes.START_NODE)
 		{
+			// Mark start node.
 			addNodeToTarget(currentCriteria.node, resultObj.startNodes);
 		}
 		else if (currentType === criteriaTypes.END_NODE)
 		{
+			// Mark end node.
 			addNodeToTarget(currentCriteria.node, resultObj.endNodes);
 		}
 		else if (currentType === criteriaTypes.STOP_COUNT && resultObj.cutoffSet !== true)
 		{
+			// Set 'stop count' cutoff if applicable based on sign.
 			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
 		}
 		else if (currentType === criteriaTypes.TOTAL_DISTANCE && resultObj.cutoffSet !== true)
 		{
+			// Set 'total distance' cutoff if applicable based on sign.
 			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
 		}
 		else if (currentType === criteriaTypes.ONE_WAY)
 		{
+			// Prevent backtracking for one-way routes.
 			resultObj.backtrack = false;
 			resultObj.cutoffSet = true;
 		}
 		else if (currentType === criteriaTypes.TEMPLATE)
 		{
+			// Mark template criteria for parsing.
 			resultObj.templatePointers.push(criteriaIndex);
 		}
 		
@@ -178,19 +197,20 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 }
 
 
+// Marks node as start or end when inspecting criteria.
 function addNodeToTarget(nodeInd, tgtArr)
 {
 	var alreadyUsed = tgtArr.indexOf(nodeInd);
 	
 	if (alreadyUsed !== true)
 	{
+		// Add to list.
 		tgtArr.push(nodeInd);
 	}
 }
 
 
-
-
+// Define route object with start node.
 function defineRouteObject(sNode)
 {
 	var defineRes = {};
@@ -214,7 +234,6 @@ function checkRouteExists(newRouteSteps, existingRoutes)
 	
 	// Convert current route to key string.
 	routeKey = newRouteSteps.join();
-	
 	
 	// Loop existing completed route entries.
 	while (entryIndex >= 0 && entryIndex < existingRoutes.length && matchFound !== true)
@@ -246,6 +265,7 @@ function cloneRouteObject(origObj)
 }
 
 
+// Checks whether continuing a route is allowed.
 function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 {
 	var startNode = newRoute.steps[0];
@@ -257,18 +277,22 @@ function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 	
 	if (visitStatus === true && backtrackStatus === true)
 	{
+		// Backtracking is allowed.
 		checkRes = true;
 	}
 	else if (visitStatus === true && closedRoute === true && endNodeFound === true)
 	{
+		// Re-visiting the start node is allowed for closed routes.
 		checkRes = true;
 	}
 	else if (visitStatus === true)
 	{
+		// Backtracking is not allowed.
 		checkRes = false;
 	}
 	else
 	{
+		// Valid node.
 		checkRes = true;
 	}
 	

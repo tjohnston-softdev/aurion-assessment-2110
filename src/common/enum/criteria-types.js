@@ -1,6 +1,5 @@
 // Route criteria types
 
-
 function defineOptions()
 {
 	var defineRes = {};
