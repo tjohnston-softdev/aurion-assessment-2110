@@ -6,6 +6,7 @@ const validStartEnd = require("./possible/valid/start-end");
 const validStopCount = require("./possible/valid/stop-count");
 const validTotalDist = require("./possible/valid/total-dist");
 const validTemplateCriteria = require("./possible/valid/template-criteria");
+const validRouteCount = require("./possible/valid/route-count");
 const invalidNodeCriteria = require("./possible/invalid/node-criteria");
 const invalidSearchArgs = require("./possible/invalid/search-args");
 const invalidStopDistCriteria = require("./possible/invalid/stop-dist-criteria");
@@ -30,7 +31,8 @@ function handleValidGroup()
 		//validStartEnd.callTests();
 		//validStopCount.callTests();
 		//validTotalDist.callTests();
-		validTemplateCriteria.callTests();
+		//validTemplateCriteria.callTests();
+		validRouteCount.callTests();
 	});
 }
 
