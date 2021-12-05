@@ -1,3 +1,6 @@
+// Generic helper functions for pathfinding unit tests.
+
+
 // Validate output distance number for valid pathfinding cases.
 function checkOutputDistanceNumber(distNum)
 {
@@ -36,6 +39,7 @@ function checkMultiplePossibleRoutesResult(countNum)
 }
 
 
+// Checks whether the output error message for criteria validation is correct.
 function checkInvalidCriteriaMessageText(givenValue, desiredMessage)
 {
 	var valueType = typeof givenValue;
@@ -47,13 +51,17 @@ function checkInvalidCriteriaMessageText(givenValue, desiredMessage)
 	
 	var checkRes = false;
 	
+	
 	if (valueType === "string")
 	{
+		// Isolate message from string, up until the item suffix.
 		isolatedMessage = readCriteriaMessage(givenValue);
 	}
 	
+	
 	if (isolatedMessage.length > 0)
 	{
+		// Message extracted successfully - Check start and end contents.
 		stringExists = true;
 		correctStart = isolatedMessage.startsWith("INVALID ROUTE CRITERIA");
 		correctEnd = isolatedMessage.endsWith(desiredMessage);
@@ -62,24 +70,28 @@ function checkInvalidCriteriaMessageText(givenValue, desiredMessage)
 	
 	if (stringExists === true && correctStart === true && correctEnd === true)
 	{
+		// Correct message.
 		checkRes = true;
 	}
 	else if (stringExists === true && correctStart === true)
 	{
+		// Incorrect message.
 		flagIncorrectCriteriaMessage(desireStr);
 	}
 	else if (stringExists === true)
 	{
+		// Wrong string type.
 		throw new Error("Invalid output message type.");
 	}
 	else
 	{
+		// No error message.
 		throw new Error("No output message given.");
 	}
 	
 }
 
-
+// Extracts criteria error message from string.
 function readCriteriaMessage(fullText)
 {
 	var bracketInd = fullText.indexOf(" (ITEM ");
@@ -87,6 +99,7 @@ function readCriteriaMessage(fullText)
 	
 	if (bracketInd >= 0 && bracketInd < fullText.length)
 	{
+		// Read until 'ITEM' suffix.
 		substringRes = fullText.substring(0, bracketInd);
 	}
 	
@@ -94,6 +107,7 @@ function readCriteriaMessage(fullText)
 }
 
 
+// Incorrect criteria message.
 function flagIncorrectCriteriaMessage(vExp)
 {
 	var preparedText = ["Incorrect criteria message.\r\n", "Should had been: '", vExp, "'"].join("");

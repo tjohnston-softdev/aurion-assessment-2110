@@ -1,3 +1,8 @@
+/*
+	Edge array output objects for 'graph parse' unit tests.
+	Used mostly for ignored data cases.
+*/
+
 function getObject()
 {
 	var resObj =

@@ -1,3 +1,5 @@
+// Input graph for pathfinding unit tests.
+
 function getGraphInputObject()
 {
 	var resObj =
