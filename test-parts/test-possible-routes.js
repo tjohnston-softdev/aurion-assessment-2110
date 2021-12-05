@@ -19,7 +19,7 @@ function runTests()
 	describe("Possible Routes", function()
 	{
 		handleValidGroup();
-		//handleInvalidGroup();
+		handleInvalidGroup();
 	});
 }
 
@@ -28,12 +28,12 @@ function handleValidGroup()
 {
 	describe("Valid", function()
 	{
-		//validOneWay.callTest();
-		//validStartEnd.callTests();
-		//validStopCount.callTests();
-		//validTotalDist.callTests();
-		//validTemplateCriteria.callTests();
-		//validRouteCount.callTests();
+		validOneWay.callTest();
+		validStartEnd.callTests();
+		validStopCount.callTests();
+		validTotalDist.callTests();
+		validTemplateCriteria.callTests();
+		validRouteCount.callTests();
 		validOther.callTests();
 	});
 }
