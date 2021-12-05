@@ -17,6 +17,7 @@ function defineOptions()
 	defineRes["TEMPLATE_SEQUENCE"] = 13;
 	defineRes["TEMPLATE_CHOICE"] = 14;
 	defineRes["TEMPLATE_INVERT"] = 15;
+	defineRes["TEMPLATE_CHAR_GRPS"] = 16;
 	
 	return defineRes;
 }

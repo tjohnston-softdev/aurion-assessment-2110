@@ -34,6 +34,10 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		{
 			currentMatch = followInvert(currentEntry.route.steps, nodeListObj);
 		}
+		else if (scenarioFlag === testScenarios.TEMPLATE_CHAR_GRPS)
+		{
+			currentMatch = followCharacterGroups(currentEntry.route.steps, nodeListObj);
+		}
 		
 		if (currentMatch !== true)
 		{
@@ -205,6 +209,25 @@ function followInvert(stepArr, nodeArr)
 	var secondIncl = secondAvoid.includes(secondChar);
 	
 	var matchSuccessful = (firstIncl !== true && secondIncl !== true);
+	return matchSuccessful;
+}
+
+
+function followCharacterGroups(stepArr, nodeArr)
+{
+	var allowedStart = ["A", "B", "C"];
+	var allowedEnd = ["D", "E", "F"];
+	
+	var startGroupID = stepArr[1];
+	var startGroupChar = nodeArr[startGroupID];
+	
+	var endGroupID = stepArr[3];
+	var endGroupChar = nodeArr[endGroupID];
+	
+	var startMatch = allowedStart.includes(startGroupChar);
+	var endMatch = allowedEnd.includes(endGroupChar);
+	
+	var matchSuccessful = (startMatch === true && endMatch === true);
 	return matchSuccessful;
 }
 

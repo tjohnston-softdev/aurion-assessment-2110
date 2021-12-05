@@ -45,7 +45,7 @@ function callTemplateTests()
 		
 		it("Choice", function()
 		{
-			var routeTemplate = routeCriteria.defineTemplate("^..[ABC](.)*$", true);
+			var routeTemplate = routeCriteria.defineTemplate("^..[ABC](.)*$", false);
 			var routeOneWay = routeCriteria.defineOneWay();
 			var searchCriteria = [routeTemplate, routeOneWay];
 			
@@ -54,12 +54,34 @@ function callTemplateTests()
 		
 		it("Invert", function()
 		{
-			var routeTemplate = routeCriteria.defineTemplate("^.[^AB].[^DE](.)*$", true);
+			var routeTemplate = routeCriteria.defineTemplate("^.[^AB].[^DE](.)*$", false);
 			var routeOneWay = routeCriteria.defineOneWay();
 			var searchCriteria = [routeTemplate, routeOneWay];
 			
 			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_INVERT);
 		});
+		
+		it("Character Groups", function()
+		{
+			var routeStartA = routeCriteria.defineStartNode("A");
+			var routeStartB = routeCriteria.defineStartNode("B");
+			var routeStartC = routeCriteria.defineStartNode("C");
+			
+			var routeEndD = routeCriteria.defineEndNode("D");
+			var routeEndE = routeCriteria.defineEndNode("E");
+			var routeEndF = routeCriteria.defineEndNode("F");
+			var routeTemplate = routeCriteria.defineTemplate("^.\\s.\\e(.)+$", false);
+			var routeDist = routeCriteria.defineTotalDistance(50, numSigns.LESS_EQUAL);
+			var searchCriteria = [];
+			
+			searchCriteria.push(routeTemplate);
+			searchCriteria.push(routeStartA, routeStartB, routeStartC);
+			searchCriteria.push(routeEndD, routeEndE, routeEndF);
+			searchCriteria.push(routeTemplate, routeDist);
+			
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_CHAR_GRPS);
+		});
+		
 		
 		
 		
