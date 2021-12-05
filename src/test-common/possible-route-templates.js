@@ -22,13 +22,9 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		{
 			currentMatch = followWildcard(currentEntry.route.steps, nodeListObj);
 		}
-		else if (scenarioFlag === testScenarios.TEMPLATE_SEQ_ONCE)
+		else if (scenarioFlag === testScenarios.TEMPLATE_SEQUENCE)
 		{
-			currentMatch = followSequence(currentEntry.route.steps, nodeListObj, "AEB", false);
-		}
-		else if (scenarioFlag === testScenarios.TEMPLATE_SEQ_REPEAT)
-		{
-			currentMatch = followSequence(currentEntry.route.steps, nodeListObj, "EAC", true);
+			currentMatch = followSequence(currentEntry.route.steps, nodeListObj);
 		}
 		
 		if (currentMatch !== true)
@@ -128,8 +124,9 @@ function followWildcard(stepArr, nodeArr)
 }
 
 
-function followSequence(stepArr, nodeArr, seqString, useGlobal)
+function followSequence(stepArr, nodeArr)
 {
+	var seqString = "EAC";
 	var startNode = seqString.charAt(0);
 	
 	var stepIndex = 0;
@@ -140,9 +137,8 @@ function followSequence(stepArr, nodeArr, seqString, useGlobal)
 	
 	var sequenceIndex = -1;
 	var sequenceFound = false;
-	var canStep = true;
 	
-	while (stepIndex >= 0 && stepIndex < stepArr.length && sequenceFound !== true && canStep === true)
+	for (stepIndex = 0; stepIndex < stepArr.length; stepIndex = stepIndex + 1)
 	{
 		currentVisitID = stepArr[stepIndex];
 		currentVisitChar = nodeArr[currentVisitID];
@@ -163,10 +159,7 @@ function followSequence(stepArr, nodeArr, seqString, useGlobal)
 		{
 			sequenceIndex = -1;
 			sequenceFound = true;
-			canStep = useGlobal;
 		}
-		
-		stepIndex = stepIndex + 1;
 	}
 	
 	if (sequenceIndex >= seqString.length)

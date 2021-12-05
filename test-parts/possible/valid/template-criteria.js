@@ -34,22 +34,13 @@ function callTemplateTests()
 			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_WILDCARD);
 		});
 		
-		it("Sequence Once", function()
-		{
-			var routeTemplate = routeCriteria.defineTemplate("AEB", false);
-			var routeOneWay = routeCriteria.defineOneWay();
-			var searchCriteria = [routeTemplate, routeOneWay];
-			
-			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_SEQ_ONCE);
-		});
-		
-		it("Sequence Repeat", function()
+		it("Repeating Sequence", function()
 		{
 			var routeTemplate = routeCriteria.defineTemplate("EAC", true);
 			var routeDist = routeCriteria.defineTotalDistance(40, numSigns.LESS_EQUAL);
 			var searchCriteria = [routeTemplate, routeDist];
 			
-			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_SEQ_REPEAT);
+			handlePathfinding(searchCriteria, testScenarios.TEMPLATE_SEQUENCE);
 		});
 		
 	});
