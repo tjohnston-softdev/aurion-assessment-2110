@@ -96,10 +96,12 @@ function validateGraphParse(graphObject)
 {
 	if (graphObject.nodes.length >= 2 && graphObject.edges.length >= 2)
 	{
+		// Object counts valid.
 		graphObject.valid = true;
 	}
 	else
 	{
+		// Invalid object counts.
 		errorMessages.displayInvalidGraph();
 	}
 }
