@@ -49,7 +49,7 @@ function findPossibleRoutes(inputGraphObject, criteriaListObject)
 	else if (searchPrepared === true)
 	{
 		// No possible routes.
-		possibleRes = 0;
+		possibleRes = [];
 	}
 	else if (criteriaValidation.successful === true)
 	{

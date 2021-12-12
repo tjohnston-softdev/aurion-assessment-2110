@@ -26,7 +26,7 @@ function callOtherTestCases()
 			
 			var searchCriteria = [routeStart, routeEnd];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			expect(resultValue).to.equal(0);
+			expect(resultValue).to.be.an("array").that.is.empty;
 		});
 	});
 }

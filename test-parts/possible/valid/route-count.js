@@ -50,7 +50,7 @@ function callRouteCountTests()
 			
 			var searchCriteria = [routeStart, routeEnd, routeDist];
 			var resultValue = possibleRoutes.findRoutes(exampleGraphObject, searchCriteria);
-			expect(resultValue).to.equal(0);
+			expect(resultValue).to.be.an("array").that.is.empty;
 		});
 		
 		it("Infinite", function()
