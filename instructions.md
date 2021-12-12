@@ -120,31 +120,33 @@ We would like to see:
 	* Higher numbers are ignored without error.
 	* Negative and decimal values still cause errors during the initial format check because the respective characters are not allowed.
 
-#### Pathfinding
+#### Pathfinding - Exact Route
 
-* Exact route:
-	* Input is a string with each character representing a node along the route.
-	* This string must have at least two characters.
-	* Messages are output for invalid route input.
-	* If the route is not possible or a node does not exist, output "NO SUCH ROUTE"
-	* Successful output is the distance of the given route.
-* Shortest path:
-	* Implemented using Dijkstra's algorithm.
-	* If the start or end nodes are missing, output message.
-	* If the end node was not visited, the algorithm was unsuccessful.
-	* Successful output is the distance of the calculated route.
-* Possible routes:
-	* Supports criteria for 'number of stops' and 'total distance'
-	* If the start or end nodes are missing, output message.
-	* If the criteria objects are invalid, output message.
-	* If the end node cannot be reached from the start node in a direct sequence, there are no possible routes to search. The output will be zero.
-	* Pathfinding expands from the start node, creating new possible paths as nodes are visited.
-	* Backtracking is allowed, so nodes can be visited multiple times on a given route.
-	* If the end node is visited at *any* point, it is a completed route and will be remembered.
-	* A complete route is valid if the criteria is met and has at least one stop.
-	* *All* completed routes are saved to avoid searching forever but only valid routes will be counted for the end result.
-	* Valid routes are counted after all of the completed routes have been found.
-	* Successful output is the number of possible routes found, even if it is zero.
+* Input is a string with each character representing a node along the route.
+* This string must have at least two characters.
+* Messages are output for invalid route input.
+* If the route is not possible or a node does not exist, output "NO SUCH ROUTE"
+* Successful output is the distance of the given route.
+
+#### Pathfinding - Shortest Path
+
+* Implemented using Dijkstra's algorithm.
+* If the start or end nodes are missing, output message.
+* If the end node was not visited, the algorithm was unsuccessful.
+* Successful output is the distance of the calculated route.
+
+#### Pathfinding - Possible Routes
+* Supports criteria for 'number of stops' and 'total distance'
+* If the start or end nodes are missing, output message.
+* If the criteria objects are invalid, output message.
+* If the end node cannot be reached from the start node in a direct sequence, there are no possible routes to search. The output will be zero.
+* Pathfinding expands from the start node, creating new possible paths as nodes are visited.
+* Backtracking is allowed, so nodes can be visited multiple times on a given route.
+* If the end node is visited at *any* point, it is a completed route and will be remembered.
+* A complete route is valid if the criteria is met and has at least one stop.
+* *All* completed routes are saved to avoid searching forever but only valid routes will be counted for the end result.
+* Valid routes are counted after all of the completed routes have been found.
+* Successful output is the number of possible routes found, even if it is zero.
 
 #### Output
 
