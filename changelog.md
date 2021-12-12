@@ -1,11 +1,19 @@
 # Changelog
 
-**./submission.js**
-* Revised header comment.
-	* Changed "Aurion assessment submission." to "Aurion technical assessment."
-	* Indicated 'Originally submitted' date.
-	* Added dates for 'Unit tests' and 'Co-pair' releases.
-* Changed 'callTestCases' header comment.
-	* Before: "Runs test cases."
-	* After: "Run test cases."
-* Removed 'outputs' plural from 'runSubmission' comments.
+**./src/result-display.js**
+* Comment is now header for the entire file and not just 'outputResultsToConsole'
+* Declared global variables indicating column start points:
+	* caseCol
+	* expectCol
+	* actualCol
+* Wrote new function 'renderHeadRow'
+	* Used to write header row and output to console.
+	* Columns for case number, expected value, and actual value.
+* Wrote new function 'renderBodyRow'
+	* Used to write body row and output to console.
+	* Test case results.
+* Changes to 'outputResultsToConsole'
+	* 'renderHeadRow' is called before the loop.
+	* Removed 'currentValue' and 'currentLine' variables.
+	* Removed `console.log(currentLine)`
+	* Added call to 'renderBodyRow' during the loop.
