@@ -1,5 +1,7 @@
 # Developer Assessment
 
+---
+
 #### Problem Statement
 
 The local commuter rail network in the City of Zadgas services a number of suburbs.  Because of resource limitations, all of the tracks are 'one-way'. That is, a route from Neodrek Plaza to Yisec Grove does not imply the existence of a route from Yisec Grove to Neodrek Plaza. In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
@@ -81,8 +83,8 @@ We would like to see:
 * The application must execute successfully.
 * You should provide sufficient evidence that your solution is complete by, as a minimum, indicating that it works correctly against the supplied test data.
 * The application built to solve the problem should be constructed using TypeScript, and execute as a Node JS application.
-* Provide a brief overview of the submission with guidance on:
-	* How to execute the application.
+* Provide a brief overview of the submission with guidance on how to:
+	* Execute the application.
 	* Execute the test suites that verify the logic.
 
 ---
@@ -108,14 +110,14 @@ We would like to see:
 * A node is represented using an alphabet character: `[A-Z]`
 * A graph must have multiple nodes and edges. Otherwise, there will be errors.
 	* This is covered both during the initial format check and after the graph has been parsed.
-* There is no hard upper limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
-* There is a hard upper limit of 300 edges. Afterwards, further input will be ignored without error.
+* There is no hard limit on the number of nodes, but only alphabet characters are supported. (26 possible values)
+* There is a hard limit of 300 edges. Further input will be ignored without error.
 * Edges are only one-way, so 'BC' and 'CB' are different edges.
 	* These edges can have different distances, even if they are the same nodes in the opposite direction.
-* Duplicate edges will be ignored without error. The first one takes priority.
+* Duplicate edges are ignored without error. The first one takes priority.
 * Recursive edges (eg. A to A) will be ignored without error.
 * Edge distance must be a whole number between 1 and 1000000000 (a billion)
-	* Higher numbers will be ignored without error.
+	* Higher numbers are ignored without error.
 	* Negative and decimal values still cause errors during the initial format check because the respective characters are not allowed.
 
 #### Pathfinding
@@ -146,10 +148,10 @@ We would like to see:
 
 #### Output
 
-* Result values for each test case are displayed to the console, same as above.
-* For the submission itself, only the actual values are displayed.
-	* At first, I thought implementing a full unit test suite would have been excessive given that we only had three days to complete the assessment.
-	* Proper unit tests were finally implemented in a later update during my own time.
+* Result values for each test case are displayed to the console.
+* For the submission itself, both the expected and actual values are displayed.
+	* For the original submission, I thought implementing a full unit test suite would have been excessive given that we only had three days to complete the assessment.
+	* Proper unit tests were implemented in an updated version.
 	* The unit tests directly compare the expected and actual values for the given test cases.
 
 #### Dependencies
