@@ -103,6 +103,7 @@ function performInitialSequence(inspectObj, graphObject, criteriaListObj, ignore
 		{
 			// Iterate through current set of routes.
 			currentFound = iterateRoutes(endNodesList, graphObject, criteriaListObj, ignoreCriteria, currentBacklog, currentExplored, false, true);
+			routeTasks.filterValidRoutes(currentExplored);
 			currentIteration = currentIteration + 1;
 		}
 		
@@ -131,6 +132,7 @@ function performMainSearch(inspectObj, graphObject, criteriaListObj, ignoreCrite
 	{
 		// Iterate through current set of routes.
 		iterateRoutes(endNodesList, graphObject, criteriaListObj, ignoreCriteria, routeBacklog, completedRoutes, useBack, false);
+		routeTasks.filterValidRoutes(completedRoutes);
 	}
 	
 	// Remove invalid routes.
