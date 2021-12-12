@@ -1,14 +1,9 @@
 # Changelog
 
-**./src/possible-routes.js - findPossibleRoutes**
-* Output empty array instead of zero for "No possible routes" result.
-
----
-
-**./test-parts/possible/valid/route-count.js**
-* Updated "Zero" test to check for an empty array and not Zero, the number.
-
----
-
-**./test-parts/possible/valid/other-cases.js**
-* Updated "Impossible Route" test to check for an empty array and not Zero, the number.
+**./instructions.md**
+* Wrote details for route template syntax under 'Pathfinding - Possible Routes'
+* Added 'Unit Tests' section.
+* Changes to 'Dependencies' section:
+	* Removed "Unit tests are run completely separate from the original submission."
+	* Removed "Unit tests were implemented using [...]"
+	* Added "Mocha and Chai are included as dependencies for the unit tests."

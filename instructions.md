@@ -145,6 +145,9 @@ We would like to see:
 	* One-way routes (No backtracking)
 	* Template pattern
 * Any number of criteria can be used, even multiple of the same type.
+* Route template patterns are defined as [Regular Expressions](https://www.w3schools.com/jsref/jsref_obj_regexp.asp) but with two differences:
+	* `\s` and `\S` represent any start node.
+	* `\e` and `\E` represent any end node.
 * If any of the given criteria is invalid, output message.
 * A route must meet *all* of the given criteria to be considered valid.
 * If any of the end nodes cannot be reached from any of the start nodes in a direct sequence:
@@ -171,8 +174,19 @@ We would like to see:
 #### Dependencies
 
 * The submission itself uses no third-party packages. Everything is written in native Node JS.
-* Unit tests were implemented using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/)
-* Unit tests are run completely separate from the original submission.
+* [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/) are included as dependencies for the unit tests.
+
+#### Unit Tests
+
+* Implemented using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/)
+* The original submission script and the unit tests run completely separate from each other.
+* Different scripts are used to run different tests:
+	* Read input file: `npm run test-input`
+	* Input graph parsing: `npm run test-parse`
+	* Exact route pathfinding: `npm run test-exact`
+	* Shortest route pathfinding: `npm run test-shortest`
+	* Possible routes pathfinding: `npm run test-possible`
+	* Assessment submission: `npm run test-submission`
 
 ----
 
