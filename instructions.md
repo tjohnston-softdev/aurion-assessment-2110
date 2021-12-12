@@ -126,27 +126,40 @@ We would like to see:
 * This string must have at least two characters.
 * Messages are output for invalid route input.
 * If the route is not possible or a node does not exist, output "NO SUCH ROUTE"
-* Successful output is the distance of the given route.
+* Successful output is the total distance of the given route.
 
 #### Pathfinding - Shortest Path
 
 * Implemented using Dijkstra's algorithm.
 * If the start or end nodes are missing, output message.
 * If the end node was not visited, the algorithm was unsuccessful.
-* Successful output is the distance of the calculated route.
+* Successful output is the total distance of the calculated route.
 
 #### Pathfinding - Possible Routes
-* Supports criteria for 'number of stops' and 'total distance'
-* If the start or end nodes are missing, output message.
-* If the criteria objects are invalid, output message.
-* If the end node cannot be reached from the start node in a direct sequence, there are no possible routes to search. The output will be zero.
-* Pathfinding expands from the start node, creating new possible paths as nodes are visited.
-* Backtracking is allowed, so nodes can be visited multiple times on a given route.
-* If the end node is visited at *any* point, it is a completed route and will be remembered.
-* A complete route is valid if the criteria is met and has at least one stop.
-* *All* completed routes are saved to avoid searching forever but only valid routes will be counted for the end result.
-* Valid routes are counted after all of the completed routes have been found.
-* Successful output is the number of possible routes found, even if it is zero.
+
+* Supports criteria for:
+	* Start node(s)
+	* End node(s)
+	* Number of stops
+	* Total distance
+	* One-way routes (No backtracking)
+	* Template pattern
+* Any number of criteria can be used, even multiple of the same type.
+* If any of the given criteria is invalid, output message.
+* A route must meet *all* of the given criteria to be considered valid.
+* If any of the end nodes cannot be reached from any of the start nodes in a direct sequence:
+	* There are no possible routes to search.
+	* The output will be zero.
+* Pathfinding expands from the possible start nodes, creating new possible paths as nodes are visited.
+* Backtracking is enabled by default, so nodes can be visited multiple times on a given route.
+	* This can be disabled using the 'One Way' route criteria.
+* If any of the end nodes are visited at *any* point, it is a completed route and will be processed accordingly.
+	* A complete route is valid if the criteria is met and has at least one stop.
+	* Invalid routes are temporarily stored to avoid repetition.
+* Successful output is an array of all valid routes found, even if it is empty.
+* If the given route criteria does not restrict the route size, output infinity.
+	* eg. Two-way routes with no maximum distance or stop count.
+* If there are no possible start nodes, output an empty array.
 
 #### Output
 
@@ -154,13 +167,12 @@ We would like to see:
 * For the submission itself, both the expected and actual values are displayed.
 	* For the original submission, I thought implementing a full unit test suite would have been excessive given that we only had three days to complete the assessment.
 	* Proper unit tests were implemented in an updated version.
-	* The unit tests directly compare the expected and actual values for the given test cases.
 
 #### Dependencies
 
 * The submission itself uses no third-party packages. Everything is written in native Node JS.
 * Unit tests were implemented using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/)
-	* Keep in mind that formal unit tests were not included in the original submission.
+* Unit tests are run completely separate from the original submission.
 
 ----
 
