@@ -1,7 +1,9 @@
 /*
-	Aurion assessment submission.
+	Aurion technical assessment.
 	Tyrone Johnston
-	15 October 2021
+	Originally submitted: 15 October 2021
+	Unit tests update: 27 October 2021
+	Co-pair update: 12 December 2021
 */
 
 
@@ -42,14 +44,14 @@ function runSubmission()
 	
 	if (parsedGraphObject.valid === true)
 	{
-		// Perform tests and outputs to console.
+		// Perform tests and output to console.
 		caseResultArray = callTestCases(parsedGraphObject);
 		resultDisplay.outputToConsole(caseResultArray);
 	}
 }
 
 
-// Runs test cases.
+// Run test cases.
 function callTestCases(pGraphObj)
 {
 	var output1 = cases.runCase1(pGraphObj);
