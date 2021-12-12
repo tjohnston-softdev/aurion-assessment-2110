@@ -6,6 +6,7 @@ Assessment instructions were sent as a MS Word document which I interpreted into
 
 This attempt was developed across 12-15 October 2021 and immediately shared to the general public. An updated version with unit tests was released on 27 October 2021. A final version was released on 12 December 2021 based on suggestions from the hiring managers.
 
+
 ## Running
 
 **Submission**  
@@ -22,6 +23,7 @@ Execute `npm install` to download the unit testing suite, and then execute any o
 * `npm run test-possible` - Possible routes pathfinding.
 * `npm run test-submission` - Assessment submission.
 
+
 ## References
 
 * [Computerphile - Dijkstra's Algorithm](https://www.youtube.com/watch?v=GazC3A4OQTE)
@@ -31,6 +33,7 @@ Execute `npm install` to download the unit testing suite, and then execute any o
 	* [City name](https://www.fantasynamegenerators.com/city-names.php)
 	* [Suburb Names](https://www.fantasynamegenerators.com/city-district-names.php)
 * [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/) - Unit testing suite.
+
 
 ## Disclaimer
 
