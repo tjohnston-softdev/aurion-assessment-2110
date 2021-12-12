@@ -4,21 +4,23 @@ This is my submission for a technical assessment as part of a software developer
 
 Assessment instructions were sent as a MS Word document which I interpreted into a [markdown file](./instructions.md) along with personal implementation details.
 
-This attempt was developed across 12-15 October 2021 and immediately shared to the general public. An updated version with unit tests was released on 27 October 2021.
+This attempt was developed across 12-15 October 2021 and immediately shared to the general public. An updated version with unit tests was released on 27 October 2021. A final version was released on 12 December 2021 based on suggestions from the hiring managers.
 
 ## Running
 
-After cloning the repository:
-
-
-**Submission**
-
+**Submission**  
 Execute `node submission [input-path]`
 
 \
-**Unit Tests**
-1. Execute `npm install` to download the unit testing suite.
-2. Execute `npm test` to perform the unit tests.
+**Unit Tests**  
+Execute `npm install` to download the unit testing suite, and then execute any of the following commands to run different unit tests:
+
+* `npm run test-input` - Read input file.
+* `npm run test-parse` - Input graph parsing.
+* `npm run test-exact` - Exact route pathfinding.
+* `npm run test-shortest` - Shortest route pathfinding.
+* `npm run test-possible` - Possible routes pathfinding.
+* `npm run test-submission` - Assessment submission.
 
 ## References
 
