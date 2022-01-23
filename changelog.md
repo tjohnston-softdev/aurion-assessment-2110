@@ -1,3 +1,3 @@
 # Changelog
 
-'nanoid' vulnerability was not fixed successfully.
+Wait for next Mocha update. (2022-01-23)
