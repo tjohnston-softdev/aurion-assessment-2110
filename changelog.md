@@ -1,3 +1,4 @@
 # Changelog
 
-Wait for next Mocha update. (2022-01-23)
+**./package.json**
+* Updated 'mocha' to 9.2.0
