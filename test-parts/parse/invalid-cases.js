@@ -16,7 +16,7 @@ function callInvalidCaseTests()
 	{
 		it("Invalid Type", function()
 		{
-			callInvalidEntry(null, "Cannot read property 'replace' of null");
+			callInvalidEntry(null, "Cannot read properties of null (reading 'replace')");
 		});
 		
 		it("Empty String", function()
