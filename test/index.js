@@ -18,7 +18,16 @@ function runUnitTests()
 {
 	var enteredMode = modeInput.readArg(process.argv);
 	
-	if (enteredMode === "--input")
+	if (enteredMode === "--all")
+	{
+		testInputFunctions();
+		testGraphParse();
+		testExactRoute();
+		testShortestRoute();
+		testPossibleRoutes();
+		testSubmission();
+	}
+	else if (enteredMode === "--input")
 	{
 		testInputFunctions();
 	}
