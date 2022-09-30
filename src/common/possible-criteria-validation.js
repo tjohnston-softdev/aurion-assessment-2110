@@ -14,16 +14,13 @@ function loopCriteriaComplete(givenRoute, givenNodesArray, criteriaObjectArray)
 	var finalStops = givenRoute.steps.length - 1;
 	
 	var itemIndex = 0;
-	var currentCondition = null;
-	var currentMatch = false;
-	
 	var loopRes = true;
 	
 	// Loop criteria until all checked or error found.
 	while (itemIndex >= 0 && itemIndex < criteriaObjectArray.length && loopRes === true)
 	{
-		currentCondition = criteriaObjectArray[itemIndex];
-		currentMatch = false;
+		var currentCondition = criteriaObjectArray[itemIndex];
+		var currentMatch = false;
 		
 		if (currentCondition.type === criteriaTypes.START_NODE)
 		{
@@ -57,13 +54,10 @@ function loopCriteriaComplete(givenRoute, givenNodesArray, criteriaObjectArray)
 		}
 		
 		
-		if (currentMatch !== true)
-		{
-			// Criteria error found.
-			loopRes = false;
-		}
+		// Check if criteria error found.
+		if (!currentMatch) loopRes = false;
 		
-		itemIndex = itemIndex + 1;
+		itemIndex += 1;
 	}
 	
 	return loopRes;
@@ -74,17 +68,14 @@ function loopCriteriaComplete(givenRoute, givenNodesArray, criteriaObjectArray)
 function loopCriteriaIncomplete(givenDistance, givenStops, criteriaObjectArray)
 {
 	var itemIndex = 0;
-	var currentCondition = null;
-	var currentMatch = false;
-	
 	var loopRes = true;
 	
 	
 	// Loop criteria until all checked or error found.
 	while (itemIndex >= 0 && itemIndex < criteriaObjectArray.length && loopRes === true)
 	{
-		currentCondition = criteriaObjectArray[itemIndex];
-		currentMatch = false;
+		var currentCondition = criteriaObjectArray[itemIndex];
+		var currentMatch = false;
 		
 		if (currentCondition.type === criteriaTypes.START_NODE)
 		{
@@ -117,13 +108,10 @@ function loopCriteriaIncomplete(givenDistance, givenStops, criteriaObjectArray)
 			currentMatch = true;
 		}		
 		
-		if (currentMatch !== true)
-		{
-			// Criteria error found.
-			loopRes = false;
-		}
+		// Check if criteria error found.
+		if (!currentMatch) loopRes = false;
 		
-		itemIndex = itemIndex + 1;
+		itemIndex += 1;
 	}
 	
 	return loopRes;
@@ -174,8 +162,7 @@ function checkCompleteNumberSign(actualValue, criteriaObj)
 function checkCompleteTemplate(nodeListObj, stepListObj, criteriaObj)
 {
 	var actualString = writeRouteString(stepListObj, nodeListObj);
-	var matchRes = criteriaObj.compiled.test(actualString);
-	return matchRes;
+	return criteriaObj.compiled.test(actualString);
 }
 
 
@@ -213,15 +200,13 @@ function checkIncompleteNumberSign(actualValue, criteriaObj)
 // Writes completed route as a string of node characters.
 function writeRouteString(stepArr, nodesArr)
 {
-	var stepIndex = 0;
-	var currentNode = -1;
 	var writeRes = "";
 	
 	// Loop route steps.
-	for (stepIndex = 0; stepIndex < stepArr.length; stepIndex = stepIndex + 1)
+	for (var stepIndex = 0; stepIndex < stepArr.length; stepIndex++)
 	{
 		// Get node character from ID.
-		currentNode = stepArr[stepIndex];
+		var currentNode = stepArr[stepIndex];
 		writeRes += nodesArr[currentNode];
 	}
 	

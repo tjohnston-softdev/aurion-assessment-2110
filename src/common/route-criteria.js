@@ -73,7 +73,6 @@ function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 }
 
 
-// Loop criteria objects for validation.
 function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 {
 	var loopIndex = 0;
@@ -89,42 +88,41 @@ function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 
 
 
-// Validate criteria object.
 function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 {
 	var correctType = checkValueType(givenObject);
 	var skipValidation = false;
 	
-	if (correctType === true && givenObject.type === criteriaTypes.START_NODE)
+	if (correctType && givenObject.type === criteriaTypes.START_NODE)
 	{
 		// Start node
 		handleTargetNode(givenObject, resultObject, nodeListObject, criteriaIndex, "Start Node");
 	}
-	else if (correctType === true && givenObject.type === criteriaTypes.END_NODE)
+	else if (correctType && givenObject.type === criteriaTypes.END_NODE)
 	{
 		// End node
 		handleTargetNode(givenObject, resultObject, nodeListObject, criteriaIndex, "End Node");
 	}
-	else if (correctType === true && givenObject.type === criteriaTypes.STOP_COUNT)
+	else if (correctType && givenObject.type === criteriaTypes.STOP_COUNT)
 	{
 		// Stop Count
 		handleNumberSign(givenObject, resultObject, criteriaIndex, "Stop Count");
 	}
-	else if (correctType === true && givenObject.type === criteriaTypes.TOTAL_DISTANCE)
+	else if (correctType && givenObject.type === criteriaTypes.TOTAL_DISTANCE)
 	{
 		// Total Distance
 		handleNumberSign(givenObject, resultObject, criteriaIndex, "Total Distance");
 	}
-	else if (correctType === true && givenObject.type === criteriaTypes.ONE_WAY)
+	else if (correctType && givenObject.type === criteriaTypes.ONE_WAY)
 	{
 		skipValidation = true;
 	}
-	else if (correctType === true && givenObject.type === criteriaTypes.TEMPLATE)
+	else if (correctType && givenObject.type === criteriaTypes.TEMPLATE)
 	{
 		// Template
 		handleTemplate(givenObject, resultObject, criteriaIndex);
 	}
-	else if (correctType === true)
+	else if (correctType)
 	{
 		// Unknown criteria type.
 		resultObject.successful = false;
@@ -144,14 +142,13 @@ function readCriteria(givenObject, resultObject, criteriaIndex, nodeListObject)
 // Check 'start node' and 'end node' properties.
 function handleTargetNode(criteriaObj, resObj, existingNodes, critInd, critDesc)
 {
-	var givenType = typeof criteriaObj.node;
-	var correctType = (givenType === "string" && criteriaObj.node.length > 0);
+	var correctType = (typeof criteriaObj.node === "string" && criteriaObj.node.length > 0);
 	var searchPerformed = false;
 	var matchFlag = -1;
 	
 	var handleRes = false;
 	
-	if (correctType === true)
+	if (correctType)
 	{
 		// Check if node exists.
 		searchPerformed = true;
@@ -159,22 +156,19 @@ function handleTargetNode(criteriaObj, resObj, existingNodes, critInd, critDesc)
 	}
 	
 	
-	if (searchPerformed === true && matchFlag >= 0 && matchFlag < existingNodes.length)
+	if (searchPerformed && matchFlag >= 0 && matchFlag < existingNodes.length)
 	{
-		// Valid.
 		criteriaObj.node = matchFlag;
 		handleRes = true;
 	}
-	else if (searchPerformed === true)
+	else if (searchPerformed)
 	{
-		// Unknown node.
 		resObj.successful = false;
 		resObj.reason = critDesc + " node does not exist.";
 		resObj.itemNo = critInd + 1;
 	}
 	else
 	{
-		// Invalid type.
 		resObj.successful = false;
 		resObj.reason = critDesc + " must be a valid, non-empty string.";
 		resObj.itemNo = critInd + 1;
@@ -192,19 +186,19 @@ function handleNumberSign(criteriaObj, resObj, critInd, critDesc)
 	
 	var handleRes = false;
 	
-	if (correctNumType === true && correctSignType === true && numberVal > 0)
+	if (correctNumType && correctSignType && numberVal > 0)
 	{
 		// Valid.
 		handleRes = true;
 	}
-	else if (correctNumType === true && correctSignType === true)
+	else if (correctNumType && correctSignType)
 	{
 		// Must be positive.
 		resObj.successful = false;
 		resObj.reason = critDesc + " number must be positive.";
 		resObj.itemNo = critInd + 1;
 	}
-	else if (correctNumType === true)
+	else if (correctNumType)
 	{
 		// Invalid sign.
 		resObj.successful = false;
@@ -223,33 +217,21 @@ function handleNumberSign(criteriaObj, resObj, critInd, critDesc)
 // Check 'template' properties.
 function handleTemplate(criteriaObj, resObj, critInd)
 {
-	var givenType = typeof criteriaObj.syntax;
-	var sLength = -1;
-	
+	var templateStringLength = (typeof criteriaObj.syntax === "string") ? criteriaObj.syntax.length : -1;
 	var handleRes = false;
 	
-	if (givenType === "string")
+	if (templateStringLength >= 0 && templateStringLength <= maxStringLength)
 	{
-		// Read string length.
-		sLength = criteriaObj.syntax.length;
-	}
-	
-	
-	if (sLength >= 0 && sLength <= maxStringLength)
-	{
-		// Valid length.
 		handleRes = true;
 	}
-	else if (sLength > maxStringLength)
+	else if (templateStringLength > maxStringLength)
 	{
-		// Too long.
 		resObj.successful = false;
 		resObj.reason = "Template string is too long.";
 		resObj.itemNo = critInd + 1;
 	}
 	else
 	{
-		// Invalid value type.
 		resObj.successful = false;
 		resObj.reason = "Template must be a valid, non-empty string.";
 		resObj.itemNo = critInd + 1;
@@ -261,34 +243,21 @@ function handleTemplate(criteriaObj, resObj, critInd)
 // Reads criteria object value type before validation.
 function checkValueType(givenObj)
 {
-	var givenType = typeof givenObj;
-	var checkRes = (givenObj !== undefined && givenObj !== null && givenType === "object");
-	return checkRes;
+	return (givenObj !== undefined && givenObj !== null && typeof givenObj === "object");
 }
 
 
 // Creates object for 'start' and 'end' criteria.
 function setTargetNode(typeVal, nodeVal)
 {
-	var setRes = {};
-	
-	setRes["type"] = typeVal;
-	setRes["node"] = nodeVal;
-	
-	return setRes;
+	return {type: typeVal, node: nodeVal};
 }
 
 
 // Creates object for 'stop count' or 'total distance' criteria.
 function setNumberSign(typeVal, numVal, signVal)
 {
-	var setRes = {};
-	
-	setRes["type"] = typeVal;
-	setRes["number"] = numVal;
-	setRes["sign"] = signVal;
-	
-	return setRes;
+	return {type: typeVal, number: numVal, sign: signVal};
 }
 
 

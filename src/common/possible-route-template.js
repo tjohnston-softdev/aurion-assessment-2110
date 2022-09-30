@@ -7,14 +7,10 @@ const spaceRegex = /\s/g;
 // Main function.
 function compileTemplateObjects(givenNodeList, givenCriteriaArray, critInspectObj, skipLoop)
 {
-	var validationResult = {};
+	var validationResult = {successful: true, reason: "", itemNo: -1};
 	
-	// Result properties.
-	validationResult["successful"] = true;
-	validationResult["reason"] = "";
-	validationResult["itemNo"] = -1;
 	
-	if (skipLoop !== true)
+	if (!skipLoop)
 	{
 		loopTemplates(givenNodeList, givenCriteriaArray, critInspectObj, validationResult);
 	}
@@ -29,13 +25,6 @@ function loopTemplates(givenNodes, givenCriteria, inspectObj, validResObj)
 	var loopIndex = 0;
 	var loopCutoff = inspectObj.templatePointers.length;
 	
-	var currentPointer = -1;
-	var currentCriteria = {};
-	var currentPrepared = "";
-	var currentFlags = "";
-	var currentWritten = false;
-	var currentCompile = null;
-	
 	var startGroup = "";
 	var endGroup = "";
 	
@@ -44,17 +33,17 @@ function loopTemplates(givenNodes, givenCriteria, inspectObj, validResObj)
 	endGroup = getNodeGroup(givenNodes,inspectObj.endNodes);
 	
 	// Loop templates until all compiled or error found.
-	while (loopIndex >= 0 && loopIndex < loopCutoff && validResObj.successful === true)
+	while (loopIndex >= 0 && loopIndex < loopCutoff && validResObj.successful)
 	{
 		// Read current criteria.
-		currentPointer = inspectObj.templatePointers[loopIndex];
-		currentCriteria = givenCriteria[currentPointer];
+		var currentPointer = inspectObj.templatePointers[loopIndex];
+		var currentCriteria = givenCriteria[currentPointer];
 		
 		// Prepare given RegExp string.
-		currentPrepared = prepareSyntaxString(currentCriteria.syntax, startGroup, endGroup);
-		currentFlags = "";
-		currentWritten = false;
-		currentCompile = null;
+		var currentPrepared = prepareSyntaxString(currentCriteria.syntax, startGroup, endGroup);
+		var currentFlags = "";
+		var currentWritten = false;
+		var currentCompile = null;
 		
 		
 		if (currentPrepared.length > 0)
@@ -65,12 +54,12 @@ function loopTemplates(givenNodes, givenCriteria, inspectObj, validResObj)
 			currentCompile = compileRegularExpression(currentPrepared, currentFlags);
 		}
 		
-		if (currentWritten === true && currentCompile !== null)
+		if (currentWritten && currentCompile !== null)
 		{
 			// Successful.
 			currentCriteria.compiled = currentCompile;
 		}
-		else if (currentWritten === true)
+		else if (currentWritten)
 		{
 			// Invalid expression.
 			validResObj.successful = false;
@@ -86,7 +75,7 @@ function loopTemplates(givenNodes, givenCriteria, inspectObj, validResObj)
 		}
 		
 		
-		loopIndex = loopIndex + 1;
+		loopIndex += 1;
 	}
 	
 }
@@ -95,41 +84,25 @@ function loopTemplates(givenNodes, givenCriteria, inspectObj, validResObj)
 // Prepares RegExp string before it is compiled.
 function prepareSyntaxString(origStr, grpStart, grpEnd)
 {
-	var prepRes = origStr;
-	
-	// Remove whitespace.
-	prepRes = prepRes.trim();
-	prepRes = prepRes.replace(spaceRegex, "");
-	
-	// Remove casing.
+	var prepRes = origStr.trim().replace(spaceRegex, "");
 	prepRes = prepRes.toUpperCase();
-	
-	// Replace '/S' and '/E' with start,end node groups.
 	prepRes = prepRes.replace(startMatch, grpStart);
-	prepRes = prepRes.replace(endMatch, grpEnd);
+	return prepRes.replace(endMatch, grpEnd);
 	
-	return prepRes;
 }
 
 
 // Set Regular Expression flags.
 function getRegexFlags(useGlobal)
 {
-	var flagRes = "i";
-	
-	if (useGlobal === true)
-	{
-		flagRes += "g";
-	}
-	
-	return flagRes;
+	return useGlobal ? "g" : "i";
 }
 
 
 // Compiles string into Regular Expression object.
 function compileRegularExpression(syntaxStr, flagStr)
 {
-	var compileRes = null;
+	var compileRes;
 	
 	try
 	{
@@ -149,7 +122,7 @@ function compileRegularExpression(syntaxStr, flagStr)
 // Writes node group into RegExp syntax.
 function getNodeGroup(nodesArrayObj, targetArrayObj)
 {
-	var joinStr = "";
+	var joinStr;
 	
 	if (targetArrayObj.length > 0)
 	{
@@ -162,8 +135,7 @@ function getNodeGroup(nodesArrayObj, targetArrayObj)
 		joinStr = nodesArrayObj.join("|");
 	}
 	
-	var groupRes = "(" + joinStr + ")";
-	return groupRes;
+	return "(" + joinStr + ")";
 }
 
 
@@ -171,13 +143,12 @@ function getNodeGroup(nodesArrayObj, targetArrayObj)
 function writeNodesByTarget(nodesArr, tgtArr)
 {
 	var targetIndex = 0;
-	var currentNumber = -1;
 	var writeRes = "";
 	
 	// Loop nodes in group.
-	for (targetIndex = 0; targetIndex < tgtArr.length; targetIndex = targetIndex + 1)
+	for (var targetIndex = 0; targetIndex < tgtArr.length; targetIndex++)
 	{
-		currentNumber = tgtArr[targetIndex];
+		var currentNumber = tgtArr[targetIndex];
 		
 		if (targetIndex > 0)
 		{
