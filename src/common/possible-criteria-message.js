@@ -9,8 +9,7 @@ function prepareMessageText(validResObj)
 		prepTxt += [" (Item ", validResObj.itemNo, ")"].join("");
 	}
 	
-	prepTxt = prepTxt.toUpperCase();
-	return prepTxt;
+	return prepTxt.toUpperCase();
 }
 
 

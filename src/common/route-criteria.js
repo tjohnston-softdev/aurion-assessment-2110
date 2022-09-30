@@ -4,42 +4,32 @@ const criteriaTypes = require("./enum/criteria-types");
 const maxStringLength = 1000;
 
 
-// 'Start Node' constructor.
 function defineStartNodeCriteria(inpNode)
 {
-	var defineRes = setTargetNode(criteriaTypes.START_NODE, inpNode);
-	return defineRes;
+	return setTargetNode(criteriaTypes.START_NODE, inpNode);
 }
 
 
-// 'End Node' constructor.
 function defineEndNodeCriteria(inpNode)
 {
-	var defineRes = setTargetNode(criteriaTypes.END_NODE, inpNode);
-	return defineRes;
+	return setTargetNode(criteriaTypes.END_NODE, inpNode);
 }
 
 
-// 'Stop Count' constructor.
 function defineStopCountCriteria(inpCount, inpSign)
 {
-	var defineRes = setNumberSign(criteriaTypes.STOP_COUNT, inpCount, inpSign);
-	return defineRes;
+	return setNumberSign(criteriaTypes.STOP_COUNT, inpCount, inpSign);
 }
 
 
-// 'Total Distance' constructor.
 function defineTotalDistanceCriteria(inpDist, inpSign)
 {
-	var defineRes = setNumberSign(criteriaTypes.TOTAL_DISTANCE, inpDist, inpSign);
-	return defineRes;
+	return setNumberSign(criteriaTypes.TOTAL_DISTANCE, inpDist, inpSign);
 }
 
-// 'One Way' constructor.
 function defineOneWayCriteria()
 {
-	var defineRes = {"type": criteriaTypes.ONE_WAY};
-	return defineRes;
+	return {"type": criteriaTypes.ONE_WAY};
 }
 
 // 'RegExp' constructor.
@@ -56,19 +46,13 @@ function defineTemplateCriteria(inpString, inpRepeat)
 }
 
 
-// Validate route criteria list.
 function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 {
 	var arrayValid = Array.isArray(givenCriteriaArray);
-	var validationResult = {};
+	var validationResult = {successful: true, reason: "", itemNo: -1, ignore: false};
 	
-	// Result properties.
-	validationResult["successful"] = true;
-	validationResult["reason"] = "";
-	validationResult["itemNo"] = -1;
-	validationResult["ignore"] = false;
 	
-	if (arrayValid === true)
+	if (arrayValid)
 	{
 		// Loop criteria objects.
 		iterateCriteriaValidation(givenNodesList, givenCriteriaArray, validationResult);
@@ -93,14 +77,13 @@ function validateRouteCriteria(givenNodesList, givenCriteriaArray)
 function iterateCriteriaValidation(givenNodes, givenArray, validResultObj)
 {
 	var loopIndex = 0;
-	var currentElement = null;
 	
 	// Loop until end reached or error found.
-	while (loopIndex >= 0 && loopIndex < givenArray.length && validResultObj.successful === true)
+	while (loopIndex >= 0 && loopIndex < givenArray.length && validResultObj.successful)
 	{
-		currentElement = givenArray[loopIndex];
+		var currentElement = givenArray[loopIndex];
 		readCriteria(currentElement, validResultObj, loopIndex, givenNodes);
-		loopIndex = loopIndex + 1;
+		loopIndex += 1;
 	}
 }
 
