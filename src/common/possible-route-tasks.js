@@ -10,16 +10,14 @@ function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 {
 	var targetRes = {};
 	
-	// Result properties.
 	targetRes["startNodes"] = [];
 	targetRes["endNodes"] = [];
 	targetRes["cutoffSet"] = false;
 	targetRes["backtrack"] = true;
 	targetRes["templatePointers"] = [];
 	
-	if (skipLoop !== true)
+	if (!skipLoop)
 	{
-		// Run criteria loop.
 		loopCriteriaInspection(givenNodesList, givenCriteriaArray, targetRes);
 	}
 	
@@ -31,25 +29,18 @@ function inspectRouteCriteria(givenNodesList, givenCriteriaArray, skipLoop)
 function initializeSingleRouteBacklog(startNodeIndex)
 {
 	var startRoute = defineRouteObject(startNodeIndex);
-	var intlRes = [startRoute];
-	return intlRes;
+	return [startRoute];
 }
 
 // Initialize route backlog with multiple nodes.
 function initializeMultipleRoutesBacklog(markedNodes)
 {
-	var markIndex = 0;
-	var currentStart = -1;
-	var currentRoute = {};
-	
 	var intlRes = [];
 	
-	// Loop marked nodes.
-	for (markIndex = 0; markIndex < markedNodes.length; markIndex = markIndex + 1)
+	for (var markIndex = 0; markIndex < markedNodes.length; markIndex++)
 	{
-		// Create route object from current node.
-		currentStart = markedNodes[markIndex];
-		currentRoute = defineRouteObject(currentStart);
+		var currentStart = markedNodes[markIndex];
+		var currentRoute = defineRouteObject(currentStart);
 		intlRes.push(currentRoute);
 	}
 	
@@ -63,14 +54,11 @@ function initializeMultipleRoutesBacklog(markedNodes)
 function saveCompletedRoute(routeInd, routeObj, routeArr, compArr, routeValid)
 {
 	var routeAlreadyExists = checkRouteExists(routeObj.steps, compArr);
-	var completeDefinition = {route: null, valid: null};
 	var saveSuccessful = false;
 	
-	if (routeAlreadyExists !== true)
+	if (!routeAlreadyExists)
 	{
-		// Save route since it does not exist yet.
-		completeDefinition.route = routeObj;
-		completeDefinition.valid = routeValid;
+		var completeDefinition = {route: routeObj, valid: routeValid};
 		compArr.push(completeDefinition);
 		saveSuccessful = true;
 	}
@@ -81,29 +69,22 @@ function saveCompletedRoute(routeInd, routeObj, routeArr, compArr, routeValid)
 
 // Derive new routes using possible destinations.
 function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, routeEnds, routeArr, allowBack)
-{
-	var adjacentIndex = 0;
-	var currentEdgeID = -1;
-	var currentEdgeObject = {};
-	var currentNewRoute = {};
-	var currentInsertIndex = -1;
-	var currentUpdate = false;
-	
+{	
 	var offsetIndex = 1;
 	
 	// Loop marked edges that link to possible destinations.
-	for (adjacentIndex = 0; adjacentIndex < possibleEdges.length; adjacentIndex = adjacentIndex + 1)
+	for (var adjacentIndex = 0; adjacentIndex < possibleEdges.length; adjacentIndex++)
 	{
 		// Read current edge.
-		currentEdgeID = possibleEdges[adjacentIndex];
-		currentEdgeObject = edgeArray[currentEdgeID];
+		var currentEdgeID = possibleEdges[adjacentIndex];
+		var currentEdgeObject = edgeArray[currentEdgeID];
 		
 		// Prepare new route.
-		currentNewRoute = cloneRouteObject(baseRouteObj);
-		currentInsertIndex = baseRouteInd + offsetIndex;
-		currentUpdate = checkDeriveAllowed(currentEdgeObject.destination, currentNewRoute, routeEnds, allowBack);
+		var currentNewRoute = cloneRouteObject(baseRouteObj);
+		var currentInsertIndex = baseRouteInd + offsetIndex;
+		var currentUpdate = checkDeriveAllowed(currentEdgeObject.destination, currentNewRoute, routeEnds, allowBack);
 		
-		if (currentUpdate === true)
+		if (currentUpdate)
 		{
 			// Update new route.
 			currentNewRoute.steps.push(currentEdgeObject.destination);
@@ -112,7 +93,7 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 			// Add to backlog.
 			routeArr.splice(currentInsertIndex, 0, currentNewRoute);
 			
-			offsetIndex = offsetIndex + 1;
+			offsetIndex += 1;
 		}
 	}
 	
@@ -124,20 +105,17 @@ function deriveNewRoutes(baseRouteInd, baseRouteObj, possibleEdges, edgeArray, r
 function filterValidCompleteRoutes(compArr)
 {
 	var entryIndex = 0;
-	var currentEntry = {};
 	
 	while (entryIndex >= 0 && entryIndex < compArr.length)
 	{
-		currentEntry = compArr[entryIndex];
+		var currentEntry = compArr[entryIndex];
 		
-		if (currentEntry.valid === true)
+		if (currentEntry.valid)
 		{
-			// Keep
 			entryIndex = entryIndex + 1;
 		}
 		else
 		{
-			// Remove
 			compArr.splice(entryIndex, 1);
 		}
 	}
@@ -147,19 +125,16 @@ function filterValidCompleteRoutes(compArr)
 // Performs criteria preperation loop.
 function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 {
-	var criteriaIndex = 0;
-	var currentCriteria = {};
-	var currentType = null;
 	var cutoffSigns = [];
 	
 	// These number signs enforce limits to stop count or total distance.
 	cutoffSigns.push(numSigns.LESS, numSigns.LESS_EQUAL, numSigns.EQUAL);
 	
-	for (criteriaIndex = 0; criteriaIndex < criteriaArray.length; criteriaIndex = criteriaIndex + 1)
+	for (var criteriaIndex = 0; criteriaIndex < criteriaArray.length; criteriaIndex++)
 	{
 		// Read current criteria.
-		currentCriteria = criteriaArray[criteriaIndex];
-		currentType = currentCriteria.type;
+		var currentCriteria = criteriaArray[criteriaIndex];
+		var currentType = currentCriteria.type;
 		
 		if (currentType === criteriaTypes.START_NODE)
 		{
@@ -171,12 +146,12 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 			// Mark end node.
 			addNodeToTarget(currentCriteria.node, resultObj.endNodes);
 		}
-		else if (currentType === criteriaTypes.STOP_COUNT && resultObj.cutoffSet !== true)
+		else if (currentType === criteriaTypes.STOP_COUNT && !resultObj.cutoffSet)
 		{
 			// Set 'stop count' cutoff if applicable based on sign.
 			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
 		}
-		else if (currentType === criteriaTypes.TOTAL_DISTANCE && resultObj.cutoffSet !== true)
+		else if (currentType === criteriaTypes.TOTAL_DISTANCE && !resultObj.cutoffSet)
 		{
 			// Set 'total distance' cutoff if applicable based on sign.
 			resultObj.cutoffSet = cutoffSigns.includes(currentCriteria.sign);
@@ -201,55 +176,34 @@ function loopCriteriaInspection(nodesArray, criteriaArray, resultObj)
 function addNodeToTarget(nodeInd, tgtArr)
 {
 	var alreadyUsed = tgtArr.indexOf(nodeInd);
-	
-	if (alreadyUsed !== true)
-	{
-		// Add to list.
-		tgtArr.push(nodeInd);
-	}
+	if (!alreadyUsed !== true) tgtArr.push(nodeInd);
 }
 
 
 // Define route object with start node.
 function defineRouteObject(sNode)
 {
-	var defineRes = {};
-	
-	defineRes["steps"] = [sNode];
-	defineRes["distance"] = 0;
-	
-	return defineRes;
+	return {steps: [sNode], distance: 0};
 }
 
 
 // Checks if a given route has already been saved.
 function checkRouteExists(newRouteSteps, existingRoutes)
 {
-	var routeKey = "";
-	
+	var routeKey = newRouteSteps.join();
 	var entryIndex = 0;
-	var currentEntry = {};
-	var currentKey = "";
 	var matchFound = false;
 	
-	// Convert current route to key string.
-	routeKey = newRouteSteps.join();
 	
-	// Loop existing completed route entries.
-	while (entryIndex >= 0 && entryIndex < existingRoutes.length && matchFound !== true)
+	while (entryIndex >= 0 && entryIndex < existingRoutes.length && !matchFound)
 	{
 		// Read current route as unique key string.
-		currentEntry = existingRoutes[entryIndex];
-		currentKey = currentEntry.route.steps.join();
+		var currentEntry = existingRoutes[entryIndex];
+		var currentKey = currentEntry.route.steps.join();
 		
 		
-		if (currentKey === routeKey)
-		{
-			// Route already exists.
-			matchFound = true;
-		}
-		
-		entryIndex = entryIndex + 1;
+		matchFound = (currentKey === routeKey)
+		entryIndex += 1;
 	}
 	
 	return matchFound;
@@ -260,8 +214,7 @@ function checkRouteExists(newRouteSteps, existingRoutes)
 function cloneRouteObject(origObj)
 {
 	var definitionText = JSON.stringify(origObj);
-	var cloneRes = JSON.parse(definitionText);
-	return cloneRes;
+	return JSON.parse(definitionText);
 }
 
 
@@ -272,20 +225,20 @@ function checkDeriveAllowed(tgtNode, newRoute, eNodes, backtrackStatus)
 	var closedRoute = eNodes.includes(startNode);
 	var visitStatus = newRoute.steps.includes(tgtNode);
 	var endMatch = eNodes.includes(tgtNode);
-	var endNodeFound = (endMatch === true || eNodes.length === 0);
+	var endNodeFound = (endMatch || eNodes.length === 0);
 	var checkRes = false;
 	
-	if (visitStatus === true && backtrackStatus === true)
+	if (visitStatus && backtrackStatus)
 	{
 		// Backtracking is allowed.
 		checkRes = true;
 	}
-	else if (visitStatus === true && closedRoute === true && endNodeFound === true)
+	else if (visitStatus && closedRoute && endNodeFound)
 	{
 		// Re-visiting the start node is allowed for closed routes.
 		checkRes = true;
 	}
-	else if (visitStatus === true)
+	else if (visitStatus)
 	{
 		// Backtracking is not allowed.
 		checkRes = false;
