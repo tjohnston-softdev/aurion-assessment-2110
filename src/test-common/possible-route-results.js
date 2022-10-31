@@ -15,22 +15,12 @@ function checkResultObject(pathResObj, inputGraphObj, scenarioFlag, inputParasOb
 
 // Test individual routes.
 function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
-{
-	var loopIndex = 0;
-	var currentElement = null;
-	
-	var currentStopCount = -1;
-	var currentStart = -1;
-	var currentEnd = -1;
-	
+{	
 	// Loop all retrieved routes.
-	for (loopIndex = 0; loopIndex < routeArr.length; loopIndex = loopIndex + 1)
+	for (var loopIndex = 0; loopIndex < routeArr.length; loopIndex++)
 	{
 		// Read current route.
-		currentElement = routeArr[loopIndex];
-		currentStopCount = -1;
-		currentStart = -1;
-		currentEnd = -1;
+		var currentElement = routeArr[loopIndex];
 		
 		// Check schema, distance, and sequence.
 		checkBaseSchema(currentElement);
@@ -38,9 +28,9 @@ function loopRoutes(routeArr, graphObject, sceFlag, parasObj)
 		checkBaseSequence(currentElement.route, graphObject);
 		
 		// Read stop count, start node, and end node.
-		currentStopCount = currentElement.route.steps.length - 1;
-		currentStart = currentElement.route.steps[0];
-		currentEnd = currentElement.route.steps[currentStopCount];
+		var currentStopCount = currentElement.route.steps.length - 1;
+		var currentStart = currentElement.route.steps[0];
+		var currentEnd = currentElement.route.steps[currentStopCount];
 		
 		// Test by scenario.
 		if (sceFlag === testScenarios.ONE_WAY)
@@ -137,13 +127,6 @@ function checkBaseSequence(routeObj, graphObj)
 	var stepIndex = 0;
 	var stepCutoff = routeObj.steps.length - 2;
 	
-	var currentNodeIndex = -1;
-	var currentOffsetIndex = -1;
-	var currentNodeExists = false;
-	var currentOffsetExists = false;
-	var currentDistance = -1;
-	var currentMatch = false;
-	
 	var sequenceValid = true;
 	var estimatedDistance = 0;
 	
@@ -151,17 +134,17 @@ function checkBaseSequence(routeObj, graphObj)
 	while (stepIndex >= 0 && stepIndex <= stepCutoff && sequenceValid === true)
 	{
 		// Read current and next node.
-		currentNodeIndex = routeObj.steps[stepIndex];
-		currentOffsetIndex = routeObj.steps[stepIndex + 1];
+		var currentNodeIndex = routeObj.steps[stepIndex];
+		var currentOffsetIndex = routeObj.steps[stepIndex + 1];
 		
 		// Check if nodes exist.
-		currentNodeExists = checkNodeExists(currentNodeIndex, graphObj.nodes.length);
-		currentOffsetExists = checkNodeExists(currentOffsetIndex, graphObj.nodes.length);
-		currentDistance = -1;
-		currentMatch = false;
+		var currentNodeExists = checkNodeExists(currentNodeIndex, graphObj.nodes.length);
+		var currentOffsetExists = checkNodeExists(currentOffsetIndex, graphObj.nodes.length);
+		var currentDistance = -1;
+		var currentMatch = false;
 		
 		
-		if (currentNodeExists === true && currentOffsetExists === true)
+		if (currentNodeExists && currentOffsetExists)
 		{
 			// Retrieve distance from current node to text.
 			currentDistance = searchEdge(graphObj.edges, currentNodeIndex, currentOffsetIndex);
@@ -174,24 +157,19 @@ function checkBaseSequence(routeObj, graphObj)
 			currentMatch = true;
 		}
 		
-		if (currentMatch !== true)
-		{
-			// Invalid edge.
-			sequenceValid = false;
-		}
+		if (!currentMatch) sequenceValid = false;
 		
 		stepIndex = stepIndex + 1;
 	}
 	
 	// Loop complete.
-	if (sequenceValid === true)
+	if (sequenceValid)
 	{
 		// Check if expected distance matches actual.
 		expect(routeObj.distance).to.equal(estimatedDistance);
 	}
 	else
 	{
-		// Invalid
 		throw new Error("Impossible route");
 	}
 }
@@ -200,36 +178,31 @@ function checkBaseSequence(routeObj, graphObj)
 function checkOneWaySequence(routeStepArray, startNode, endNode)
 {	
 	var stepIndex = 0;
-	var currentNode = -1;
-	var currentSkip = false;
-	var currentRepeat = false;
-	var currentValid = false;
-	
 	var skipNodesArray = [];
 	var sequenceValid = true;
 	
 	
 	// Loop route steps until traversed, or error found.
-	while (stepIndex >= 0 && stepIndex < routeStepArray.length && sequenceValid === true)
+	while (stepIndex >= 0 && stepIndex < routeStepArray.length && sequenceValid)
 	{
 		// Read current node.
-		currentNode = routeStepArray[stepIndex];
-		currentSkip = skipNodesArray.includes(currentNode);
-		currentRepeat = searchNodeRepeat(routeStepArray, currentNode, stepIndex);
-		currentValid = false;
+		var currentNode = routeStepArray[stepIndex];
+		var currentSkip = skipNodesArray.includes(currentNode);
+		var currentRepeat = searchNodeRepeat(routeStepArray, currentNode, stepIndex);
+		var currentValid = false;
 		
-		if (currentSkip === true)
+		if (currentSkip)
 		{
 			// Skip node.
 			currentValid = true;
 		}
-		else if (currentRepeat === true && currentNode === startNode && currentNode === endNode)
+		else if (currentRepeat && currentNode === startNode && currentNode === endNode)
 		{
 			// Start and End nodes are exempt.
 			currentValid = true;
 			skipNodesArray.push(currentNode);
 		}
-		else if (currentRepeat === true)
+		else if (currentRepeat)
 		{
 			// Backtracking
 			sequenceValid = false;
@@ -251,13 +224,12 @@ function checkOneWaySequence(routeStepArray, startNode, endNode)
 function searchEdge(edgeArr, srcNode, destNode)
 {
 	var edgeIndex = 0;
-	var currentEdge = {};
 	var searchRes = -1;
 	
 	// Loop edges until found.
 	while (edgeIndex >= 0 && edgeIndex < edgeArr.length && searchRes < 0)
 	{
-		currentEdge = edgeArr[edgeIndex];
+		var currentEdge = edgeArr[edgeIndex];
 		
 		if (currentEdge.origin === srcNode && currentEdge.destination === destNode)
 		{
@@ -265,7 +237,7 @@ function searchEdge(edgeArr, srcNode, destNode)
 			searchRes = currentEdge.distance;
 		}
 		
-		edgeIndex = edgeIndex + 1;
+		edgeIndex += 1;
 	}
 	
 	return searchRes;
@@ -275,28 +247,15 @@ function searchEdge(edgeArr, srcNode, destNode)
 // Checks if a given node repeats in a sequence.
 function searchNodeRepeat(stepArr, tgtNode, sIndex)
 {
-	var matchFlag = -1;
-	var searchRes = false;
-	
-	// Future appearances.
-	matchFlag = stepArr.indexOf(tgtNode, sIndex + 1);
-	
-	
-	if (matchFlag >= 0 && matchFlag > sIndex && matchFlag < stepArr.length)
-	{
-		// Duplicate found.
-		searchRes = true;
-	}
-	
-	return searchRes;
+	var matchFlag = stepArr.indexOf(tgtNode, sIndex + 1);
+	return (matchFlag >= 0 && matchFlag > sIndex && matchFlag < stepArr.length)
 }
 
 
 // Checks if a given node ID exists.
 function checkNodeExists(tgtIndex, nCount)
 {
-	var checkRes = (tgtIndex >= 0 && tgtIndex < nCount);
-	return checkRes;
+	return (tgtIndex >= 0 && tgtIndex < nCount);
 }
 
 

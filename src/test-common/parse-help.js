@@ -11,8 +11,7 @@ const alphabetString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 // Convert alphabet string into node array.
 function getNodeListObject(entryStr)
 {
-	var listRes = entryStr.split("");
-	return listRes;
+	return entryStr.split("");
 }
 
 
@@ -20,9 +19,7 @@ function getNodeListObject(entryStr)
 // Defines graph containing every possible node.
 function defineAlphabetGraphString()
 {
-	var defineRes = "";
-	
-	defineRes += "AB1, CD2, EF3, GH4, IJ5, KL6, MN7, OP8, QR9, ST10, UV11, WX12, YZ13, ";
+	var defineRes = "AB1, CD2, EF3, GH4, IJ5, KL6, MN7, OP8, QR9, ST10, UV11, WX12, YZ13, ";
 	defineRes += "ZY14, XW15, VU16, TS17, RQ18, PO19, NM20, LK21, JI22, HG23, FE24, DC25, BA26";
 	
 	return defineRes;
@@ -36,13 +33,8 @@ function defineMaxEdgesGraphString()
 	var destinationIndex = -1;
 	var distanceNumber = 10;
 	
-	var currentOriginNode = "";
-	var currentDestinationNode = "";
-	var currentPart = "";
-	
 	var partArray = [];
 	var loopCutoff = Math.ceil(maxEdgesNum * 1.15);
-	var defineRes = "";
 	
 	// Loop until target number of edges generated, or every possible combination explored.
 	while (partArray.length < loopCutoff && originIndex < alphabetString.length)
@@ -60,9 +52,9 @@ function defineMaxEdgesGraphString()
 		if (originIndex !== destinationIndex)
 		{
 			// Create edge part.
-			currentOriginNode = alphabetString.charAt(originIndex);
-			currentDestinationNode = alphabetString.charAt(destinationIndex);
-			currentPart = [currentOriginNode, currentDestinationNode, distanceNumber].join("");
+			var currentOriginNode = alphabetString.charAt(originIndex);
+			var currentDestinationNode = alphabetString.charAt(destinationIndex);
+			var currentPart = [currentOriginNode, currentDestinationNode, distanceNumber].join("");
 			partArray.push(currentPart);
 			
 			// Increment distance.
@@ -77,8 +69,7 @@ function defineMaxEdgesGraphString()
 	
 	
 	// Write graph string from parts.
-	defineRes = partArray.join();
-	return defineRes;
+	return partArray.join();
 }
 
 

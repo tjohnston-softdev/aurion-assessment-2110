@@ -2,12 +2,9 @@
 function checkBytesNumber(sBytes)
 {
 	var correctType = Number.isInteger(sBytes);
-	var checkRes = (correctType === true && sBytes > 0);
+	var checkRes = (correctType && sBytes > 0);
 	
-	if (checkRes !== true)
-	{
-		throw new Error("File size must be a positive, whole number.");
-	}
+	if (!checkRes) throw new Error("File size must be a positive, whole number.");
 	
 	
 	return checkRes;

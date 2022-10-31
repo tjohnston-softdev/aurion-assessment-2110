@@ -5,18 +5,8 @@
 function checkOutputDistanceNumber(distNum)
 {
 	var correctType = Number.isInteger(distNum);
-	var checkRes = false;
-	
-	if (correctType === true && distNum > 0)
-	{
-		// Valid.
-		checkRes = true;
-	}
-	else
-	{
-		// Invalid.
-		throw new Error("Output must be a positive, whole number.");
-	}
+	var checkRes = (correctType && distNum > 0)
+	if (!checkRes) throw new Error("Output must be a positive, whole number.");
 }
 
 
@@ -24,18 +14,8 @@ function checkOutputDistanceNumber(distNum)
 function checkMultiplePossibleRoutesResult(countNum)
 {
 	var correctType = Number.isInteger(countNum);
-	var checkRes = false;
-	
-	if (correctType === true && countNum >= 2)
-	{
-		// Valid.
-		checkRes = true;
-	}
-	else
-	{
-		// Invalid.
-		throw new Error("Output must be a whole number that is at least 2.");
-	}
+	var checkRes = (correctType === true && countNum >= 2)
+	if (!checkRes) throw new Error("Output must be a whole number that is at least 2.");
 }
 
 
@@ -68,24 +48,20 @@ function checkInvalidCriteriaMessageText(givenValue, desiredMessage)
 	}
 	
 	
-	if (stringExists === true && correctStart === true && correctEnd === true)
+	if (stringExists && correctStart && correctEnd)
 	{
-		// Correct message.
 		checkRes = true;
 	}
-	else if (stringExists === true && correctStart === true)
+	else if (stringExists && correctStart)
 	{
-		// Incorrect message.
 		flagIncorrectCriteriaMessage(desireStr);
 	}
-	else if (stringExists === true)
+	else if (stringExists)
 	{
-		// Wrong string type.
 		throw new Error("Invalid output message type.");
 	}
 	else
 	{
-		// No error message.
 		throw new Error("No output message given.");
 	}
 	

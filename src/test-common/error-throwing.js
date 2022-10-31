@@ -3,25 +3,21 @@ function checkTryCatchResult(trySuccessful, messageCorrect, expMsgTxt)
 {
 	var checkRes = false;
 	
-	if (trySuccessful === true)
+	if (trySuccessful)
 	{
-		// No error.
 		throw new Error("No error was thrown.");
 	}
-	else if (messageCorrect === true)
+	else if (messageCorrect)
 	{
-		// Valid.
 		checkRes = true;
 	}
 	else
 	{
-		// Wrong error.
 		flagIncorrectError(expMsgTxt);
 	}
 }
 
 
-// Incorrect error thrown in 'try-catch'
 function flagIncorrectError(vExp)
 {
 	var preparedText = ["Incorrect error thrown\r\n", "Should had been: '", vExp, "'"].join("");

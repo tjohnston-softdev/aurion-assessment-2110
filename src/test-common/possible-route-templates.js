@@ -9,17 +9,15 @@ const testScenarios = require("../common/enum/possible-route-tests");
 function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 {
 	var entryIndex = 0;
-	var currentEntry = null;
-	var currentMatch = false;
 	
 	var canContinue = true;
 	
 	// Loop routes until complete, or error found.
-	while (entryIndex >= 0 && entryIndex < pathResObj.length && canContinue === true)
+	while (entryIndex >= 0 && entryIndex < pathResObj.length && canContinue)
 	{
 		// Read current route.
-		currentEntry = pathResObj[entryIndex];
-		currentMatch = true;
+		var currentEntry = pathResObj[entryIndex];
+		var currentMatch = true;
 		
 		if (scenarioFlag === testScenarios.TEMPLATE_EXACT)
 		{
@@ -58,7 +56,7 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		}
 		
 		
-		if (currentMatch !== true)
+		if (!currentMatch)
 		{
 			// Route does not match.
 			canContinue = false;
@@ -66,7 +64,7 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 		}
 		
 		
-		entryIndex = entryIndex + 1;
+		entryIndex += 1;
 	}
 	
 }
@@ -76,21 +74,16 @@ function checkResultObject(pathResObj, nodeListObj, scenarioFlag)
 function followExact(stepArr, nodeArr)
 {
 	var routeString = "AEBFD";
-	
 	var loopIndex = 0;
-	var currentTargetNode = "";
-	var currentVisitID = -1;
-	var currentVisitChar = "";
-	
 	var matchSuccessful = true;
 	
 	// Traverse sequence in loop.
 	while (loopIndex >= 0 && loopIndex < routeString.length && matchSuccessful === true)
 	{
 		// Reads current target node.
-		currentTargetNode = routeString.charAt(loopIndex);
-		currentVisitID = -1;
-		currentVisitChar = "";
+		var currentTargetNode = routeString.charAt(loopIndex);
+		var currentVisitID = -1;
+		var currentVisitChar = "";
 		
 		if (loopIndex >= 0 && loopIndex < stepArr.length)
 		{
@@ -99,11 +92,7 @@ function followExact(stepArr, nodeArr)
 			currentVisitChar = nodeArr[currentVisitID];
 		}
 		
-		if (currentVisitChar !== currentTargetNode)
-		{
-			// Nodes match.
-			matchSuccessful = false;
-		}
+		if (currentVisitChar !== currentTargetNode) matchSuccessful = false;
 		
 		loopIndex = loopIndex + 1;
 	}
@@ -117,25 +106,18 @@ function followExact(stepArr, nodeArr)
 function followWildcard(stepArr, nodeArr)
 {
 	var routeString = "A..C";
-	
 	var loopIndex = 0;
-	var currentStep = -1;
-	var currentTargetNode = "";
-	var currentVisitID = -1;
-	var currentVisitChar = null;
-	var currentValid = false;
-	
 	var matchSuccessful = true;
 	
 	// Traverse sequence in loop.
-	while (loopIndex >= 0 && loopIndex < routeString.length && matchSuccessful === true)
+	while (loopIndex >= 0 && loopIndex < routeString.length && matchSuccessful)
 	{
 		// Reads step index and target node.
-		currentStep = (stepArr.length - 4) + loopIndex;
-		currentTargetNode = routeString.charAt(loopIndex);
-		currentVisitID = -1;
-		currentVisitChar = null;
-		currentValid = false;
+		var currentStep = (stepArr.length - 4) + loopIndex;
+		var currentTargetNode = routeString.charAt(loopIndex);
+		var currentVisitID = -1;
+		var currentVisitChar = null;
+		var currentValid = false;
 		
 		
 		if (currentStep >= 0 && currentStep < stepArr.length)
@@ -162,7 +144,7 @@ function followWildcard(stepArr, nodeArr)
 			matchSuccessful = false;
 		}
 		
-		loopIndex = loopIndex + 1;
+		loopIndex += 1;
 	}
 	
 	return matchSuccessful;
@@ -175,24 +157,18 @@ function followSequence(stepArr, nodeArr)
 	var seqString = "EAC";
 	var startNode = seqString.charAt(0);
 	
-	var stepIndex = 0;
-	var currentVisitID = -1;
-	var currentVisitChar = "";
-	var currentSequenceNode = null;
-	var currentMatch = false;
-	
 	var sequenceIndex = -1;
 	var sequenceFound = false;
 	
 	
 	// Traverse route
-	for (stepIndex = 0; stepIndex < stepArr.length; stepIndex = stepIndex + 1)
+	for (var stepIndex = 0; stepIndex < stepArr.length; stepIndex++)
 	{
 		// Read current node.
-		currentVisitID = stepArr[stepIndex];
-		currentVisitChar = nodeArr[currentVisitID];
-		currentSequenceNode = null;
-		currentMatch = false;
+		var currentVisitID = stepArr[stepIndex];
+		var currentVisitChar = nodeArr[currentVisitID];
+		var currentSequenceNode = null;
+		var currentMatch = false;
 		
 		if (currentVisitChar === startNode)
 		{
@@ -214,12 +190,8 @@ function followSequence(stepArr, nodeArr)
 		}
 	}
 	
-	
-	if (sequenceIndex >= seqString.length)
-	{
-		// Sequence ends with route.
-		sequenceFound = true;
-	}
+	// Check if sequence ends with route.
+	if (sequenceIndex >= seqString.length) sequenceFound = true;
 	
 	return sequenceFound;
 }
@@ -232,9 +204,7 @@ function followChoice(stepArr, nodeArr)
 	var allowedNodes = ["A", "B", "C"];
 	var visitID = stepArr[2];
 	var visitChar = nodeArr[visitID];
-	var matchSuccessful = allowedNodes.includes(visitChar);
-	
-	return matchSuccessful;
+	return allowedNodes.includes(visitChar);
 }
 
 
@@ -255,8 +225,7 @@ function followInvert(stepArr, nodeArr)
 	var firstIncl = firstAvoid.includes(firstChar);
 	var secondIncl = secondAvoid.includes(secondChar);
 	
-	var matchSuccessful = (firstIncl !== true && secondIncl !== true);
-	return matchSuccessful;
+	return (firstIncl !== true && secondIncl !== true);
 }
 
 
@@ -277,8 +246,7 @@ function followCharacterGroups(stepArr, nodeArr)
 	var startMatch = allowedStart.includes(startGroupChar);
 	var endMatch = allowedEnd.includes(endGroupChar);
 	
-	var matchSuccessful = (startMatch === true && endMatch === true);
-	return matchSuccessful;
+	return (startMatch === true && endMatch === true);
 }
 
 
@@ -288,21 +256,16 @@ function followNesting(stepArr, nodeArr)
 	// Alternates between A and C from second node onwards.
 	
 	var stepIndex = 1;
-	var currentAlternateFlag = -1;
-	var currentNodeID = -1;
-	var currentNodeChar = "";
-	var currentValid = false;
-	
 	var matchSuccessful = true;
 	
 	// Traverse route from second node until end reached or error found.
-	while (stepIndex > 0 && stepIndex < stepArr.length && matchSuccessful === true)
+	while (stepIndex > 0 && stepIndex < stepArr.length && matchSuccessful)
 	{
 		// Reads current node.
-		currentAlternateFlag = stepIndex % 2;
-		currentNodeID = stepArr[stepIndex];
-		currentNodeChar = nodeArr[currentNodeID];
-		currentValid = false;
+		var currentAlternateFlag = stepIndex % 2;
+		var currentNodeID = stepArr[stepIndex];
+		var currentNodeChar = nodeArr[currentNodeID];
+		var currentValid = false;
 		
 		if (currentAlternateFlag === 1 && currentNodeChar === "A")
 		{
@@ -320,7 +283,7 @@ function followNesting(stepArr, nodeArr)
 			matchSuccessful = false;
 		}
 		
-		stepIndex = stepIndex + 1;
+		stepIndex += 1;
 	}
 	
 	return matchSuccessful;
@@ -335,22 +298,14 @@ function followIntegration(stepArr, nodeArr)
 	var allowedNodes = ["A", "B", "C", "D"];
 	var choiceID = stepArr[2];
 	var choiceChar = nodeArr[choiceID];
-	var matchSuccessful = allowedNodes.includes(choiceChar);
-	return matchSuccessful;
+	return allowedNodes.includes(choiceChar);
 }
 
 
 // Increments sequence step indes for the 'Sequence' template.
 function updateSequenceProgression(nodesMatch, seqInd)
 {
-	var newValue = -1;
-	
-	if (nodesMatch === true)
-	{
-		newValue = seqInd + 1;
-	}
-	
-	return newValue;
+	return (nodesMatch) ? seqInd + 1 : -1;
 }
 
 
