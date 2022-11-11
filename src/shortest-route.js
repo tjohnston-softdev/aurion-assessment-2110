@@ -36,16 +36,12 @@ function findShortestRoute(inputGraphObject, startNode, endNode)
 // First iteration of Dijkstra, visiting the start node.
 function visitStartNode(dsktraInfoObj, graphObject)
 {
-	var startID = -1;
-	var startObj = null;
-	var adjEdges = [];
-	
 	// Read start node.
-	startID = dsktraInfoObj.start;
-	startObj = dsktraInfoObj.nodes[startID];
+	var startID = dsktraInfoObj.start;
+	var startObj = dsktraInfoObj.nodes[startID];
 	
 	// Retrieve destination nodes and update accordingly.
-	adjEdges = graphTasks.getAdjacentEdges(startID, graphObject.edges);
+	var adjEdges = graphTasks.getAdjacentEdges(startID, graphObject.edges);
 	dsktraTasks.evaluateNodes(startID, 0, adjEdges, dsktraInfoObj, graphObject.edges);
 	
 	// Start node visited.
@@ -55,21 +51,16 @@ function visitStartNode(dsktraInfoObj, graphObject)
 
 // Continue iterating over other graph nodes.
 function visitOtherNodes(dsktraInfoObj, graphObject)
-{
-	var currentVisitingNode = null;
-	var currentID = -1;
-	var currentDistance = -1;
-	var currentAdjEdges = [];
-	
+{	
 	var canContinue = true;
 	
 	// Loop until all nodes visited.
-	while (canContinue === true)
+	while (canContinue)
 	{
-		currentVisitingNode = null;
-		currentID = -1;
-		currentDistance = -1;
-		currentAdjEdges = [];
+		var currentVisitingNode = null;
+		var currentID = -1;
+		var currentDistance = -1;
+		var currentAdjEdges = [];
 		
 		// Get unvisited node with shortest distance from start.
 		dsktraTasks.sortNodes(dsktraInfoObj.nodes);
@@ -115,27 +106,14 @@ function checkRouteSuccessful(dsktraInfoObj)
 	var checkRes = null;
 	
 	// Read end node.
-	endID = dsktraInfoObj.end;
-	endObj = dsktraInfoObj.nodes[endID];
+	var endID = dsktraInfoObj.end;
+	var endObj = dsktraInfoObj.nodes[endID];
 	
 	// Read end distance from start.
-	distVal = endObj.distanceFromStart;
-	distSet = Number.isInteger(distVal);
+	var distVal = endObj.distanceFromStart;
+	var distSet = Number.isInteger(distVal);
 	
-	
-	// End node must have been visited with a set distance.
-	if (distSet === true && endObj.visited === true)
-	{
-		// Return total distance.
-		checkRes = distVal;
-	}
-	else
-	{
-		// Return message.
-		checkRes = graphTasks.getNoRouteText();
-	}
-	
-	return checkRes;
+	return (distSet && endObj.visited) ? distVal : graphTasks.getNoRouteText();
 }
 
 
