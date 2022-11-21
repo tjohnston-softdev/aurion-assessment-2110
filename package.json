@@ -4,13 +4,7 @@
   "description": "Submission for Aurion technical assessment - October 2021",
   "main": "submission.js",
   "scripts": {
-    "test-input": "node ./node_modules/mocha/bin/mocha --input",
-    "test-parse": "node ./node_modules/mocha/bin/mocha --parse",
-    "test-exact": "node ./node_modules/mocha/bin/mocha --exact",
-    "test-shortest": "node ./node_modules/mocha/bin/mocha --shortest",
-    "test-possible": "node ./node_modules/mocha/bin/mocha --possible",
-    "test-submission": "node ./node_modules/mocha/bin/mocha --submission",
-	"test": "node ./node_modules/mocha/bin/mocha --all"
+	"test": "node ./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",

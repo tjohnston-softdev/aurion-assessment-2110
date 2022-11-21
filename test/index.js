@@ -16,44 +16,10 @@ runUnitTests();
 
 function runUnitTests()
 {
-	var enteredMode = modeInput.readArg(process.argv);
-	
-	if (enteredMode === "--all")
-	{
-		testInputFunctions();
-		testGraphParse();
-		testExactRoute();
-		testShortestRoute();
-		testPossibleRoutes();
-		testSubmission();
-	}
-	else if (enteredMode === "--input")
-	{
-		testInputFunctions();
-	}
-	else if (enteredMode === "--parse")
-	{
-		testGraphParse();
-	}
-	else if (enteredMode === "--exact")
-	{
-		testExactRoute();
-	}
-	else if (enteredMode === "--shortest")
-	{
-		testShortestRoute();
-	}
-	else if (enteredMode === "--possible")
-	{
-		testPossibleRoutes();
-	}
-	else if (enteredMode === "--submission")
-	{
-		testSubmission();
-	}
-	else
-	{
-		console.log("Unknown test mode");
-	}
-	
+	testInputFunctions();
+	testGraphParse();
+	testExactRoute();
+	testShortestRoute();
+	testPossibleRoutes();
+	testSubmission();
 }
