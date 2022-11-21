@@ -55,8 +55,7 @@ function callArgumentTests()
 // Creates object simulating Node JS arguments, including file path.
 function defineArgsObject(pthVal)
 {
-	var objectRes = [null, null, pthVal];
-	return objectRes;
+	return [null, null, pthVal];
 }
 
 

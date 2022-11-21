@@ -43,13 +43,7 @@ function callEntryValidationTests()
 // Creates object simulating file system entry.
 function defineRetrievedEntry(corrType, sBytes)
 {
-	var objectRes = {};
-	
-	objectRes["retrieved"] = true;
-	objectRes["correctType"] = corrType;
-	objectRes["sizeBytes"] = sBytes;
-	
-	return objectRes;
+	return {"retrieved": true, "correctType": corrType, "sizeBytes": sBytes};
 }
 
 

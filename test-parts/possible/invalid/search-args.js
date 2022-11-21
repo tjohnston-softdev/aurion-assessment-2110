@@ -60,13 +60,11 @@ function callMissingGraph()
 	
 	try
 	{
-		// Perform pathfinding.
 		possibleRoutes.findRoutes(null, "A", "B", null);
 		graphFound = true;
 	}
 	catch(routeErr)
 	{
-		// Error caught.
 		graphFound = false;
 		correctError = (routeErr.message === nullGraph.msgTxt);
 	}
