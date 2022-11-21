@@ -11,69 +11,53 @@ const routeCriteria = require("./src/common/route-criteria");
 const numSigns = require("./src/common/enum/num-signs");
 
 
-// Test case 1
 function runTestCase1(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "ABC");
-	var caseResultObject = setOutputObject(9, actualValue);
-	return caseResultObject;
+	return setOutputObject(9, actualValue);
 }
 
 
-// Test case 2
 function runTestCase2(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "AD");
-	var caseResultObject = setOutputObject(5, actualValue);
-	return caseResultObject;
+	return setOutputObject(5, actualValue);
 }
 
 
-// Test case 3
 function runTestCase3(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "ADC");
-	var caseResultObject = setOutputObject(13, actualValue);
-	return caseResultObject;
+	return setOutputObject(13, actualValue);
 }
 
 
-// Test case 4
 function runTestCase4(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "AEBCD");
-	var caseResultObject = setOutputObject(22, actualValue);
-	return caseResultObject;
+	return setOutputObject(22, actualValue);
 }
 
 
-// Test case 5
 function runTestCase5(givenInputGraph)
 {
 	var actualValue = exactRoute.getDistance(givenInputGraph, "AED");
-	var caseResultObject = setOutputObject("NO SUCH ROUTE", actualValue);
-	return caseResultObject;
+	return setOutputObject("NO SUCH ROUTE", actualValue);
 }
 
 
-// Test case 6
 function runTestCase6(givenInputGraph)
 {
 	var routeStart = routeCriteria.defineStartNode("C");
 	var routeEnd = routeCriteria.defineEndNode("C");
 	var routeStopCount = routeCriteria.defineStopCount(3, numSigns.LESS_EQUAL);
-	
 	var searchCriteria = [routeStart, routeEnd, routeStopCount];
-	var actualValue = null;
-	var caseResultObject = null;
 	
-	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
-	caseResultObject = setOutputObject(2, actualValue.length);
-	return caseResultObject;
+	var actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
+	return setOutputObject(2, actualValue.length);
 }
 
 
-// Test case 7
 function runTestCase7(givenInputGraph)
 {
 	var routeStart = routeCriteria.defineStartNode("A");
@@ -81,34 +65,26 @@ function runTestCase7(givenInputGraph)
 	var routeStopCount = routeCriteria.defineStopCount(4, numSigns.EQUAL);
 	
 	var searchCriteria = [routeStart, routeEnd, routeStopCount];
-	var actualValue = null;
-	var caseResultObject = null;
 	
-	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
-	caseResultObject = setOutputObject(3, actualValue.length);
-	return caseResultObject;
+	var actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
+	return setOutputObject(3, actualValue.length);
 }
 
 
-// Test case 8
 function runTestCase8(givenInputGraph)
 {
 	var actualValue = shortestRoute.findRoute(givenInputGraph, "A", "C");
-	var caseResultObject = setOutputObject(9, actualValue);
-	return caseResultObject;
+	return setOutputObject(9, actualValue);
 }
 
 
-// Test case 9
 function runTestCase9(givenInputGraph)
 {
 	var actualValue = shortestRoute.findRoute(givenInputGraph, "B", "B");
-	var caseResultObject = setOutputObject(9, actualValue);
-	return caseResultObject;
+	return setOutputObject(9, actualValue);
 }
 
 
-// Test case 10
 function runTestCase10(givenInputGraph)
 {
 	var routeStart = routeCriteria.defineStartNode("C");
@@ -116,21 +92,16 @@ function runTestCase10(givenInputGraph)
 	var routeDist = routeCriteria.defineTotalDistance(30, numSigns.LESS);
 	
 	var searchCriteria = [routeStart, routeEnd, routeDist];
-	var actualValue = null;
-	var caseResultObject = null;
 	
-	actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
-	caseResultObject = setOutputObject(7, actualValue.length);
-	return caseResultObject;
+	var actualValue = possibleRoutes.findRoutes(givenInputGraph, searchCriteria);
+	return setOutputObject(7, actualValue.length);
 }
 
 
 
-// Output object for test case.
 function setOutputObject(vExp, vAct)
 {
-	var outputRes = {"expected": vExp, "actual": vAct};
-	return outputRes;
+	return {"expected": vExp, "actual": vAct};
 }
 
 

@@ -17,32 +17,14 @@ runSubmission();
 // Main function.
 function runSubmission()
 {
-	var enteredPath = inputFile.readPathArg(process.argv);			// Read file path argument.
-	var inpEntry = inputFile.getEntry(enteredPath);					// Check if file exists.
-	var inpValid = false;
-	var inpContents = "";
-	var parsedGraphObject = null;
+	var enteredPath = inputFile.readPathArg(process.argv);
+	var inpEntry = inputFile.getEntry(enteredPath);
+	var inpValid = inpEntry ? inputFile.validateEntry(inpEntry) : false;
+	var inpContents = inpValid ? inputFile.readContents(enteredPath) : "";
+	var parsedGraphObject = (inpContents !== null) ? parseGraph.performParsing(inpContents) : null;
 	var caseResultArray = [];
 	
-	if (inpEntry.retrieved === true)
-	{
-		// Validate input file size.
-		inpValid = inputFile.validateEntry(inpEntry);
-	}
-	
-	if (inpValid === true)
-	{
-		// Read input file contents.
-		inpContents = inputFile.readContents(enteredPath);
-	}
-	
-	if (inpContents !== null)
-	{
-		// Parse input into graph.
-		parsedGraphObject = parseGraph.performParsing(inpContents);
-	}
-	
-	if (parsedGraphObject.valid === true)
+	if (parsedGraphObject.valid)
 	{
 		// Perform tests and output to console.
 		caseResultArray = callTestCases(parsedGraphObject);
