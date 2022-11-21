@@ -3,7 +3,6 @@
 const mocha = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
-const modeInput = require("../test-parts/mode-input");
 const testInputFunctions = require("../test-parts/test-input-functions");
 const testGraphParse = require("../test-parts/test-graph-parse");
 const testExactRoute = require("../test-parts/test-exact-route");
