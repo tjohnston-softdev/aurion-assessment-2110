@@ -9,8 +9,7 @@
     "test-exact": "node ./node_modules/mocha/bin/mocha --exact",
     "test-shortest": "node ./node_modules/mocha/bin/mocha --shortest",
     "test-possible": "node ./node_modules/mocha/bin/mocha --possible",
-    "test-submission": "node ./node_modules/mocha/bin/mocha --submission",
-	"test": "node ./node_modules/mocha/bin/mocha --all"
+    "test-submission": "node ./node_modules/mocha/bin/mocha --submission"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,7 @@
   },
   "homepage": "https://github.com/tjohnston-softdev/aurion-assessment-2110#readme",
   "dependencies": {
-    "chai": "^4.3.4",
-    "mocha": "^10.0.0"
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0"
   }
 }
