@@ -14,14 +14,7 @@ Execute `node submission [input-path]`
 
 \
 **Unit Tests**  
-Execute `npm install` to download the unit testing suite, and then execute any of the following commands to run different unit tests:
-
-* `npm run test-input` - Read input file.
-* `npm run test-parse` - Input graph parsing.
-* `npm run test-exact` - Exact route pathfinding.
-* `npm run test-shortest` - Shortest route pathfinding.
-* `npm run test-possible` - Possible routes pathfinding.
-* `npm run test-submission` - Assessment submission.
+Execute `npm install` to download the unit testing suite, and then execute `npm test` to perform the tests.
 
 
 ## References
