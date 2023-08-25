@@ -4,7 +4,7 @@
   "description": "Submission for Aurion technical assessment - October 2021",
   "main": "submission.js",
   "scripts": {
-	"test": "node ./node_modules/mocha/bin/mocha"
+    "test": "node ./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/tjohnston-softdev/aurion-assessment-2110#readme",
   "dependencies": {
-    "chai": "^4.3.7",
-    "mocha": "^10.1.0"
+    "chai": "^4.3.8",
+    "mocha": "^10.2.0"
   }
 }
