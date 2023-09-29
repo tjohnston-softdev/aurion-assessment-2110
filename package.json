@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/tjohnston-softdev/aurion-assessment-2110#readme",
   "dependencies": {
-    "chai": "^4.3.8",
+    "chai": "^4.3.10",
     "mocha": "^10.2.0"
   }
 }
